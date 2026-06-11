@@ -650,8 +650,8 @@ function waURL(msg){ return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURICo
 document.querySelectorAll('.wa-link').forEach(a => {
   const pkg = a.dataset.pkg;
   const msg = pkg
-    ? `Olá! Vim pelo site e quero reservar a experiência *${pkg}* 🌅 Pode me passar a disponibilidade?`
-    : 'Olá! Vim pelo site do Descomplica Guarujá e quero saber mais sobre as experiências 🌅';
+    ? `Olá! Vim pelo site e quero reservar a experiência *${pkg}* ✨ Quais datas vocês têm disponíveis?`
+    : 'Olá! Vim pelo site do Descomplica Guarujá e quero viver uma experiência inesquecível à beira-mar ✨ Pode me ajudar a escolher a ideal?';
   a.href = waURL(msg); a.target = '_blank'; a.rel = 'noopener';
   a.addEventListener('click', () => track('whatsapp_click', { source: a.dataset.src || 'unknown', pkg: pkg || null }));
 });
@@ -814,7 +814,7 @@ function showResult(){
   qBar.style.width = '100%';
   const key = recommend(answers), p = PKGS[key];
   const horarioLabel = answers.horario === 'manha' ? 'manhã (café)' : answers.horario;
-  const msg = `Olá! Fiz o quiz no site 🌅 Minha recomendação: *${p.col} · ${p.tier}* (${p.price}). ` +
+  const msg = `Olá! Fiz o quiz no site ✨ Minha recomendação: *${p.col} · ${p.tier}* (${p.price}). ` +
     `Ocasião: ${LBL.ocasiao[answers.ocasiao]} · ${answers.pessoas} pessoas · clima ${LBL.clima[answers.clima]} · ` +
     `${LBL.fotos[answers.fotos]} · investimento ${LBL.budget[answers.budget]} · horário: ${horarioLabel}. ` +
     `Quero saber a disponibilidade!`;
