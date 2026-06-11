@@ -789,7 +789,7 @@ function track(event, data = {}) {
     if (event === 'whatsapp_click') fbq('track', 'Lead', { content_name: data.pkg || data.source || 'whatsapp' });
     if (event === 'quiz_complete')  fbq('track', 'CompleteRegistration');
   } catch(e){}
-  if (WEBHOOK_URL && (event === 'quiz_complete' || event === 'whatsapp_click')) {
+  if (WEBHOOK_URL && (event === 'quiz_start' || event === 'quiz_complete' || event === 'whatsapp_click')) {
     try { fetch(WEBHOOK_URL, { method:'POST', mode:'no-cors',
       headers:{'Content-Type':'text/plain'}, body: JSON.stringify(payload) }); } catch(e){}
   }
