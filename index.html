@@ -338,6 +338,17 @@ html.js .rv.in{opacity:1;transform:none}
 .q-actions{display:grid;gap:var(--s2)}
 .q-restart{background:none;border:0;color:var(--muted);font-size:.88rem;font-weight:500;min-height:44px}
 .q-restart:hover{color:var(--petrol)}
+.q-capture{margin:var(--s4) 0 var(--s3);padding:var(--s3) var(--s3) var(--s2);border:1px solid var(--sand);border-radius:var(--r-md);background:var(--cream)}
+.q-capture p{font-size:.9rem;color:var(--ink);font-weight:500;margin-bottom:var(--s2)}
+.q-capture-row{display:grid;gap:var(--s2)}
+.q-capture input,.q-capture select{width:100%;padding:11px var(--s3);border:1px solid var(--sand);border-radius:var(--r-btn);font-family:var(--f-sans);font-size:.95rem;background:#fff;color:var(--ink);outline:none;transition:border-color var(--dur) var(--ease)}
+.q-capture input:focus,.q-capture select:focus{border-color:var(--petrol)}
+.q-capture select{color:var(--muted)}
+.q-capture select.filled{color:var(--ink)}
+.q-capture-send{width:100%;padding:11px;background:var(--petrol);color:#fff;border:0;border-radius:var(--r-btn);font-family:var(--f-sans);font-size:.95rem;font-weight:600;cursor:pointer;min-height:48px;transition:opacity var(--dur) var(--ease)}
+.q-capture-send:hover{opacity:.88}
+.q-capture-ok{font-size:.88rem;color:var(--success);font-weight:500;padding:var(--s1) 0}
+.q-capture-lgpd{font-size:.76rem;color:var(--muted);margin-top:var(--s2);line-height:1.5}
 
 /* ── galeria ── */
 .gal{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s2);margin-top:var(--s5)}
@@ -945,11 +956,54 @@ function showResult(){
         <a class="btn btn-secondary btn-block" href="#colecoes">Ver todas as experiências</a>
         <button class="q-restart" id="qRestart">Refazer o quiz</button>
       </div>
+      <div class="q-capture" id="qCapture">
+        <p>Prefere que a gente te chame? Deixa seu WhatsApp — opcional.</p>
+        <div class="q-capture-row">
+          <input type="tel" id="qCapturePhone" placeholder="(11) 99999-9999" inputmode="tel" autocomplete="tel" maxlength="20">
+          <select id="qCaptureTime">
+            <option value="" disabled selected>Melhor horário para te chamar</option>
+            <option value="manha">Manhã (8h–12h)</option>
+            <option value="tarde">Tarde (12h–18h)</option>
+            <option value="noite">Noite (18h–22h)</option>
+            <option value="qualquer">Qualquer horário</option>
+          </select>
+          <button class="q-capture-send" id="qCaptureSend">Quero ser chamada(o)</button>
+        </div>
+        <p class="q-capture-lgpd">Seus dados são usados apenas para entrarmos em contato sobre sua reserva. Responda SAIR a qualquer momento para parar.</p>
+      </div>
     </div>`;
   document.getElementById('qWa').addEventListener('click', () =>
     track('whatsapp_click', { source: 'quiz_result', pkg: `${p.col} · ${p.tier}` }));
   document.getElementById('qRestart').addEventListener('click', () => {
     step = 0; answers = {}; track('quiz_restart'); render();
+  });
+
+  const capturePhone = document.getElementById('qCapturePhone');
+  const captureTime  = document.getElementById('qCaptureTime');
+  const captureSend  = document.getElementById('qCaptureSend');
+  const captureBox   = document.getElementById('qCapture');
+  captureTime.addEventListener('change', () => captureTime.classList.add('filled'));
+  captureSend.addEventListener('click', () => {
+    const phone = capturePhone.value.trim();
+    const horario = captureTime.value;
+    if (!phone) { capturePhone.focus(); return; }
+    captureSend.disabled = true;
+    captureSend.textContent = 'Enviando…';
+    const payload = {
+      event: 'lead_capture',
+      ts: new Date().toISOString(),
+      result: key,
+      phone,
+      best_time: horario,
+      answers,
+      utm: UTM
+    };
+    track('lead_capture', { result: key, best_time: horario });
+    if (WEBHOOK_URL) {
+      try { fetch(WEBHOOK_URL, { method:'POST', mode:'no-cors',
+        headers:{'Content-Type':'text/plain'}, body: JSON.stringify(payload) }); } catch(e){}
+    }
+    captureBox.innerHTML = '<p class="q-capture-ok">✓ Anotado! Te chamamos no WhatsApp em breve.</p>';
   });
 }
 </script>
