@@ -140,7 +140,23 @@
   gtag('js', new Date());
   gtag('config', 'G-D8WWQJMVV6');
 </script>
-<!-- Meta Pixel: colar snippet oficial aqui quando criar a conta Business Manager -->
+<!-- Meta Pixel -->
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1140590289139680');
+  fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1140590289139680&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel -->
 <style>
 /* ════════════════════════════════════════════════════════
    DESCOMPLICA GUARUJÁ — Design System v1
@@ -767,7 +783,12 @@ const UTM = Object.fromEntries(new URLSearchParams(location.search));
 function track(event, data = {}) {
   const payload = { event, ...data, utm: UTM, ts: new Date().toISOString() };
   window.dataLayer.push(payload);
-  if (window.fbq) try { fbq('trackCustom', event, data); } catch(e){}
+  if (window.fbq) try {
+    fbq('trackCustom', event, data);
+    /* eventos padrão Meta — usados pelo algoritmo de otimização de anúncios */
+    if (event === 'whatsapp_click') fbq('track', 'Lead', { content_name: data.pkg || data.source || 'whatsapp' });
+    if (event === 'quiz_complete')  fbq('track', 'CompleteRegistration');
+  } catch(e){}
   if (WEBHOOK_URL && (event === 'quiz_complete' || event === 'whatsapp_click')) {
     try { fetch(WEBHOOK_URL, { method:'POST', mode:'no-cors',
       headers:{'Content-Type':'text/plain'}, body: JSON.stringify(payload) }); } catch(e){}
