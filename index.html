@@ -6,23 +6,23 @@
 <title>Piquenique de Luxo no Guarujá: a Dois, Aniversários e Pedidos | Descomplica Guarujá</title>
 <meta name="description" content="Piquenique de luxo montado para você no Guarujá: date a dois, pedido de casamento na praia, aniversário e despedida de solteira. A partir de R$ 249, reserva pelo WhatsApp. Responda 6 perguntas e descubra seu pacote ideal.">
 <meta name="robots" content="index, follow, max-image-preview:large">
-<link rel="canonical" href="https://descomplica-guaruja.vercel.app/">
+<link rel="canonical" href="https://descomplicaguaruja.com.br/">
 <meta name="theme-color" content="#F4EDE4">
 <meta name="geo.region" content="BR-SP">
 <meta name="geo.placename" content="Guarujá">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Descomplica Guarujá">
-<meta property="og:url" content="https://descomplica-guaruja.vercel.app/">
+<meta property="og:url" content="https://descomplicaguaruja.com.br/">
 <meta property="og:title" content="Piquenique de Luxo no Guarujá — Experiências à beira-mar">
 <meta property="og:description" content="Piquenique de luxo montado para você no Guarujá: date a dois, pedido de casamento, aniversário e despedida de solteira. A partir de R$ 249, reserva pelo WhatsApp.">
-<meta property="og:image" content="https://descomplica-guaruja.vercel.app/og-image.png">
+<meta property="og:image" content="https://descomplicaguaruja.com.br/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="pt_BR">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Piquenique de Luxo no Guarujá — Experiências à beira-mar">
 <meta name="twitter:description" content="Piquenique de luxo montado para você no Guarujá: date a dois, pedido de casamento, aniversário e despedida de solteira. A partir de R$ 249.">
-<meta name="twitter:image" content="https://descomplica-guaruja.vercel.app/og-image.png">
+<meta name="twitter:image" content="https://descomplicaguaruja.com.br/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Jost:wght@400;500;600&family=Allura&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -33,12 +33,12 @@
 {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  "@id": "https://descomplica-guaruja.vercel.app/#business",
+  "@id": "https://descomplicaguaruja.com.br/#business",
   "name": "Descomplica Guarujá",
   "description": "Piqueniques de luxo e experiências montadas para até 4 pessoas no Guarujá: date a dois, pedido de casamento, aniversários e encontros entre amigas. Você vive o momento. A gente cuida dos detalhes.",
-  "url": "https://descomplica-guaruja.vercel.app/",
-  "image": "https://descomplica-guaruja.vercel.app/og-image.png",
-  "logo": "https://descomplica-guaruja.vercel.app/favicon.svg",
+  "url": "https://descomplicaguaruja.com.br/",
+  "image": "https://descomplicaguaruja.com.br/og-image.png",
+  "logo": "https://descomplicaguaruja.com.br/favicon.svg",
   "priceRange": "R$249 - R$2990",
   "currenciesAccepted": "BRL",
   "paymentAccepted": "Pix",
@@ -132,6 +132,15 @@
   ]
 }
 </script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D8WWQJMVV6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-D8WWQJMVV6');
+</script>
+<!-- Meta Pixel: colar snippet oficial aqui quando criar a conta Business Manager -->
 <style>
 /* ════════════════════════════════════════════════════════
    DESCOMPLICA GUARUJÁ — Design System v1
@@ -160,7 +169,7 @@
   --maxw:1080px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:88px}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
@@ -906,6 +915,15 @@ document.getElementById('qBegin').addEventListener('click', () => {
 });
 
 function render(){
+  /* Bug 3: para A Dois e Pedido, "pessoas" é sempre 2 — pula a pergunta */
+  if (QUESTIONS[step].id === 'pessoas' &&
+      (answers.ocasiao === 'adois' || answers.ocasiao === 'pedido')) {
+    answers.pessoas = '2';
+    step++;
+    step < QUESTIONS.length ? render() : showResult();
+    return;
+  }
+
   qBar.style.width = `${(step / QUESTIONS.length) * 100}%`;
   const q = QUESTIONS[step];
   qPane.innerHTML = `
@@ -914,13 +932,19 @@ function render(){
       <p class="q-title">${q.title}</p>
       <div class="q-opts" role="group" aria-label="${q.title}">
         ${q.opts.map(o => `
-          <button class="q-opt" data-v="${o.v}">
+          <button class="q-opt" data-v="${o.v}" tabindex="-1">
             <span>${o.l}${o.s ? `<small>${o.s}</small>` : ''}</span>
             ${o.star ? '<span class="star">★</span>' : ''}
           </button>`).join('')}
       </div>
       ${step > 0 ? '<button class="q-back" id="qBack">← Voltar</button>' : ''}
     </div>`;
+  /* Bug 4: restaura tabindex e limpa foco visual depois de um frame */
+  requestAnimationFrame(() => {
+    qPane.querySelectorAll('.q-opt').forEach(b => { b.tabIndex = 0; });
+    if (document.activeElement && document.activeElement.classList.contains('q-opt'))
+      document.activeElement.blur();
+  });
   qPane.querySelectorAll('.q-opt').forEach(btn => btn.addEventListener('click', () => {
     answers[q.id] = btn.dataset.v;
     track('quiz_question', { q: q.id, value: btn.dataset.v, step: step+1 });
@@ -928,7 +952,13 @@ function render(){
     step < QUESTIONS.length ? render() : showResult();
   }));
   const back = document.getElementById('qBack');
-  if (back) back.addEventListener('click', () => { step--; render(); });
+  if (back) back.addEventListener('click', () => {
+    /* ao voltar, desfaz auto-pulo de pessoas se necessário */
+    step--;
+    if (QUESTIONS[step].id === 'pessoas' &&
+        (answers.ocasiao === 'adois' || answers.ocasiao === 'pedido')) step--;
+    render();
+  });
 }
 
 function showResult(){
