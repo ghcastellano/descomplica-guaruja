@@ -1,18 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
-<!-- Descomplica Guarujá — símbolo oficial v2
-     ondas vetorizadas da arte de referência · sol e coração geométricos centralizados -->
-<defs><clipPath id="c"><circle cx="300" cy="300" r="252"/></clipPath><clipPath id="baixo"><rect x="0" y="368" width="600" height="232"/></clipPath></defs>
-<circle cx="300" cy="300" r="292" fill="#FDF9F4"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="48 -8 620 620">
+<!-- Descomplica Guarujá — símbolo oficial (proporções medidas da referência)
+     centro (357.8,301.8) · aro R=282 · disco 85% · sol 42% centrado -->
+<defs>
+  <clipPath id="c"><circle cx="357.8" cy="301.8" r="240.4"/></clipPath>
+  <clipPath id="baixo"><rect x="0" y="429" width="660" height="320"/></clipPath>
+</defs>
+<circle cx="357.8" cy="301.8" r="299.9" fill="#FDF9F4"/>
 <g clip-path="url(#c)">
-  <!-- fundo do disco na cor do céu: elimina vazios/arcos do traçado -->
-  <circle cx="300" cy="300" r="252" fill="#FAC79C"/>
-  <!-- sol geométrico CENTRALIZADO, com margem branca -->
-  <circle cx="300" cy="268" r="88" fill="#F0A684" stroke="#FDF4EC" stroke-width="10"/>
-  <!-- coração de traço único -->
-  <path fill="none" stroke="#FBF3EA" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"
-    d="M300 290 C 283 273, 276 263, 276 252 A 14 14 0 0 1 300 244 A 14 14 0 0 1 324 252 C 324 263, 317 273, 300 290 Z"/>
-  <!-- ondas vetorizadas por cima (cortam a base do sol) -->
-  <g clip-path="url(#baixo)"><g transform="translate(0.000000,600.000000) scale(0.100000,-0.100000)" fill="#F0D1B1"><path d="M3290 5748 c-1402 -153 -2515 -1328 -2557 -2702 -14 -487 54 -818
+  <circle cx="357.8" cy="301.8" r="240.4" fill="#F0C6A4"/>
+  <circle cx="357.8" cy="300.00350000000003" r="119.3" fill="#E2A287" stroke="#FAF4EB" stroke-width="10"/>
+  <path fill="none" stroke="#FAF4EB" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"
+    d="M357.8 292.00350000000003 C 338.8 273.00350000000003, 330.8 261.00350000000003, 330.8 249.00350000000003 C 330.8 239.00350000000003, 338.8 233.00350000000003, 347.8 233.00350000000003 C 352.8 233.00350000000003, 356.8 237.00350000000003, 357.8 241.00350000000003 C 358.8 237.00350000000003, 362.8 233.00350000000003, 367.8 233.00350000000003 C 376.8 233.00350000000003, 384.8 239.00350000000003, 384.8 249.00350000000003 C 384.8 261.00350000000003, 376.8 273.00350000000003, 357.8 292.00350000000003 Z"/>
+  <g clip-path="url(#baixo)"><g transform="translate(0.000000,600.000000) scale(0.100000,-0.100000)" fill="#EAD2B6" stroke="#FAF4EB" stroke-width="9" stroke-linejoin="round"><path d="M3290 5748 c-1402 -153 -2515 -1328 -2557 -2702 -14 -487 54 -818
 265 -1271 326 -704 1004 -1285 1732 -1486 340 -93 393 -102 776 -124 324 -20
 905 84 1194 212 309 137 581 304 780 477 58 51 116 101 129 112 77 63 391 439
 391 468 0 26 -38 5 -49 -26 -34 -96 -424 -509 -460 -486 -11 7 -24 8 -28 4 -4
@@ -81,7 +80,7 @@
 -90 -21 -145 -37 -116 -32 -531 -47 -677 -24 -81 12 -103 4 -74 -29 37 -41
 399 -203 551 -246 33 -9 80 -23 105 -31 750 -226 1678 -36 2294 470 166 137
 341 319 426 443 8 11 36 51 62 87 79 110 160 254 156 279 -4 28 -365 38 -448
-12z"/></g></g><g transform="translate(0.000000,600.000000) scale(0.100000,-0.100000)" fill="#A5C0BC"><path d="M1255 3034 c-38 -7 -86 -13 -106 -13 -68 -2 -73 -12 -71 -157 4 -200
+12z"/></g></g><g><g transform="translate(0.000000,600.000000) scale(0.100000,-0.100000)" fill="#ABBFBB" stroke="#FAF4EB" stroke-width="9" stroke-linejoin="round"><path d="M1255 3034 c-38 -7 -86 -13 -106 -13 -68 -2 -73 -12 -71 -157 4 -200
 44 -466 86 -574 13 -33 44 -42 104 -29 96 21 478 18 587 -4 158 -33 295 -67
 389 -99 101 -34 124 -34 396 7 58 8 148 20 200 25 125 13 286 44 515 98 22 6
 78 21 125 35 47 13 106 28 132 31 97 14 91 62 -9 70 -270 24 -532 112 -1002
@@ -111,7 +110,7 @@
 -41 -50 -20 -101 -42 -141 -61 -8 -5 -47 -20 -85 -34 -38 -15 -82 -33 -99 -41
 -38 -19 -152 -55 -174 -55 -9 -1 -34 -8 -56 -16 -153 -57 -561 -81 -776 -45
 -63 11 -143 22 -179 26 -36 3 -83 11 -104 16 -22 6 -59 11 -83 11 -119 0 -443
-392 -614 745 -70 143 -86 181 -76 184 99 30 367 32 567 6z"/></g><g transform="translate(0.000000,600.000000) scale(0.100000,-0.100000)" fill="#79A2A5"><path d="M1305 3018 c-22 -5 -67 -11 -100 -14 -114 -9 -105 1 -105 -122 0
+392 -614 745 -70 143 -86 181 -76 184 99 30 367 32 567 6z"/></g></g><g><g transform="translate(0.000000,600.000000) scale(0.100000,-0.100000)" fill="#84A3A6" stroke="#FAF4EB" stroke-width="9" stroke-linejoin="round"><path d="M1305 3018 c-22 -5 -67 -11 -100 -14 -114 -9 -105 1 -105 -122 0
 -145 27 -373 59 -496 l26 -101 95 5 c228 12 512 6 600 -14 162 -35 285 -68
 372 -98 l88 -30 137 17 c76 9 169 23 207 31 38 8 94 14 125 15 110 1 545 91
 646 133 18 8 58 17 88 21 118 15 103 33 -40 50 -132 15 -299 64 -498 145 -16
@@ -123,7 +122,7 @@
 38 14 77 29 85 34 40 19 91 41 141 61 30 12 67 31 82 41 14 10 28 18 31 18 3
 0 34 19 70 43 35 24 79 49 96 56 59 25 31 31 -141 31 -254 1 -451 22 -574 61
 -409 130 -479 157 -729 280 -66 32 -127 59 -136 59 -8 0 -19 4 -24 9 -29 28
--357 119 -495 138 -160 21 -386 25 -485 8z"/></g>
+-357 119 -495 138 -160 21 -386 25 -485 8z"/></g></g>
 </g>
-<circle cx="300" cy="300" r="271" fill="none" stroke="#D5B190" stroke-width="11"/>
+<circle cx="357.8" cy="301.8" r="281.9" fill="none" stroke="#CDB295" stroke-width="11"/>
 </svg>
