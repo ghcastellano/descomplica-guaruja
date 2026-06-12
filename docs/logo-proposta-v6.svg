@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">
+  <!-- Descomplica Guarujá — símbolo v6
+       sol com margem branca · coração fino · 4 ondas (2 azuladas que se fundem,
+       sage à esquerda, sand à direita) · paleta fosca -->
+  <defs>
+    <clipPath id="disco">
+      <circle cx="120" cy="120" r="92"/>
+    </clipPath>
+  </defs>
+
+  <!-- disco céu pêssego fosco -->
+  <circle cx="120" cy="120" r="92" fill="#EDC8A6"/>
+
+  <g clip-path="url(#disco)">
+    <!-- sol terracota fosco com margem branca -->
+    <circle cx="120" cy="102" r="38" fill="#D6917A" stroke="#F8F3E8" stroke-width="4"/>
+
+    <!-- coração fino e menor -->
+    <path fill="none" stroke="#F8F3E8" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" d="
+      M120 107
+      C 113.8 101, 111.4 97.4, 111.4 93.6
+      A 4.9 4.9 0 0 1 120 90.8
+      A 4.9 4.9 0 0 1 128.6 93.6
+      C 128.6 97.4, 126.2 101, 120 107 Z"/>
+
+    <!-- onda azulada 1: crista à esquerda, desce e mergulha sob o sol -->
+    <path fill="#8FA9AF" stroke="#F8F3E8" stroke-width="5" d="
+      M20 126
+      C 36 116, 58 114, 76 122
+      C 94 130, 106 138, 122 143
+      C 140 148, 170 150, 214 148
+      L 214 220 L 20 220 Z"/>
+
+    <!-- onda azulada 2: crista redonda à direita do sol, funde com a 1 no centro -->
+    <path fill="#A0BAbE" stroke="#F8F3E8" stroke-width="5" d="
+      M108 150
+      C 118 142, 132 122, 152 116
+      C 170 111, 192 118, 214 128
+      L 214 220 L 108 220 Z"/>
+
+    <!-- onda sage: crista redonda à esquerda, embaixo -->
+    <path fill="#BCCDC1" stroke="#F8F3E8" stroke-width="5" d="
+      M20 162
+      C 30 142, 54 136, 76 146
+      C 98 156, 122 168, 150 174
+      C 172 178, 196 178, 214 176
+      L 214 220 L 20 220 Z"/>
+
+    <!-- onda sand: cunha à direita, fundindo com a sage -->
+    <path fill="#E7CCA8" stroke="#F8F3E8" stroke-width="5" d="
+      M84 212
+      C 120 202, 168 188, 214 172
+      L 214 220 L 84 220 Z"/>
+  </g>
+
+  <!-- respiro branco largo entre disco e aro -->
+  <circle cx="120" cy="120" r="92" fill="none" stroke="#FBF7F0" stroke-width="10"/>
+
+  <!-- aro fino tan fosco -->
+  <circle cx="120" cy="120" r="105" fill="none" stroke="#CBB092" stroke-width="3.5"/>
+</svg>

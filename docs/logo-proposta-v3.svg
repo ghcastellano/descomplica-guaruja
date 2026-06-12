@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">
+  <!-- Descomplica Guarujá — proposta v3
+       sol suave + coração em traço + ondas orgânicas sobrepostas
+       paleta dessaturada (tints dos tokens) · minimalismo praiano premium -->
+  <defs>
+    <clipPath id="disco">
+      <circle cx="120" cy="120" r="106"/>
+    </clipPath>
+  </defs>
+
+  <!-- disco sand-soft -->
+  <circle cx="120" cy="120" r="106" fill="#EFE5D6"/>
+
+  <g clip-path="url(#disco)">
+    <!-- sol terracota suave -->
+    <circle cx="120" cy="112" r="36" fill="#D9967B"/>
+
+    <!-- coração em traço fino, vazado no sol -->
+    <path fill="none" stroke="#F4EDE4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="
+      M120 124
+      C 111 116, 107 111, 107 105.5
+      A 6.8 6.8 0 0 1 120 102
+      A 6.8 6.8 0 0 1 133 105.5
+      C 133 111, 129 116, 120 124 Z"/>
+
+    <!-- onda de trás: verde-água suave -->
+    <path fill="#9DB8B2" d="
+      M-10 138
+      C 35 120, 85 150, 135 134
+      C 178 121, 215 138, 250 128
+      L 250 250 L -10 250 Z"/>
+
+    <!-- gap cream -->
+    <path fill="#EFE5D6" d="
+      M-10 162
+      C 40 144, 95 172, 150 156
+      C 192 144, 222 158, 250 150
+      L 250 250 L -10 250 Z"/>
+
+    <!-- onda do meio: teal -->
+    <path fill="#6E9A98" d="
+      M-10 172
+      C 40 154, 95 182, 150 166
+      C 192 154, 222 168, 250 160
+      L 250 250 L -10 250 Z"/>
+
+    <!-- onda da frente: sand, fechando a base -->
+    <path fill="#E0CDB4" d="
+      M-10 208
+      C 50 192, 120 218, 180 202
+      C 212 194, 235 204, 250 200
+      L 250 250 L -10 250 Z"/>
+  </g>
+
+  <!-- aro fino em dourado queimado -->
+  <circle cx="120" cy="120" r="110" fill="none" stroke="#BFA176" stroke-width="3.5"/>
+</svg>

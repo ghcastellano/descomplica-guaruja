@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">
+  <!-- Descomplica Guarujá — proposta de símbolo v1
+       coração-sol nascendo sobre o mar · paleta do design system -->
+  <defs>
+    <clipPath id="disco">
+      <circle cx="120" cy="120" r="104"/>
+    </clipPath>
+  </defs>
+
+  <!-- fundo interno cream -->
+  <circle cx="120" cy="120" r="104" fill="#F4EDE4"/>
+
+  <g clip-path="url(#disco)">
+    <!-- coração terracota nascendo (sol) -->
+    <path fill="#C8765A" d="
+      M120 178
+      C 88 148, 70 128, 70 104
+      A 27 27 0 0 1 120 90
+      A 27 27 0 0 1 170 104
+      C 170 128, 152 148, 120 178 Z"/>
+
+    <!-- mar: bloco petrol -->
+    <path fill="#1F4E54" d="
+      M0 152
+      Q 30 144, 60 152 T 120 152 T 180 152 T 240 152
+      L 240 240 L 0 240 Z"/>
+
+    <!-- duas ondas douradas finas -->
+    <path fill="none" stroke="#C9A24B" stroke-width="5" stroke-linecap="round" d="
+      M8 178 Q 38 170, 68 178 T 128 178 T 188 178 T 248 178"/>
+    <path fill="none" stroke="#C9A24B" stroke-width="5" stroke-linecap="round" d="
+      M8 204 Q 38 196, 68 204 T 128 204 T 188 204 T 248 204"/>
+  </g>
+
+  <!-- aro dourado fino -->
+  <circle cx="120" cy="120" r="110" fill="none" stroke="#C9A24B" stroke-width="5"/>
+</svg>

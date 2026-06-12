@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">
+  <!-- Descomplica Guarujá — símbolo v7
+       réplica medida pixel a pixel da referência (opção 9 do IMG_9155)
+       sol off-center à direita · onda slate diagonal · onda clara abraça o sol
+       cunha sand à direita · respiro cream no canto inferior esquerdo -->
+  <defs>
+    <clipPath id="disco">
+      <circle cx="120" cy="120" r="85"/>
+    </clipPath>
+  </defs>
+
+  <!-- base clara (respiro entre disco e aro, sólido p/ qualquer fundo) -->
+  <circle cx="120" cy="120" r="102" fill="#FDF9F4"/>
+
+  <!-- disco céu pêssego -->
+  <circle cx="120" cy="120" r="85" fill="#FAC79C"/>
+
+  <g clip-path="url(#disco)">
+    <!-- sol salmon, deslocado à direita, com margem branca -->
+    <circle cx="142" cy="118" r="41.5" fill="#F0A684" stroke="#FDF4EC" stroke-width="4"/>
+
+    <!-- coração fino dentro do sol -->
+    <path fill="none" stroke="#FBF3EA" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="
+      M141 112
+      C 135.5 106.6, 133.4 103.4, 133.4 100
+      A 4.4 4.4 0 0 1 141 97.4
+      A 4.4 4.4 0 0 1 148.6 100
+      C 148.6 103.4, 146.5 106.6, 141 112 Z"/>
+
+    <!-- base cream cobrindo o fundo do disco (vira o respiro inferior esquerdo) -->
+    <path fill="#FBF7F1" d="M20 150 C 60 152, 160 152, 220 148 L 220 220 L 20 220 Z"/>
+
+    <!-- onda clara: abraça a base direita do sol e se espalha pela direita -->
+    <path fill="#A5C0BC" stroke="#FBF6F0" stroke-width="4.5" d="
+      M78 141
+      C 92 152, 108 161, 128 163
+      C 152 165, 178 148, 208 130
+      L 208 176
+      C 175 172, 135 178, 96 180
+      C 88 172, 80 158, 78 141 Z"/>
+
+    <!-- onda slate: pincelada diagonal, do meio-esquerdo ao centro-baixo -->
+    <path fill="#79A2A5" stroke="#FBF6F0" stroke-width="4.5" d="
+      M18 118
+      C 45 114, 68 120, 88 130
+      C 110 141, 128 144, 144 146
+      C 146 162, 142 178, 134 190
+      C 95 198, 55 196, 18 200 Z"/>
+
+    <!-- cunha sand: canto inferior direito -->
+    <path fill="#F0D1B1" stroke="#FBF6F0" stroke-width="4.5" d="
+      M210 158
+      C 178 168, 145 182, 116 196
+      C 105 201, 96 204, 88 207
+      L 220 212 L 220 158 Z"/>
+  </g>
+
+  <!-- aro tan fino -->
+  <circle cx="120" cy="120" r="104" fill="none" stroke="#D5B190" stroke-width="3.5"/>
+</svg>

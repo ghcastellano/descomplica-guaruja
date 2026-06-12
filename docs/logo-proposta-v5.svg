@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">
+  <!-- Descomplica Guarujá — símbolo v5 (réplica medida da referência)
+       sol grande 45% · crista slate redonda à direita do sol
+       crista sage redonda à esquerda · cunha sand à direita · faixas brancas finas -->
+  <defs>
+    <clipPath id="disco">
+      <circle cx="120" cy="120" r="92"/>
+    </clipPath>
+  </defs>
+
+  <!-- disco céu pêssego (menor, com respiro até o aro) -->
+  <circle cx="120" cy="120" r="92" fill="#F0C9A2"/>
+
+  <g clip-path="url(#disco)">
+    <!-- sol terracota grande (~45% do disco) -->
+    <circle cx="120" cy="103" r="40" fill="#DC9278"/>
+
+    <!-- coração em traço fino -->
+    <path fill="none" stroke="#F8F1E5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="
+      M120 110
+      C 112 103, 109 99, 109 94.5
+      A 6 6 0 0 1 120 91.2
+      A 6 6 0 0 1 131 94.5
+      C 131 99, 128 103, 120 110 Z"/>
+
+    <!-- onda slate: reta à esquerda, mergulha sob o sol,
+         crista redonda e volumosa à direita do sol -->
+    <path fill="#8FAEB6" stroke="#FAF5EC" stroke-width="5" d="
+      M20 128
+      C 50 126, 80 134, 105 138
+      C 128 142, 140 120, 160 115
+      C 176 111, 194 118, 214 128
+      L 214 220 L 20 220 Z"/>
+
+    <!-- onda sage: crista grande e redonda à esquerda, desce em diagonal -->
+    <path fill="#BACCBF" stroke="#FAF5EC" stroke-width="5" d="
+      M20 154
+      C 30 134, 52 128, 74 138
+      C 100 150, 140 168, 214 168
+      L 214 220 L 20 220 Z"/>
+
+    <!-- cunha sand no canto inferior direito -->
+    <path fill="#E9CBA3" stroke="#FAF5EC" stroke-width="5" d="
+      M70 214
+      C 110 206, 165 194, 214 178
+      L 214 220 L 70 220 Z"/>
+  </g>
+
+  <!-- respiro branco largo entre disco e aro -->
+  <circle cx="120" cy="120" r="92" fill="none" stroke="#FBF6EE" stroke-width="10"/>
+
+  <!-- aro fino tan -->
+  <circle cx="120" cy="120" r="105" fill="none" stroke="#C9AC8B" stroke-width="3.5"/>
+</svg>

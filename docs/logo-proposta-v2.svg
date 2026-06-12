@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">
+  <!-- Descomplica Guarujá — proposta v2
+       pôr do sol em camadas + sol com coração + ondas fluidas
+       baseado no avatar atual do Instagram, vetorizado na paleta oficial -->
+  <defs>
+    <clipPath id="disco">
+      <circle cx="120" cy="120" r="106"/>
+    </clipPath>
+  </defs>
+
+  <circle cx="120" cy="120" r="106" fill="#F4EDE4"/>
+
+  <g clip-path="url(#disco)">
+    <!-- céu em camadas (tints de terracota → sand) -->
+    <circle cx="120" cy="138" r="104" fill="#E8C9B2"/>
+    <circle cx="120" cy="138" r="82"  fill="#DEA98C"/>
+    <circle cx="120" cy="138" r="60"  fill="#C8765A"/>
+
+    <!-- sol dourado com coração vazado -->
+    <circle cx="120" cy="138" r="38" fill="#C9A24B"/>
+    <path fill="#F4EDE4" d="
+      M120 152
+      C 108 141, 102 134, 102 126
+      A 9.5 9.5 0 0 1 120 121
+      A 9.5 9.5 0 0 1 138 126
+      C 138 134, 132 141, 120 152 Z"/>
+
+    <!-- onda de trás: sand -->
+    <path fill="#E7D8C5" d="
+      M-10 150
+      C 40 134, 80 162, 130 150
+      C 175 139, 210 152, 250 144
+      L 250 250 L -10 250 Z"/>
+
+    <!-- onda do meio: teal suave -->
+    <path fill="#5F8B8A" d="
+      M-10 168
+      C 45 150, 95 182, 150 166
+      C 195 153, 225 170, 250 162
+      L 250 250 L -10 250 Z"/>
+
+    <!-- onda da frente: petrol -->
+    <path fill="#1F4E54" d="
+      M-10 196
+      C 50 178, 110 208, 170 192
+      C 205 183, 230 196, 250 190
+      L 250 250 L -10 250 Z"/>
+  </g>
+
+  <!-- aro dourado fino -->
+  <circle cx="120" cy="120" r="110" fill="none" stroke="#C9A24B" stroke-width="4"/>
+</svg>

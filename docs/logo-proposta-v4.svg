@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">
+  <!-- Descomplica Guarujá — símbolo v4.2 (réplica da referência)
+       ondas diagonais entrelaçadas: slate sobe p/ direita, sage cresce à esquerda -->
+  <defs>
+    <clipPath id="disco">
+      <circle cx="120" cy="120" r="100"/>
+    </clipPath>
+  </defs>
+
+  <!-- céu pêssego -->
+  <circle cx="120" cy="120" r="100" fill="#F0C49C"/>
+
+  <g clip-path="url(#disco)">
+    <!-- sol terracota -->
+    <circle cx="120" cy="100" r="31" fill="#DA8E70"/>
+
+    <!-- coração em traço fino -->
+    <path fill="none" stroke="#F7EFE2" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" d="
+      M120 106
+      C 113 100, 110.2 96.2, 110.2 92
+      A 5.4 5.4 0 0 1 120 89.2
+      A 5.4 5.4 0 0 1 129.8 92
+      C 129.8 96.2, 127 100, 120 106 Z"/>
+
+    <!-- onda slate: nasce baixa à esquerda, corta o sol e sobe suave para a direita -->
+    <path fill="#8CACB0" stroke="#F7EFE2" stroke-width="6" d="
+      M-20 142
+      C 30 136, 75 138, 110 130
+      C 150 121, 195 114, 260 110
+      L 260 260 L -20 260 Z"/>
+
+    <!-- onda sage: crista alta à esquerda, desce para a direita (contraposta) -->
+    <path fill="#B3CBBE" stroke="#F7EFE2" stroke-width="6" d="
+      M-20 174
+      C 15 148, 55 146, 95 162
+      C 140 180, 195 186, 260 182
+      L 260 260 L -20 260 Z"/>
+
+    <!-- base sand: swoosh fechando embaixo, mais visível à direita -->
+    <path fill="#E8C9A2" stroke="#F7EFE2" stroke-width="6" d="
+      M-20 222
+      C 40 214, 100 218, 150 204
+      C 195 192, 230 191, 260 188
+      L 260 260 L -20 260 Z"/>
+  </g>
+
+  <!-- respiro cream + aro tan -->
+  <circle cx="120" cy="120" r="100" fill="none" stroke="#FBF5EA" stroke-width="8"/>
+  <circle cx="120" cy="120" r="109" fill="none" stroke="#C8A87E" stroke-width="3.5"/>
+</svg>
