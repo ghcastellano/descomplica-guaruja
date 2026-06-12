@@ -26,6 +26,10 @@ function criarDashboard() {
       'Cole-o no Apps Script da planilha "Descomplica — Resumo de Leads".');
   }
 
+  /* localidade en-US: garante que as fórmulas (sintaxe com vírgula) sejam aceitas */
+  ss.setSpreadsheetLocale('en_US');
+  SpreadsheetApp.flush();
+
   /* ── aba de dados (oculta) ── */
   let dados = ss.getSheetByName('dados');
   if (dados) ss.deleteSheet(dados);
@@ -145,8 +149,21 @@ function criarDashboard() {
   ss.setSpreadsheetTheme(ss.getPredefinedSpreadsheetThemes ? ss.getSpreadsheetTheme() : null);
 }
 
-/** Permite disparar o dashboard pela URL do App da Web (acessar /exec no navegador) */
-function doGet() {
+/** Permite disparar o dashboard pela URL do App da Web (acessar /exec no navegador).
+ *  Com ?diag=1 retorna diagnóstico em vez de recriar. */
+function doGet(e) {
+  if (e && e.parameter && e.parameter.diag) {
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    const dash = ss.getSheetByName('Dashboard');
+    const dados = ss.getSheetByName('dados');
+    const out = {
+      locale: ss.getSpreadsheetLocale(),
+      sheets: ss.getSheets().map(s => s.getName()),
+      kpi_completados: dash ? { formula: dash.getRange('E5').getFormula(), display: dash.getRange('E5').getDisplayValue() } : null,
+      dados_A1: dados ? { formula: dados.getRange('A1').getFormula(), display: dados.getRange('A1').getDisplayValue(), B2: dados.getRange('B2').getDisplayValue() } : null
+    };
+    return ContentService.createTextOutput(JSON.stringify(out, null, 2));
+  }
   criarDashboard();
   return ContentService.createTextOutput('✓ Dashboard criado com sucesso! Pode fechar esta aba e abrir a planilha.');
 }
