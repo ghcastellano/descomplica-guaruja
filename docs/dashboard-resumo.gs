@@ -82,8 +82,8 @@ function criarDashboard() {
   const seteDias = [
     ['B9', 'Iniciados',          'C9', '=COUNTIFS(dados!B:B,"quiz_start",dados!R:R,">="&(TODAY()-7))'],
     ['E9', 'Completados',        'F9', '=COUNTIFS(dados!B:B,"quiz_complete",dados!R:R,">="&(TODAY()-7))'],
-    ['H9', 'Cliques WhatsApp',   'I9', '=COUNTIFS(dados!B:B,"whatsapp_click",dados!R:R,">="&(TODAY()-7))'],
-    ['K9', 'Telefones deixados', 'L9', '=COUNTIF(dados!B:B,"lead_capture")']
+    ['H9', 'Cliques WA',         'I9', '=COUNTIFS(dados!B:B,"whatsapp_click",dados!R:R,">="&(TODAY()-7))'],
+    ['K9', 'Telefones', 'L9', '=COUNTIF(dados!B:B,"lead_capture")']
   ];
   dash.setRowHeight(9, 30);
   seteDias.forEach(([lc, label, vc, f]) => {
@@ -108,10 +108,10 @@ function criarDashboard() {
   secao(dash, 17, 'PREFERÊNCIAS  ·  quiz completados');
   dash.getRange('B18').setValue('Investimento').setFontSize(10).setFontColor(MUTED);
   dash.getRange('C18').setFormula(
-    `=IFERROR(TRANSPOSE(QUERY(dados!A2:H5000,"select G, count(B) where B='quiz_complete' group by G label G ''",0)),"—")`);
+    `=IFERROR(TRANSPOSE(QUERY(dados!A2:H5000,"select G, count(B) where B='quiz_complete' group by G label G '', count(B) ''",0)),"—")`);
   dash.getRange('B20').setValue('Horário').setFontSize(10).setFontColor(MUTED);
   dash.getRange('C20').setFormula(
-    `=IFERROR(TRANSPOSE(QUERY(dados!A2:H5000,"select H, count(B) where B='quiz_complete' group by H label H ''",0)),"—")`);
+    `=IFERROR(TRANSPOSE(QUERY(dados!A2:H5000,"select H, count(B) where B='quiz_complete' group by H label H '', count(B) ''",0)),"—")`);
   dash.getRange('C18:M21').setHorizontalAlignment('center');
   dash.getRange('C18:M18').setFontWeight('bold').setFontColor(PETROL);
   dash.getRange('C20:M20').setFontWeight('bold').setFontColor(PETROL);
@@ -119,7 +119,7 @@ function criarDashboard() {
   /* origem (UTM) */
   secao(dash, 23, 'ORIGEM DO TRÁFEGO  ·  utm_source');
   dash.getRange('C24').setFormula(
-    `=IFERROR(TRANSPOSE(QUERY(dados!A2:L5000,"select L, count(B) where L is not null and L<>'' group by L label L ''",0)),"ainda sem UTM — use os links etiquetados (docs/links-utm.md)")`);
+    `=IFERROR(TRANSPOSE(QUERY(dados!A2:L5000,"select L, count(B) where L is not null and L<>'' group by L label L '', count(B) ''",0)),"ainda sem UTM — use os links etiquetados (docs/links-utm.md)")`);
   dash.getRange('C24:M24').setFontWeight('bold').setFontColor(PETROL);
   dash.getRange('C24:M25').setHorizontalAlignment('center');
   dash.getRange('C24').setHorizontalAlignment('left');
