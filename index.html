@@ -33,7 +33,6 @@
 <noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Jost:wght@400;500;600&family=Allura&display=swap" rel="stylesheet"></noscript>
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="alternate icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23F4EDE4'/%3E%3Cpath d='M16 30a16 16 0 0 1 32 0' fill='%23C9A24B'/%3E%3Cpath d='M32 22.5c1.6-2.6 5.6-1.6 5.6 1.4 0 2.2-3.4 4.3-5.6 5.6-2.2-1.3-5.6-3.4-5.6-5.6 0-3 4-4 5.6-1.4z' fill='%23C8765A'/%3E%3Cpath d='M10 38c4-3 8-3 12 0s8 3 12 0 8-3 12 0' stroke='%231F4E54' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Cpath d='M14 46c4-3 8-3 12 0s8 3 12 0 8-3 12 0' stroke='%231F4E54' stroke-width='3' fill='none' stroke-linecap='round' opacity='.55'/%3E%3C/svg%3E">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -269,7 +268,7 @@ html.js .rv.in{opacity:1;transform:none}
 @media(max-width:859px){.hero-img{aspect-ratio:4/3}}
 .hero-seal{position:absolute;top:-18px;right:14px;width:84px;height:84px;border-radius:50%;
   background:var(--cream);box-shadow:var(--sh-md);display:grid;place-items:center;border:1.5px solid var(--gold-soft)}
-.hero-seal svg{width:58px;height:58px}
+.hero-seal svg,.hero-seal img{width:58px;height:58px;display:block}
 .hero-tag{position:absolute;left:14px;bottom:14px;background:rgba(20,52,56,.82);backdrop-filter:blur(6px);
   color:#fff;font-size:.8rem;font-weight:500;padding:8px 14px;border-radius:999px;letter-spacing:.04em}
 
@@ -468,13 +467,7 @@ window.phErr=function(el){el.onerror=null;el.src=window.PH};
     <figure class="hero-fig rv" style="--i:2">
       <img class="hero-img" src="https://images.unsplash.com/photo-1707296819777-f96b799efb41?q=80&w=1400&auto=format&fit=crop" srcset="https://images.unsplash.com/photo-1707296819777-f96b799efb41?q=80&w=480&auto=format&fit=crop 480w, https://images.unsplash.com/photo-1707296819777-f96b799efb41?q=80&w=800&auto=format&fit=crop 800w, https://images.unsplash.com/photo-1707296819777-f96b799efb41?q=80&w=1400&auto=format&fit=crop 1400w" sizes="(max-width: 760px) 94vw, 520px" alt="Piquenique de luxo montado ao pôr do sol com almofadas e mesa baixa" fetchpriority="high" onerror="phErr(this)">
       <span class="hero-seal" aria-hidden="true">
-        <svg viewBox="0 0 64 64">
-          <circle cx="32" cy="32" r="30" fill="none" stroke="#C9A24B" stroke-width="1.5"/>
-          <path d="M18 31a14 14 0 0 1 28 0" fill="#C9A24B"/>
-          <path d="M32 24.5c1.4-2.3 5-1.4 5 1.2 0 2-3 3.8-5 5-2-1.2-5-3-5-5 0-2.6 3.6-3.5 5-1.2z" fill="#C8765A"/>
-          <path d="M13 38c4-2.6 7.5-2.6 11.5 0s7.5 2.6 11.5 0 7.5-2.6 11.5 0" stroke="#1F4E54" stroke-width="2.6" fill="none" stroke-linecap="round"/>
-          <path d="M17 45c4-2.6 7.5-2.6 11.5 0s7.5 2.6 11.5 0 6-2.2 9.5-.6" stroke="#1F4E54" stroke-width="2.6" fill="none" stroke-linecap="round" opacity=".5"/>
-        </svg>
+        <img src="/logo.webp" width="58" height="58" alt="">
       </span>
       <figcaption class="hero-tag">Guarujá · Baixada Santista</figcaption>
     </figure>
