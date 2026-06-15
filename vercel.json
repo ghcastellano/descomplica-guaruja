@@ -1,9 +1,17 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.descomplicaguaruja.com.br" }],
+      "destination": "https://descomplicaguaruja.com.br/:path*",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
-      "source": "/(favicon.svg|og-image.png)",
+      "source": "/(favicon.png|apple-touch-icon.png|og-image.png|logo.png|logo.webp)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }
       ]
