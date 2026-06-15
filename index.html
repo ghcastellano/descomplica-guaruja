@@ -857,7 +857,7 @@ const QUESTIONS = [
     { v:'500',  l:'Até R$ 500' },
     { v:'1200', l:'R$ 500 a R$ 1.200' },
     { v:'2500', l:'R$ 1.200 a R$ 2.500' },
-    { v:'9999', l:'R$ 2.500+' },
+    { v:'2500+', l:'R$ 2.500+' },
   ]},
   { id:'horario', title:'Qual horário combina com o seu momento?', opts:[
     { v:'manha', l:'Manhã', s:'Café da manhã especial' },
@@ -914,8 +914,11 @@ const LBL = {
   ocasiao:{adois:'surpresa a dois',pedido:'pedido de casamento',celebrar:'aniversário/comemoração',amigas:'entre amigas'},
   clima:{intimista:'intimista e romântico',festivo:'animado e festivo',uau:'sofisticado'},
   fotos:{sim:'fotos essenciais',talvez:'fotos talvez',nao:'sem fotos'},
-  budget:{'500':'até R$ 500','1200':'R$ 500–1.200','2500':'R$ 1.200–2.500','9999':'R$ 2.500+'},
+  budget:{'500':'até R$ 500','1200':'R$ 500 a R$ 1.200','2500':'R$ 1.200 a R$ 2.500','2500+':'R$ 2.500+'},
 };
+
+/* nome comercial da ocasião para gravar nos dados (chave interna → nome bonito) */
+const OCASIAO_NOME = { adois:'A Dois', pedido:'Pedido', celebrar:'Celebrar', amigas:'Entre Amigas' };
 
 /* máquina do quiz */
 const qBody = document.getElementById('qBody'), qPane = document.getElementById('qPane'),
@@ -986,7 +989,16 @@ function showResult(){
     `Ocasião: ${LBL.ocasiao[answers.ocasiao]} · ${answers.pessoas} pessoas · clima ${LBL.clima[answers.clima]} · ` +
     `${LBL.fotos[answers.fotos]} · investimento ${LBL.budget[answers.budget]} · horário: ${horarioLabel}. ` +
     `Quero saber a disponibilidade!`;
-  track('quiz_complete', { result: key, answers });
+  /* nomes comerciais para gravar nos dados (planilha, e-mail, dashboard) — em vez das chaves internas */
+  const pacoteNome = `${p.col} · ${p.tier}`;
+  const answersOut = Object.assign({}, answers, {
+    ocasiao: OCASIAO_NOME[answers.ocasiao] || answers.ocasiao,
+    clima:   LBL.clima[answers.clima]      || answers.clima,
+    fotos:   LBL.fotos[answers.fotos]      || answers.fotos,
+    budget:  LBL.budget[answers.budget]    || answers.budget,
+    horario: horarioLabel
+  });
+  track('quiz_complete', { result: pacoteNome, answers: answersOut });
   qPane.innerHTML = `
     <div class="q-pane q-result">
       <p class="ribbon">Sua experiência ideal</p>
@@ -1039,13 +1051,13 @@ function showResult(){
     const payload = {
       event: 'lead_capture',
       ts: new Date().toISOString(),
-      result: key,
+      result: pacoteNome,
       phone,
       best_time: horario,
-      answers,
+      answers: answersOut,
       utm: UTM
     };
-    track('lead_capture', { result: key, best_time: horario });
+    track('lead_capture', { result: pacoteNome, best_time: horario });
     if (WEBHOOK_URL) {
       try { fetch(WEBHOOK_URL, { method:'POST', mode:'no-cors',
         headers:{'Content-Type':'text/plain'}, body: JSON.stringify(payload) }); } catch(e){}

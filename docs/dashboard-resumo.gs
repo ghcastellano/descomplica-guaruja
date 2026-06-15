@@ -93,7 +93,7 @@ function criarDashboard() {
 
   /* por ocasião, com barras */
   secao(dash, 11, 'POR OCASIÃO  ·  quiz completados');
-  const ocasioes = [['A Dois', 'adois'], ['Celebrar', 'celebrar'], ['Entre Amigas', 'amigas'], ['Pedido', 'pedido']];
+  const ocasioes = [['A Dois', 'A Dois'], ['Celebrar', 'Celebrar'], ['Entre Amigas', 'Entre Amigas'], ['Pedido', 'Pedido']];
   ocasioes.forEach(([nome, chave], i) => {
     const r = 12 + i;
     dash.setRowHeight(r, 24);
