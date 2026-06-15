@@ -930,7 +930,7 @@ function dicaVenda(ans, p){
   else if (orc >= preco * 0.8)   d = 'Quase alinhado: destaque tudo que já vem incluído (montagem/desmontagem) e ofereça 50% no Pix. Feche com urgência de datas.';
   else                           d = 'Espera pagar menos: não lidere pelo preço. Mostre o tier de entrada como porta ou a data dom–qui (mais barata).';
   if (ans.ocasiao === 'pedido')              d += ' É um pedido: reforce sigilo, exclusividade e o vídeo do momento.';
-  else if (ans.horario === 'por do sol')     d += ' Pediu pôr do sol (slot mais disputado): crie urgência — "tenho poucas datas".';
+  else if (ans.horario === 'por do sol')     d += ' Pediu pôr do sol (slot mais disputado): crie urgência — poucas datas disponíveis.';
   else if (ans.fotos === 'sim')              d += ' Quer fotos: ofereça o registro profissional como upsell.';
   return d;
 }
