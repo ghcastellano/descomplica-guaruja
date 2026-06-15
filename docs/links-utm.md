@@ -6,7 +6,23 @@
 > **Regra de ordem**: o `?utm...` vem SEMPRE antes do `#quiz`.
 > O `?utm...` é a etiqueta de origem (gravada na planilha); o `#quiz` rola a página direto até o quiz.
 
-## Links prontos para copiar
+## Links CURTOS (recomendado para a bio — bonitos e rastreados)
+
+Estes redirecionam para o quiz já com UTM. Use na bio porque ficam limpos na tela do Instagram:
+
+| Onde | Link curto | Rastreia como |
+|---|---|---|
+| **Bio** | `descomplicaguaruja.com.br/montar` | instagram / bio |
+| Stories | `descomplicaguaruja.com.br/stories` | instagram / stories |
+| Direct | `descomplicaguaruja.com.br/insta` | instagram / direct |
+
+`/bio` também funciona como alias de `/montar`. Definidos em `vercel.json` (bloco `redirects`).
+
+> Por que usar o curto na bio: o Instagram não mostra título de link único — só a URL. Com `/montar`, a URL exibida fica limpa e com cara de marca, em vez do `?utm_source=...` comprido.
+
+---
+
+## Links COMPLETOS (para Reels com campanha específica, ou onde o curto não cobre)
 
 ### Bio do Instagram (link fixo do perfil) — leva direto ao quiz
 ```
