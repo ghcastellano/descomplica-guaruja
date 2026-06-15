@@ -138,8 +138,8 @@ function criarDashboard() {
 
   /* CONTATOS PARA CHAMAR — extrai telefone/horário do JSON (coluna P = payload_bruto) */
   secao(dash, 31, '📞 CONTATOS PARA CHAMAR  ·  quem deixou o WhatsApp');
-  dash.getRange('B32:G32').setValues([['Data', 'Telefone', 'Melhor horário', 'Ocasião', 'Pacote', 'Origem']])
-    .setFontWeight('bold').setFontColor(PETROL).setFontSize(10).setBackground('#EFE5D6');
+  dash.getRange('B32:H32').setValues([['Data', 'Telefone', 'Melhor horário', 'Ocasião', 'Pacote', 'Origem', 'Chamar']])
+    .setFontWeight('bold').setFontColor(PETROL).setFontSize(10).setBackground('#EFE5D6').setHorizontalAlignment('center');
   dash.getRange('B33').setFormula(
     '=IFERROR(QUERY({' +
       'ARRAYFORMULA(IF(dados!A2:A5000="","",MID(dados!A2:A5000,9,2)&"/"&MID(dados!A2:A5000,6,2)&" "&MID(dados!A2:A5000,12,5))),' +
@@ -148,7 +148,13 @@ function criarDashboard() {
       'dados!C2:C5000,dados!I2:I5000,dados!L2:L5000,dados!B2:B5000},' +
       '"select Col1,Col2,Col3,Col4,Col5,Col6 where Col7=\'lead_capture\' order by Col1 desc",0),' +
       '"Nenhum contato deixado ainda — aparece aqui quando alguém preenche o WhatsApp no quiz.")');
-  dash.getRange('B32:G32').setHorizontalAlignment('center');
+  /* botão "Chamar" — link wa.me com mensagem pronta (limpa o telefone e prefixa 55) */
+  dash.getRange('H33').setFormula(
+    '=ARRAYFORMULA(IF(C33:C200="","",HYPERLINK(' +
+      '"https://wa.me/55"&REGEXREPLACE(C33:C200,"[^0-9]","")&' +
+      '"?text="&ENCODEURL("Oi! Vi que você montou seu piquenique no site do Descomplica Guarujá. Posso te ajudar a reservar sua data?"),' +
+      '"💬 Chamar")))');
+  dash.getRange('H33:H200').setFontColor('#25D366').setFontWeight('bold');
 
   /* rodapé */
   merge(dash, 'B45:M45').setValue('Você vive o momento. A gente cuida dos detalhes.')
