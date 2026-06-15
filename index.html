@@ -919,7 +919,8 @@ const LBL = {
 
 /* máquina do quiz */
 const qBody = document.getElementById('qBody'), qPane = document.getElementById('qPane'),
-      qBar = document.getElementById('qBar'), qStart = document.getElementById('qStart');
+      qBar = document.getElementById('qBar'), qStart = document.getElementById('qStart'),
+      quizCard = document.getElementById('quizCard');
 let step = 0, answers = {};
 
 document.getElementById('qBegin').addEventListener('click', () => {
@@ -958,6 +959,8 @@ function render(){
     qPane.querySelectorAll('.q-opt').forEach(b => { b.tabIndex = 0; });
     if (document.activeElement && document.activeElement.classList.contains('q-opt'))
       document.activeElement.blur();
+    /* traz o card do quiz pro topo da tela (abaixo do header) — opções sempre visíveis */
+    quizCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
   qPane.querySelectorAll('.q-opt').forEach(btn => btn.addEventListener('click', () => {
     answers[q.id] = btn.dataset.v;
