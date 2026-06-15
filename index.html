@@ -920,6 +920,21 @@ const LBL = {
 /* nome comercial da ocasião para gravar nos dados (chave interna → nome bonito) */
 const OCASIAO_NOME = { adois:'A Dois', pedido:'Pedido', celebrar:'Celebrar', amigas:'Entre Amigas' };
 
+/* DICA DE VENDA — o que ofertar e como, com base em orçamento × preço + ocasião.
+   Fundamentos: ancoragem de valor, aversão à perda, urgência/escassez, lead response time. */
+function dicaVenda(ans, p){
+  const orc = parseInt(ans.budget, 10) || 0;
+  const preco = parseInt((String(p.price).match(/\d[\d.]*/) || ['0'])[0].replace(/\./g,''), 10) || 0;
+  let d;
+  if (orc >= preco)              d = 'Orçamento folgado: ofereça upgrade ou adicionais (fotos, hora extra) e ancore no valor da experiência, não no preço.';
+  else if (orc >= preco * 0.8)   d = 'Quase alinhado: destaque tudo que já vem incluído (montagem/desmontagem) e ofereça 50% no Pix. Feche com urgência de datas.';
+  else                           d = 'Espera pagar menos: não lidere pelo preço. Mostre o tier de entrada como porta ou a data dom–qui (mais barata).';
+  if (ans.ocasiao === 'pedido')              d += ' É um pedido: reforce sigilo, exclusividade e o vídeo do momento.';
+  else if (ans.horario === 'por do sol')     d += ' Pediu pôr do sol (slot mais disputado): crie urgência — "tenho poucas datas".';
+  else if (ans.fotos === 'sim')              d += ' Quer fotos: ofereça o registro profissional como upsell.';
+  return d;
+}
+
 /* máquina do quiz */
 const qBody = document.getElementById('qBody'), qPane = document.getElementById('qPane'),
       qBar = document.getElementById('qBar'), qStart = document.getElementById('qStart'),
@@ -998,7 +1013,8 @@ function showResult(){
     budget:  LBL.budget[answers.budget]    || answers.budget,
     horario: horarioLabel
   });
-  track('quiz_complete', { result: pacoteNome, answers: answersOut });
+  const dica = dicaVenda(answers, p);
+  track('quiz_complete', { result: pacoteNome, preco: p.price, dica, answers: answersOut });
   qPane.innerHTML = `
     <div class="q-pane q-result">
       <p class="ribbon">Sua experiência ideal</p>
@@ -1052,6 +1068,8 @@ function showResult(){
       event: 'lead_capture',
       ts: new Date().toISOString(),
       result: pacoteNome,
+      preco: p.price,
+      dica,
       phone,
       best_time: horario,
       answers: answersOut,

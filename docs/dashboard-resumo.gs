@@ -136,25 +136,33 @@ function criarDashboard() {
     '=COUNTIFS(dados!B:B,"quiz_complete",dados!R:R,">="&(TODAY()-WEEKDAY(TODAY(),2)-6),dados!R:R,"<"&(TODAY()-WEEKDAY(TODAY(),2)+1))&"  |  "&COUNTIFS(dados!B:B,"whatsapp_click",dados!R:R,">="&(TODAY()-WEEKDAY(TODAY(),2)-6),dados!R:R,"<"&(TODAY()-WEEKDAY(TODAY(),2)+1))')
     .setFontSize(13).setFontWeight('bold').setFontColor(MUTED);
 
-  /* CONTATOS PARA CHAMAR — extrai telefone/horário do JSON (coluna P = payload_bruto) */
+  /* CONTATOS PARA CHAMAR — extrai telefone/horário/preço do JSON (coluna P = payload_bruto) */
   secao(dash, 31, '📞 CONTATOS PARA CHAMAR  ·  quem deixou o WhatsApp');
-  dash.getRange('B32:H32').setValues([['Data', 'Telefone', 'Melhor horário', 'Ocasião', 'Pacote', 'Origem', 'Chamar']])
+  dash.getRange('B32:K32').setValues([['Data', 'Telefone', 'Ocasião', 'Pacote', 'Preço pacote', 'Quer pagar', 'Dica de venda', 'Melhor horário', 'Origem', 'Chamar']])
     .setFontWeight('bold').setFontColor(PETROL).setFontSize(10).setBackground('#EFE5D6').setHorizontalAlignment('center');
   dash.getRange('B33').setFormula(
     '=IFERROR(QUERY({' +
       'ARRAYFORMULA(IF(dados!A2:A5000="","",MID(dados!A2:A5000,9,2)&"/"&MID(dados!A2:A5000,6,2)&" "&MID(dados!A2:A5000,12,5))),' +
       'ARRAYFORMULA(IFERROR(REGEXEXTRACT(dados!P2:P5000,"""phone"":""([^""]+)"""),"")),' +
+      'dados!C2:C5000,' +
+      'dados!I2:I5000,' +
+      'ARRAYFORMULA(IFERROR(REGEXEXTRACT(dados!P2:P5000,"""preco"":""([^""]+)"""),"")),' +
+      'dados!G2:G5000,' +
+      'ARRAYFORMULA(IFERROR(REGEXEXTRACT(dados!P2:P5000,"""dica"":""([^""]+)"""),"")),' +
       'ARRAYFORMULA(IFERROR(REGEXEXTRACT(dados!P2:P5000,"""best_time"":""([^""]+)"""),"")),' +
-      'dados!C2:C5000,dados!I2:I5000,dados!L2:L5000,dados!B2:B5000},' +
-      '"select Col1,Col2,Col3,Col4,Col5,Col6 where Col7=\'lead_capture\' order by Col1 desc",0),' +
+      'dados!L2:L5000,dados!B2:B5000},' +
+      '"select Col1,Col2,Col3,Col4,Col5,Col6,Col7,Col8,Col9 where Col10=\'lead_capture\' order by Col1 desc",0),' +
       '"Nenhum contato deixado ainda — aparece aqui quando alguém preenche o WhatsApp no quiz.")');
   /* botão "Chamar" — link wa.me com mensagem pronta (limpa o telefone e prefixa 55) */
-  dash.getRange('H33').setFormula(
+  dash.getRange('K33').setFormula(
     '=ARRAYFORMULA(IF(C33:C200="","",HYPERLINK(' +
       '"https://wa.me/55"&REGEXREPLACE(C33:C200,"[^0-9]","")&' +
       '"?text="&ENCODEURL("Oi! Vi que você montou seu piquenique no site do Descomplica Guarujá. Posso te ajudar a reservar sua data?"),' +
       '"💬 Chamar")))');
-  dash.getRange('H33:H200').setFontColor('#25D366').setFontWeight('bold');
+  dash.getRange('K33:K200').setFontColor('#25D366').setFontWeight('bold');
+  dash.setColumnWidth(6, 140);   /* Preço pacote */
+  dash.setColumnWidth(8, 300);   /* Dica de venda — texto longo */
+  dash.getRange('H33:H200').setWrap(true).setFontColor(PETROL).setVerticalAlignment('top');
 
   /* rodapé */
   merge(dash, 'B45:M45').setValue('Você vive o momento. A gente cuida dos detalhes.')

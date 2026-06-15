@@ -80,8 +80,10 @@ function enviarAlerta_(data, a, u) {
       '⏰ Melhor horário: ' + (data.best_time || '—') + '\n' +
       '🎀 Ocasião: ' + (a.ocasiao || '—') + '\n' +
       '📦 Pacote recomendado: ' + (data.result || '—') + '\n' +
-      '💰 Investimento: ' + (a.budget || '—') + '\n' +
+      '💵 Preço do pacote: ' + (data.preco || '—') + '\n' +
+      '💰 Quanto quer investir: ' + (a.budget || '—') + '\n' +
       '📍 Origem: ' + origem + '\n\n' +
+      '🎯 Dica de venda: ' + (data.dica || '—') + '\n\n' +
       '👉 Chamar agora no WhatsApp:\n' + waLink + '\n\n' +
       '— Responda rápido: leads contatados em minutos têm muito mais chance de fechar.';
     MailApp.sendEmail(ALERT_EMAIL, '🔥 Novo lead — ' + fone + ' (' + (a.ocasiao || 'quiz') + ')', corpo);
