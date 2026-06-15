@@ -136,8 +136,22 @@ function criarDashboard() {
     '=COUNTIFS(dados!B:B,"quiz_complete",dados!R:R,">="&(TODAY()-WEEKDAY(TODAY(),2)-6),dados!R:R,"<"&(TODAY()-WEEKDAY(TODAY(),2)+1))&"  |  "&COUNTIFS(dados!B:B,"whatsapp_click",dados!R:R,">="&(TODAY()-WEEKDAY(TODAY(),2)-6),dados!R:R,"<"&(TODAY()-WEEKDAY(TODAY(),2)+1))')
     .setFontSize(13).setFontWeight('bold').setFontColor(MUTED);
 
+  /* CONTATOS PARA CHAMAR — extrai telefone/horário do JSON (coluna P = payload_bruto) */
+  secao(dash, 31, '📞 CONTATOS PARA CHAMAR  ·  quem deixou o WhatsApp');
+  dash.getRange('B32:G32').setValues([['Data', 'Telefone', 'Melhor horário', 'Ocasião', 'Pacote', 'Origem']])
+    .setFontWeight('bold').setFontColor(PETROL).setFontSize(10).setBackground('#EFE5D6');
+  dash.getRange('B33').setFormula(
+    '=IFERROR(QUERY({' +
+      'TEXT(dados!A2:A,"dd/mm hh:mm"),' +
+      'IFERROR(REGEXEXTRACT(dados!P2:P,"""phone""\\s*:\\s*""([^""]+)"""),""),' +
+      'IFERROR(REGEXEXTRACT(dados!P2:P,"""best_time""\\s*:\\s*""([^""]+)"""),""),' +
+      'dados!C2:C, dados!I2:I, dados!L2:L, dados!B2:B},' +
+      '"select Col1,Col2,Col3,Col4,Col5,Col6 where Col7=\'lead_capture\' order by Col1 desc",0),' +
+      '"Nenhum contato deixado ainda — aparece aqui quando alguém preenche o WhatsApp no quiz.")');
+  dash.getRange('B32:G32').setHorizontalAlignment('center');
+
   /* rodapé */
-  merge(dash, 'B31:M31').setValue('Você vive o momento. A gente cuida dos detalhes.')
+  merge(dash, 'B45:M45').setValue('Você vive o momento. A gente cuida dos detalhes.')
     .setFontSize(9).setFontStyle('italic').setFontColor(GOLD).setHorizontalAlignment('center');
 
   /* limpeza final */
