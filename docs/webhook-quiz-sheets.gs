@@ -26,7 +26,7 @@ const HEADERS = [
 /* HACK #4 — alerta na hora: e-mail quando alguém deixa o WhatsApp no quiz.
    Vai para a Sophia, que controla os contatos (deixe '' para desligar o alerta).
    Pode pôr vários separados por vírgula: 'sophiatkd1@gmail.com,ghcastellano@gmail.com' */
-const ALERT_EMAIL = 'sophiatkd1@gmail.com';
+const ALERT_EMAIL = 'sophiatkd1@gmail.com,ghcastellano@gmail.com';
 
 function doPost(e) {
   try {
