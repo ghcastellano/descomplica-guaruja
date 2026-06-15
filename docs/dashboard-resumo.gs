@@ -156,7 +156,7 @@ function criarDashboard() {
   /* botão "Chamar" — link wa.me com mensagem pronta (limpa o telefone e prefixa 55) */
   dash.getRange('K33').setFormula(
     '=ARRAYFORMULA(IF(C33:C200="","",HYPERLINK(' +
-      '"https://wa.me/55"&REGEXREPLACE(C33:C200,"[^0-9]","")&' +
+      '"https://wa.me/"&IF((LEFT(REGEXREPLACE(C33:C200,"[^0-9]",""),2)="55")*(LEN(REGEXREPLACE(C33:C200,"[^0-9]",""))>=12),REGEXREPLACE(C33:C200,"[^0-9]",""),"55"&REGEXREPLACE(C33:C200,"[^0-9]",""))&' +
       '"?text="&ENCODEURL("Oi! Vi que você montou seu piquenique no site do Descomplica Guarujá. Posso te ajudar a reservar sua data?"),' +
       '"💬 Chamar")))');
   dash.getRange('K33:K200').setFontColor('#25D366').setFontWeight('bold');
