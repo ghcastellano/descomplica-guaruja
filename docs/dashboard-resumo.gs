@@ -142,10 +142,10 @@ function criarDashboard() {
     .setFontWeight('bold').setFontColor(PETROL).setFontSize(10).setBackground('#EFE5D6');
   dash.getRange('B33').setFormula(
     '=IFERROR(QUERY({' +
-      'TEXT(dados!A2:A,"dd/mm hh:mm"),' +
-      'IFERROR(REGEXEXTRACT(dados!P2:P,"""phone"":""([^""]+)"""),""),' +
-      'IFERROR(REGEXEXTRACT(dados!P2:P,"""best_time"":""([^""]+)"""),""),' +
-      'dados!C2:C, dados!I2:I, dados!L2:L, dados!B2:B},' +
+      'ARRAYFORMULA(IF(dados!A2:A5000="","",MID(dados!A2:A5000,9,2)&"/"&MID(dados!A2:A5000,6,2)&" "&MID(dados!A2:A5000,12,5))),' +
+      'ARRAYFORMULA(IFERROR(REGEXEXTRACT(dados!P2:P5000,"""phone"":""([^""]+)"""),"")),' +
+      'ARRAYFORMULA(IFERROR(REGEXEXTRACT(dados!P2:P5000,"""best_time"":""([^""]+)"""),"")),' +
+      'dados!C2:C5000,dados!I2:I5000,dados!L2:L5000,dados!B2:B5000},' +
       '"select Col1,Col2,Col3,Col4,Col5,Col6 where Col7=\'lead_capture\' order by Col1 desc",0),' +
       '"Nenhum contato deixado ainda — aparece aqui quando alguém preenche o WhatsApp no quiz.")');
   dash.getRange('B32:G32').setHorizontalAlignment('center');
