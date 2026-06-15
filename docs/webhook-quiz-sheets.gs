@@ -15,6 +15,9 @@
  */
 
 const SHEET_NAME = 'Leads Quiz';
+/* ID da planilha "Descomplica — Leads" — grava SEMPRE aqui, mesmo que este script
+   esteja em outro projeto/planilha. Evita o lead cair na planilha errada. */
+const LEADS_SHEET_ID = '1R-f9evkwlL6tVs_XdnazG_-wex7DnvIDpjQyEefE4w8';
 const HEADERS = [
   'data_hora', 'evento',
   'ocasiao', 'pessoas', 'clima', 'fotos', 'investimento', 'horario',
@@ -85,9 +88,9 @@ function enviarAlerta_(data, a, u) {
   } catch (_) {}
 }
 
-/** Garante que a aba existe com cabeçalho formatado */
+/** Garante que a aba existe com cabeçalho formatado (sempre na planilha de Leads, pelo ID) */
 function getSheet_() {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = SpreadsheetApp.openById(LEADS_SHEET_ID);
   let sh = ss.getSheetByName(SHEET_NAME);
   if (!sh) {
     sh = ss.insertSheet(SHEET_NAME);
