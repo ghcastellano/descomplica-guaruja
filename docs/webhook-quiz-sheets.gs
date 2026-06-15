@@ -23,6 +23,10 @@ const HEADERS = [
   'payload_bruto'
 ];
 
+/* HACK #4 — alerta na hora: e-mail quando alguém deixa o WhatsApp no quiz.
+   Troque pelo seu e-mail se quiser (deixe '' para desligar o alerta). */
+const ALERT_EMAIL = 'ghcastellano@gmail.com';
+
 function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents);
@@ -41,6 +45,11 @@ function doPost(e) {
       JSON.stringify(data)
     ]);
 
+    /* HACK #4 — dispara alerta só quando alguém deixa o telefone (lead quente) */
+    if (data.event === 'lead_capture' && ALERT_EMAIL) {
+      enviarAlerta_(data, a, u);
+    }
+
     return ContentService.createTextOutput('ok');
   } catch (err) {
     // Registra o erro numa aba separada para depuração
@@ -51,6 +60,28 @@ function doPost(e) {
     } catch (_) {}
     return ContentService.createTextOutput('error');
   }
+}
+
+/* HACK #4 — monta e envia o e-mail de lead quente */
+function enviarAlerta_(data, a, u) {
+  try {
+    const fone = data.phone || '';
+    const foneLimpo = ('55' + String(fone).replace(/[^0-9]/g, ''));
+    const msg = encodeURIComponent('Oi! Vi que você montou seu piquenique no site do Descomplica Guarujá. Posso te ajudar a reservar sua data?');
+    const waLink = 'https://wa.me/' + foneLimpo + '?text=' + msg;
+    const origem = u.utm_source ? (u.utm_source + (u.utm_medium ? ' / ' + u.utm_medium : '')) : 'direto';
+    const corpo =
+      '🌅 Novo lead deixou o WhatsApp no quiz!\n\n' +
+      '📱 Telefone: ' + fone + '\n' +
+      '⏰ Melhor horário: ' + (data.best_time || '—') + '\n' +
+      '🎀 Ocasião: ' + (a.ocasiao || '—') + '\n' +
+      '📦 Pacote recomendado: ' + (data.result || '—') + '\n' +
+      '💰 Investimento: ' + (a.budget || '—') + '\n' +
+      '📍 Origem: ' + origem + '\n\n' +
+      '👉 Chamar agora no WhatsApp:\n' + waLink + '\n\n' +
+      '— Responda rápido: leads contatados em minutos têm muito mais chance de fechar.';
+    MailApp.sendEmail(ALERT_EMAIL, '🔥 Novo lead — ' + fone + ' (' + (a.ocasiao || 'quiz') + ')', corpo);
+  } catch (_) {}
 }
 
 /** Garante que a aba existe com cabeçalho formatado */
