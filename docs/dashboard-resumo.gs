@@ -143,8 +143,8 @@ function criarDashboard() {
   dash.getRange('B33').setFormula(
     '=IFERROR(QUERY({' +
       'TEXT(dados!A2:A,"dd/mm hh:mm"),' +
-      'IFERROR(REGEXEXTRACT(dados!P2:P,"""phone""\\s*:\\s*""([^""]+)"""),""),' +
-      'IFERROR(REGEXEXTRACT(dados!P2:P,"""best_time""\\s*:\\s*""([^""]+)"""),""),' +
+      'IFERROR(REGEXEXTRACT(dados!P2:P,"""phone"":""([^""]+)"""),""),' +
+      'IFERROR(REGEXEXTRACT(dados!P2:P,"""best_time"":""([^""]+)"""),""),' +
       'dados!C2:C, dados!I2:I, dados!L2:L, dados!B2:B},' +
       '"select Col1,Col2,Col3,Col4,Col5,Col6 where Col7=\'lead_capture\' order by Col1 desc",0),' +
       '"Nenhum contato deixado ainda — aparece aqui quando alguém preenche o WhatsApp no quiz.")');
