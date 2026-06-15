@@ -2,36 +2,41 @@
 
 > Use SEMPRE estes links (nunca o link "limpo") ao postar no Instagram.
 > É assim que a planilha e o GA4 sabem de onde cada lead veio.
+>
+> **Regra de ordem**: o `?utm...` vem SEMPRE antes do `#quiz`.
+> O `?utm...` é a etiqueta de origem (gravada na planilha); o `#quiz` rola a página direto até o quiz.
 
 ## Links prontos para copiar
 
-### Bio do Instagram (link fixo do perfil)
+### Bio do Instagram (link fixo do perfil) — leva direto ao quiz
 ```
-https://descomplicaguaruja.com.br/?utm_source=instagram&utm_medium=bio
+https://descomplicaguaruja.com.br/?utm_source=instagram&utm_medium=bio#quiz
 ```
 
-### Stories (figurinha de link)
+### Stories (figurinha de link) — leva direto ao quiz
 ```
-https://descomplicaguaruja.com.br/?utm_source=instagram&utm_medium=stories
+https://descomplicaguaruja.com.br/?utm_source=instagram&utm_medium=stories#quiz
 ```
 
 ### Reels — um link por tema (troque o utm_campaign)
 ```
-https://descomplicaguaruja.com.br/?utm_source=instagram&utm_medium=reels&utm_campaign=adois
-https://descomplicaguaruja.com.br/?utm_source=instagram&utm_medium=reels&utm_campaign=celebrar
-https://descomplicaguaruja.com.br/?utm_source=instagram&utm_medium=reels&utm_campaign=amigas
-https://descomplicaguaruja.com.br/?utm_source=instagram&utm_medium=reels&utm_campaign=pedido
+https://descomplicaguaruja.com.br/?utm_source=instagram&utm_medium=reels&utm_campaign=adois#quiz
+https://descomplicaguaruja.com.br/?utm_source=instagram&utm_medium=reels&utm_campaign=celebrar#quiz
+https://descomplicaguaruja.com.br/?utm_source=instagram&utm_medium=reels&utm_campaign=amigas#quiz
+https://descomplicaguaruja.com.br/?utm_source=instagram&utm_medium=reels&utm_campaign=pedido#quiz
 ```
 
-### Direct (quando mandar o link em conversa)
+### Direct (quando mandar o link em conversa) — leva direto ao quiz
 ```
-https://descomplicaguaruja.com.br/?utm_source=instagram&utm_medium=direct
+https://descomplicaguaruja.com.br/?utm_source=instagram&utm_medium=direct#quiz
 ```
 
 ### WhatsApp (status ou grupos)
 ```
-https://descomplicaguaruja.com.br/?utm_source=whatsapp&utm_medium=status
+https://descomplicaguaruja.com.br/?utm_source=whatsapp&utm_medium=status#quiz
 ```
+
+> Dica: se quiser levar para o TOPO do site (hero) em vez do quiz, é só tirar o `#quiz` do final.
 
 ## Como configurar no Instagram — passo a passo
 
