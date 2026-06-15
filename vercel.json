@@ -7,7 +7,10 @@
       "has": [{ "type": "host", "value": "www.descomplicaguaruja.com.br" }],
       "destination": "https://descomplicaguaruja.com.br/:path*",
       "permanent": true
-    }
+    },
+    { "source": "/bio",     "destination": "/?utm_source=instagram&utm_medium=bio#quiz",     "permanent": false },
+    { "source": "/stories", "destination": "/?utm_source=instagram&utm_medium=stories#quiz", "permanent": false },
+    { "source": "/insta",   "destination": "/?utm_source=instagram&utm_medium=direct#quiz",  "permanent": false }
   ],
   "headers": [
     {
