@@ -147,7 +147,7 @@ function criarDashboard() {
       'dados!C2:C5000,' +
       'dados!I2:I5000,' +
       'ARRAYFORMULA(IFERROR(REGEXEXTRACT(dados!P2:P5000,"""preco"":""([^""]+)"""),"")),' +
-      'dados!G2:G5000,' +
+      'ARRAYFORMULA(IF(dados!G2:G5000="","",""&dados!G2:G5000)),' +
       'ARRAYFORMULA(IFERROR(REGEXEXTRACT(dados!P2:P5000,"""dica"":""([^""]+)"""),"")),' +
       'ARRAYFORMULA(IFERROR(REGEXEXTRACT(dados!P2:P5000,"""best_time"":""([^""]+)"""),"")),' +
       'dados!L2:L5000,dados!B2:B5000},' +
