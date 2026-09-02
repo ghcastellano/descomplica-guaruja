@@ -3,30 +3,55 @@
   "trailingSlash": false,
   "redirects": [
     {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.descomplicaguaruja.com.br" }],
-      "destination": "https://descomplicaguaruja.com.br/:path*",
-      "permanent": true
+      "source": "/montar",
+      "destination": "/?utm_source=instagram&utm_medium=bio#quiz",
+      "permanent": false
     },
-    { "source": "/montar",  "destination": "/?utm_source=instagram&utm_medium=bio#quiz",     "permanent": false },
-    { "source": "/bio",     "destination": "/?utm_source=instagram&utm_medium=bio#quiz",     "permanent": false },
-    { "source": "/stories", "destination": "/?utm_source=instagram&utm_medium=stories#quiz", "permanent": false },
-    { "source": "/insta",   "destination": "/?utm_source=instagram&utm_medium=direct#quiz",  "permanent": false }
+    {
+      "source": "/bio",
+      "destination": "/?utm_source=instagram&utm_medium=bio#quiz",
+      "permanent": false
+    },
+    {
+      "source": "/stories",
+      "destination": "/?utm_source=instagram&utm_medium=stories#quiz",
+      "permanent": false
+    },
+    {
+      "source": "/insta",
+      "destination": "/?utm_source=instagram&utm_medium=direct#quiz",
+      "permanent": false
+    }
   ],
   "headers": [
     {
       "source": "/(favicon.png|apple-touch-icon.png|og-image.png|logo.png|logo.webp)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
       ]
     },
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
       ]
     }
   ]
