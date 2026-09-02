@@ -14,7 +14,7 @@ No topo do `<script>` principal do `index.html`:
 - `WEBHOOK_URL` — URL do Apps Script (código em `docs/webhook-quiz-sheets.gs`, instruções no cabeçalho do arquivo). Opcional no primeiro deploy; site funciona sem.
 
 ## Design system (tokens já implementados no CSS — manter fielmente)
-- Paleta: cream `#F4EDE4` · sand `#E7D8C5` · terracotta `#C8765A` · gold `#C9A24B` · petrol `#1F4E54` · petrol-deep `#143438` · ink `#2B2B2B` · muted `#7A736B` · whatsapp `#25D366`
+- Paleta: cream `#F4EDE4` · sand `#E7D8C5` · terracotta `#C8765A` (só fundos/bordas/hover) · terracotta-ink `#A35236` (terracota em TEXTO: 4.7:1 sobre creme) · gold `#C9A24B` · petrol `#1F4E54` · petrol-deep `#143438` · ink `#2B2B2B` · muted `#6B655E` (4.9:1 sobre creme; o antigo `#7A736B` dava 4.0) · whatsapp `#25D366`
 - Fontes: **Fraunces** (títulos serif) · **Jost** (corpo/UI) · **Allura** (script, SÓ para "Guarujá")
 - Espaçamento escala 8px · raios 8/16/24 (botões 12) · touch targets ≥48px · contraste ≥4.5:1
 - Estética: minimalismo praiano premium, texto à esquerda, muito respiro, NADA de visual de template (sem gradientes roxos, sem sombras pesadas, sem emojis em títulos)

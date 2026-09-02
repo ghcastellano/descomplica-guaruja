@@ -27,6 +27,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com">
+<link rel="preload" as="image" fetchpriority="high" href="https://images.unsplash.com/photo-1707296819777-f96b799efb41?q=80&w=1400&auto=format&fit=crop" imagesrcset="https://images.unsplash.com/photo-1707296819777-f96b799efb41?q=80&w=480&auto=format&fit=crop 480w, https://images.unsplash.com/photo-1707296819777-f96b799efb41?q=80&w=800&auto=format&fit=crop 800w, https://images.unsplash.com/photo-1707296819777-f96b799efb41?q=80&w=1400&auto=format&fit=crop 1400w" imagesizes="(max-width: 760px) 94vw, 520px">
 <link rel="dns-prefetch" href="https://www.googletagmanager.com">
 <link rel="dns-prefetch" href="https://connect.facebook.net">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Jost:wght@400;500;600&family=Allura&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -136,26 +137,36 @@
   ]
 }
 </script>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-D8WWQJMVV6"></script>
+<!-- Google tag (gtag.js) + Meta Pixel.
+     Os scripts são carregados na 1ª interação (toque, tecla, scroll) ou 3,5 s após o load,
+     o que vier primeiro — assim não disputam a thread principal com a renderização.
+     Os stubs abaixo enfileiram gtag()/fbq() chamados antes; nada se perde. -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-D8WWQJMVV6');
-</script>
-<!-- Meta Pixel -->
-<script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  !function(f,n){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
   n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[]}(window);
   fbq('init', '1055608873800794');
   fbq('track', 'PageView');
+  (function(){
+    var done=false;
+    function loadTags(){
+      if(done) return; done=true;
+      ['https://www.googletagmanager.com/gtag/js?id=G-D8WWQJMVV6',
+       'https://connect.facebook.net/en_US/fbevents.js'].forEach(function(u){
+        var s=document.createElement('script'); s.async=true; s.src=u; document.head.appendChild(s);
+      });
+    }
+    window.__loadTags=loadTags;
+    function afterLoad(){ setTimeout(loadTags, 3500); }
+    (document.readyState==='complete') ? afterLoad() : window.addEventListener('load', afterLoad);
+    ['pointerdown','keydown','touchstart','scroll'].forEach(function(ev){
+      window.addEventListener(ev, loadTags, {once:true, passive:true});
+    });
+  })();
 </script>
 <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=1055608873800794&ev=PageView&noscript=1"
@@ -169,9 +180,9 @@
 :root{
   /* paleta */
   --cream:#F4EDE4; --sand:#E7D8C5; --sand-soft:#EFE5D6;
-  --terracotta:#C8765A; --gold:#C9A24B; --gold-soft:#E4CD96;
+  --terracotta:#C8765A; --terracotta-ink:#A35236; --gold:#C9A24B; --gold-soft:#E4CD96;
   --petrol:#1F4E54; --petrol-deep:#143438;
-  --ink:#2B2B2B; --muted:#7A736B; --white:#FFFFFF;
+  --ink:#2B2B2B; --muted:#6B655E; --white:#FFFFFF;
   --success:#3F8F5B; --whatsapp:#25D366;
   /* tipografia */
   --f-serif:'Fraunces', Georgia, serif;
@@ -209,8 +220,8 @@ h1{font-size:2rem;font-weight:600}
 h2{font-size:1.5rem;font-weight:600}
 h3{font-size:1.25rem;font-weight:500}
 @media(min-width:760px){h1{font-size:3rem}h2{font-size:2.1rem}h3{font-size:1.4rem}}
-.script{font-family:var(--f-script);font-weight:400;color:var(--terracotta);letter-spacing:0}
-.eyebrow{font-size:.78rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--terracotta);display:flex;align-items:center;gap:.7rem;margin-bottom:var(--s3)}
+.script{font-family:var(--f-script);font-weight:400;color:var(--terracotta-ink);letter-spacing:0}
+.eyebrow{font-size:.78rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--terracotta-ink);display:flex;align-items:center;gap:.7rem;margin-bottom:var(--s3)}
 .eyebrow::before{content:"";width:24px;height:1.5px;background:var(--gold)}
 .lead{color:var(--muted);max-width:56ch;font-size:1.05rem}
 .wrap{max-width:var(--maxw);margin:0 auto;padding-left:var(--s4);padding-right:var(--s4)}
@@ -229,7 +240,7 @@ html.js .rv.in{opacity:1;transform:none}
 .btn:active{transform:scale(.98)}
 .btn-primary{background:var(--petrol);color:#fff;box-shadow:var(--sh-md)}
 .btn-primary:hover{background:var(--petrol-deep);transform:translateY(-2px);box-shadow:var(--sh-lg)}
-.btn-secondary{background:transparent;color:var(--terracotta);border:1.5px solid var(--terracotta)}
+.btn-secondary{background:transparent;color:var(--terracotta-ink);border:1.5px solid var(--terracotta-ink)}
 .btn-secondary:hover{background:rgba(200,118,90,.08);transform:translateY(-2px)}
 .btn-wa{background:var(--whatsapp);color:#fff;box-shadow:var(--sh-md)}
 .btn-wa:hover{background:#1fb959;transform:translateY(-2px);box-shadow:var(--sh-lg)}
@@ -295,7 +306,7 @@ html.js .rv.in{opacity:1;transform:none}
 .col-card{background:var(--cream);border-radius:var(--r-md);overflow:hidden;border:1px solid rgba(43,43,43,.06);box-shadow:var(--sh-sm)}
 .col-img{aspect-ratio:16/10;object-fit:cover;width:100%;background:var(--sand)}
 .col-body{padding:var(--s4)}
-.col-kicker{font-size:.72rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--terracotta)}
+.col-kicker{font-size:.72rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--terracotta-ink)}
 .col-body h3{margin:4px 0 6px}
 .col-body p{font-size:.93rem;color:var(--muted)}
 .col-price{margin-top:var(--s3);font-family:var(--f-serif);font-weight:600;color:var(--petrol-deep);font-size:1.05rem}
@@ -312,12 +323,15 @@ html.js .rv.in{opacity:1;transform:none}
 .tier-head{display:flex;align-items:baseline;justify-content:space-between;gap:var(--s2);flex-wrap:wrap}
 .tier-head h4{font-family:var(--f-sans);font-weight:600;font-size:1.05rem;color:var(--petrol-deep)}
 .tier-head h4 small{display:block;font-weight:400;color:var(--muted);font-size:.8rem;letter-spacing:.02em;margin-top:6px}
-.tier-price{font-family:var(--f-serif);font-weight:600;color:var(--terracotta);font-size:1.05rem;white-space:nowrap}
+.tier-price{font-family:var(--f-serif);font-weight:600;color:var(--terracotta-ink);font-size:1.05rem;white-space:nowrap}
 .tier ul{list-style:none;margin:var(--s2) 0 var(--s3);display:grid;gap:5px}
 .tier li{font-size:.9rem;color:var(--muted);display:flex;gap:8px;align-items:baseline}
 .tier li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--gold);flex:none;transform:translateY(-2px)}
 .tier .wa-mini{font-size:.9rem;font-weight:600;color:var(--petrol);text-decoration:none;display:inline-flex;align-items:center;gap:6px;border-bottom:1.5px solid var(--gold);padding-bottom:2px}
-.tier .wa-mini:hover{color:var(--terracotta)}
+.tier .wa-mini:hover{color:var(--terracotta-ink)}
+/* área de toque ≥44px nos links de texto pequenos, sem mudar o visual (design system: touch targets ≥48px) */
+.top-link,.tier .wa-mini,.foot-l a{position:relative}
+.top-link::after,.tier .wa-mini::after,.foot-l a::after{content:"";position:absolute;left:-4px;right:-4px;top:50%;height:44px;transform:translateY(-50%)}
 .badge{display:inline-block;font-size:.6rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
   background:var(--gold);color:var(--petrol-deep);padding:2px 9px;border-radius:999px;margin-left:8px;vertical-align:middle;transform:translateY(-1px)}
 
@@ -356,9 +370,9 @@ html.js .rv.in{opacity:1;transform:none}
 @keyframes qin{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 /* resultado */
 .q-result{text-align:left}
-.q-result .ribbon{font-size:.74rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--terracotta)}
+.q-result .ribbon{font-size:.74rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--terracotta-ink)}
 .q-result h3{font-family:var(--f-serif);font-size:1.7rem;color:var(--petrol-deep);margin:6px 0 2px}
-.q-result .rprice{font-family:var(--f-serif);font-size:1.25rem;font-weight:600;color:var(--terracotta);margin-bottom:var(--s3)}
+.q-result .rprice{font-family:var(--f-serif);font-size:1.25rem;font-weight:600;color:var(--terracotta-ink);margin-bottom:var(--s3)}
 .q-result img{border-radius:var(--r-md);aspect-ratio:16/9;object-fit:cover;width:100%;margin-bottom:var(--s3);background:var(--sand)}
 .q-result ul{list-style:none;display:grid;gap:6px;margin-bottom:var(--s4)}
 .q-result li{font-size:.95rem;color:var(--ink);display:flex;gap:8px;align-items:baseline}
@@ -413,7 +427,7 @@ footer{background:var(--petrol-deep);color:rgba(255,255,255,.75);padding:var(--s
 .foot-l{display:flex;gap:var(--s4);list-style:none;flex-wrap:wrap}
 .foot-l a{font-size:.9rem;text-decoration:none;opacity:.8}
 .foot-l a:hover{opacity:1;color:var(--gold-soft)}
-.foot-c{width:100%;padding-top:var(--s3);border-top:1px solid rgba(255,255,255,.12);font-size:.78rem;opacity:.55;display:flex;flex-wrap:wrap;gap:var(--s2);justify-content:space-between}
+.foot-c{width:100%;padding-top:var(--s3);border-top:1px solid rgba(255,255,255,.12);font-size:.78rem;opacity:.7;display:flex;flex-wrap:wrap;gap:var(--s2);justify-content:space-between}
 
 /* ── WhatsApp FAB (mobile) ── */
 .fab{position:fixed;right:16px;bottom:16px;z-index:70;width:56px;height:56px;border-radius:50%;
@@ -519,7 +533,7 @@ window.phErr=function(el){el.onerror=null;el.src=window.PH};
 
       <!-- A DOIS -->
       <article class="col-card rv" style="--i:0" data-col="adois">
-        <img class="col-img" loading="lazy" src="https://images.unsplash.com/photo-1744221127502-727af70bc6e7?q=80&w=800&auto=format&fit=crop" srcset="https://images.unsplash.com/photo-1744221127502-727af70bc6e7?q=80&w=480&auto=format&fit=crop 480w, https://images.unsplash.com/photo-1744221127502-727af70bc6e7?q=80&w=800&auto=format&fit=crop 800w, https://images.unsplash.com/photo-1744221127502-727af70bc6e7?q=80&w=1200&auto=format&fit=crop 1200w" sizes="(max-width: 760px) 94vw, 420px" alt="Casal abraçado ao pôr do sol na praia" onerror="phErr(this)">
+        <img class="col-img" loading="lazy" src="https://images.unsplash.com/photo-1744221127502-727af70bc6e7?q=80&w=800&h=500&auto=format&fit=crop" srcset="https://images.unsplash.com/photo-1744221127502-727af70bc6e7?q=80&w=480&h=300&auto=format&fit=crop 480w, https://images.unsplash.com/photo-1744221127502-727af70bc6e7?q=80&w=800&h=500&auto=format&fit=crop 800w, https://images.unsplash.com/photo-1744221127502-727af70bc6e7?q=80&w=1200&h=750&auto=format&fit=crop 1200w" sizes="(max-width: 760px) 94vw, 520px" alt="Casal abraçado ao pôr do sol na praia" onerror="phErr(this)">
         <div class="col-body">
           <span class="col-kicker">Coleção</span>
           <h3>A Dois</h3>
@@ -550,7 +564,7 @@ window.phErr=function(el){el.onerror=null;el.src=window.PH};
 
       <!-- CELEBRAR -->
       <article class="col-card rv" style="--i:1" data-col="celebrar">
-        <img class="col-img" loading="lazy" src="https://images.unsplash.com/photo-1772724317675-5a1afcefea9a?q=80&w=800&auto=format&fit=crop" srcset="https://images.unsplash.com/photo-1772724317675-5a1afcefea9a?q=80&w=480&auto=format&fit=crop 480w, https://images.unsplash.com/photo-1772724317675-5a1afcefea9a?q=80&w=800&auto=format&fit=crop 800w, https://images.unsplash.com/photo-1772724317675-5a1afcefea9a?q=80&w=1200&auto=format&fit=crop 1200w" sizes="(max-width: 760px) 94vw, 420px" alt="Piquenique decorado com flores e bandeja" onerror="phErr(this)">
+        <img class="col-img" loading="lazy" src="https://images.unsplash.com/photo-1772724317675-5a1afcefea9a?q=80&w=800&h=500&auto=format&fit=crop" srcset="https://images.unsplash.com/photo-1772724317675-5a1afcefea9a?q=80&w=480&h=300&auto=format&fit=crop 480w, https://images.unsplash.com/photo-1772724317675-5a1afcefea9a?q=80&w=800&h=500&auto=format&fit=crop 800w, https://images.unsplash.com/photo-1772724317675-5a1afcefea9a?q=80&w=1200&h=750&auto=format&fit=crop 1200w" sizes="(max-width: 760px) 94vw, 520px" alt="Piquenique decorado com flores e bandeja" onerror="phErr(this)">
         <div class="col-body">
           <span class="col-kicker">Coleção</span>
           <h3>Celebrar</h3>
@@ -581,7 +595,7 @@ window.phErr=function(el){el.onerror=null;el.src=window.PH};
 
       <!-- ENTRE AMIGAS -->
       <article class="col-card rv" style="--i:2" data-col="amigas">
-        <img class="col-img" loading="lazy" src="https://images.unsplash.com/photo-1707296825230-3f106b3ac450?q=80&w=800&auto=format&fit=crop" srcset="https://images.unsplash.com/photo-1707296825230-3f106b3ac450?q=80&w=480&auto=format&fit=crop 480w, https://images.unsplash.com/photo-1707296825230-3f106b3ac450?q=80&w=800&auto=format&fit=crop 800w, https://images.unsplash.com/photo-1707296825230-3f106b3ac450?q=80&w=1200&auto=format&fit=crop 1200w" sizes="(max-width: 760px) 94vw, 420px" alt="Piquenique boho montado na praia para grupo" onerror="phErr(this)">
+        <img class="col-img" loading="lazy" src="https://images.unsplash.com/photo-1707296825230-3f106b3ac450?q=80&w=800&h=500&auto=format&fit=crop" srcset="https://images.unsplash.com/photo-1707296825230-3f106b3ac450?q=80&w=480&h=300&auto=format&fit=crop 480w, https://images.unsplash.com/photo-1707296825230-3f106b3ac450?q=80&w=800&h=500&auto=format&fit=crop 800w, https://images.unsplash.com/photo-1707296825230-3f106b3ac450?q=80&w=1200&h=750&auto=format&fit=crop 1200w" sizes="(max-width: 760px) 94vw, 520px" alt="Piquenique boho montado na praia para grupo" onerror="phErr(this)">
         <div class="col-body">
           <span class="col-kicker">Coleção</span>
           <h3>Entre Amigas</h3>
@@ -612,7 +626,7 @@ window.phErr=function(el){el.onerror=null;el.src=window.PH};
 
       <!-- PEDIDO -->
       <article class="col-card rv" style="--i:3" data-col="pedido">
-        <img class="col-img" loading="lazy" src="https://images.unsplash.com/photo-1741318103098-767700b2b0aa?q=80&w=800&auto=format&fit=crop" srcset="https://images.unsplash.com/photo-1741318103098-767700b2b0aa?q=80&w=480&auto=format&fit=crop 480w, https://images.unsplash.com/photo-1741318103098-767700b2b0aa?q=80&w=800&auto=format&fit=crop 800w, https://images.unsplash.com/photo-1741318103098-767700b2b0aa?q=80&w=1200&auto=format&fit=crop 1200w" sizes="(max-width: 760px) 94vw, 420px" alt="Cenário de pedido de casamento na praia com flores" onerror="phErr(this)">
+        <img class="col-img" loading="lazy" src="https://images.unsplash.com/photo-1741318103098-767700b2b0aa?q=80&w=800&h=500&auto=format&fit=crop" srcset="https://images.unsplash.com/photo-1741318103098-767700b2b0aa?q=80&w=480&h=300&auto=format&fit=crop 480w, https://images.unsplash.com/photo-1741318103098-767700b2b0aa?q=80&w=800&h=500&auto=format&fit=crop 800w, https://images.unsplash.com/photo-1741318103098-767700b2b0aa?q=80&w=1200&h=750&auto=format&fit=crop 1200w" sizes="(max-width: 760px) 94vw, 520px" alt="Cenário de pedido de casamento na praia com flores" onerror="phErr(this)">
         <div class="col-body">
           <span class="col-kicker">Coleção</span>
           <h3>Pedido</h3>
@@ -677,9 +691,9 @@ window.phErr=function(el){el.onerror=null;el.src=window.PH};
     <p class="eyebrow rv">Momentos</p>
     <h2 class="rv" style="--i:1">Nós cuidamos dos detalhes, você vive o momento.</h2>
     <div class="gal rv" style="--i:2">
-      <img loading="lazy" src="https://images.unsplash.com/photo-1707296825230-3f106b3ac450?q=80&w=800&auto=format&fit=crop" alt="Cenário de piquenique completo na areia" onerror="phErr(this)">
-      <img loading="lazy" src="https://images.unsplash.com/photo-1695606452817-e28a67339e57?q=80&w=800&auto=format&fit=crop" alt="Tábua de frios artesanal" onerror="phErr(this)">
-      <img loading="lazy" src="https://images.unsplash.com/photo-1744221127502-727af70bc6e7?q=80&w=800&auto=format&fit=crop" alt="Casal ao pôr do sol" onerror="phErr(this)">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1707296825230-3f106b3ac450?q=80&w=800&h=1067&auto=format&fit=crop" srcset="https://images.unsplash.com/photo-1707296825230-3f106b3ac450?q=80&w=400&h=533&auto=format&fit=crop 400w, https://images.unsplash.com/photo-1707296825230-3f106b3ac450?q=80&w=800&h=1067&auto=format&fit=crop 800w" sizes="(max-width: 760px) 30vw, 340px" alt="Cenário de piquenique completo na areia" onerror="phErr(this)">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1695606452817-e28a67339e57?q=80&w=800&h=1067&auto=format&fit=crop" srcset="https://images.unsplash.com/photo-1695606452817-e28a67339e57?q=80&w=400&h=533&auto=format&fit=crop 400w, https://images.unsplash.com/photo-1695606452817-e28a67339e57?q=80&w=800&h=1067&auto=format&fit=crop 800w" sizes="(max-width: 760px) 30vw, 340px" alt="Tábua de frios artesanal" onerror="phErr(this)">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1744221127502-727af70bc6e7?q=80&w=800&h=1067&auto=format&fit=crop" srcset="https://images.unsplash.com/photo-1744221127502-727af70bc6e7?q=80&w=400&h=533&auto=format&fit=crop 400w, https://images.unsplash.com/photo-1744221127502-727af70bc6e7?q=80&w=800&h=1067&auto=format&fit=crop 800w" sizes="(max-width: 760px) 30vw, 340px" alt="Casal ao pôr do sol" onerror="phErr(this)">
     </div>
     <p class="hero-note rv" style="--i:3;margin-top:var(--s3)">* Imagens de referência da primeira temporada — em breve, os momentos dos nossos clientes. 💛</p>
   </div>
