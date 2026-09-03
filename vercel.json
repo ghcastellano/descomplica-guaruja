@@ -21,6 +21,21 @@
       "source": "/insta",
       "destination": "/?utm_source=instagram&utm_medium=direct#quiz",
       "permanent": false
+    },
+    {
+      "source": "/apresentacao-executiva",
+      "destination": "/apresentacao",
+      "permanent": false
+    },
+    {
+      "source": "/parceria",
+      "destination": "/apresentacao",
+      "permanent": false
+    },
+    {
+      "source": "/pousadas",
+      "destination": "/apresentacao",
+      "permanent": false
     }
   ],
   "headers": [

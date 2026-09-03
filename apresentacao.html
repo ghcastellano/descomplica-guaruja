@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Descomplica Guarujá — Proposta de parceria para pousadas e hotéis</title>
+<meta name="description" content="Apresentação executiva do Descomplica Guarujá para pousadas e hotéis à beira-mar: experiências intimistas dentro do seu espaço, sem custo fixo e com ganhos para os dois lados.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#143438">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Descomplica Guarujá">
+<meta property="og:url" content="https://descomplicaguaruja.com.br/apresentacao">
+<meta property="og:title" content="Descomplica Guarujá — Proposta de parceria para pousadas">
+<meta property="og:description" content="Experiências intimistas dentro da sua pousada. Sem custo fixo, sem exclusividade, ganhos para os dois lados.">
+<meta property="og:image" content="https://descomplicaguaruja.com.br/og-image.png">
+<meta property="og:locale" content="pt_BR">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Jost:wght@400;500;600&family=Allura&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F4EDE4; --sand:#E7D8C5; --sand-soft:#EFE5D6;
+  --terracotta:#C8765A; --terracotta-ink:#A35236; --gold:#C9A24B; --gold-soft:#E4CD96;
+  --petrol:#1F4E54; --petrol-deep:#143438;
+  --ink:#2B2B2B; --muted:#6B655E; --white:#FFFFFF; --whatsapp:#25D366;
+  --f-serif:'Fraunces', Georgia, serif;
+  --f-sans:'Jost', -apple-system, 'Segoe UI', sans-serif;
+  --f-script:'Allura', cursive;
+  --r-sm:8px; --r-md:16px; --r-lg:24px; --r-btn:12px;
+  --sh-md:0 4px 16px rgba(0,0,0,.10);
+  --sh-lg:0 8px 32px rgba(20,52,56,.12);
+  --ease:cubic-bezier(.4,0,.2,1); --ease-in:cubic-bezier(.16,1,.3,1);
+}
+/* Escala tipográfica proporcional à tela: 13px no celular → 22px em TV/projetor */
+html{font-size:clamp(13px, calc(.55vw + .55vh + 6px), 22px);-webkit-text-size-adjust:100%}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--cream);color:var(--ink);font-family:var(--f-sans);line-height:1.55;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+h1,h2,h3{font-family:var(--f-serif);color:var(--petrol-deep);line-height:1.12;letter-spacing:-.01em;margin:0;text-wrap:balance;font-weight:600}
+h1{font-size:2.9rem}
+h2{font-size:2.3rem}
+h3{font-size:1.25rem}
+p{margin:0}
+ul{margin:0;padding:0;list-style:none}
+.script{font-family:var(--f-script);font-weight:400;color:var(--terracotta-ink);letter-spacing:0}
+
+/* ===== Deck ===== */
+.deck{position:relative;min-height:100dvh}
+.slide{position:relative;min-height:100dvh;padding:calc(env(safe-area-inset-top) + 2.2rem) 0 calc(env(safe-area-inset-bottom) + 3.6rem);background:var(--cream)}
+.wrap{max-width:78rem;margin:0 auto;padding:0 3.2rem;min-height:calc(100dvh - 5.8rem);display:flex;flex-direction:column;justify-content:center;gap:1.4rem}
+.slide.dark{background:var(--petrol-deep);color:#fff}
+.slide.dark h1,.slide.dark h2,.slide.dark h3{color:var(--cream)}
+.slide.dark .script{color:var(--gold)}
+.slide.dark .muted{color:rgba(244,237,228,.72)}
+.muted{color:var(--muted)}
+
+/* com JS: um slide por vez, transição suave */
+html.js .deck{height:100dvh;overflow:hidden}
+html.js .slide{position:absolute;inset:0;min-height:0;height:100dvh;overflow:auto;overscroll-behavior:contain;
+  opacity:0;visibility:hidden;transform:translateX(3%);transition:opacity .55s var(--ease),transform .65s var(--ease-in),visibility 0s .55s}
+html.js .slide.is-active{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+html.js .slide.is-prev{transform:translateX(-3%)}
+/* reveals leves dentro do slide ativo */
+html.js .rv{opacity:0;transform:translateY(12px);transition:opacity .5s var(--ease),transform .6s var(--ease-in)}
+html.js .slide.is-active .rv{opacity:1;transform:none}
+html.js .slide.is-active .rv:nth-child(2){transition-delay:.08s}
+html.js .slide.is-active .rv:nth-child(3){transition-delay:.16s}
+html.js .slide.is-active .rv:nth-child(4){transition-delay:.24s}
+html.js .slide.is-active .rv:nth-child(5){transition-delay:.32s}
+html.js .slide.is-active .rv:nth-child(6){transition-delay:.40s}
+html:not(.js) .slide{border-bottom:1px solid var(--sand)}
+@media (prefers-reduced-motion:reduce){html.js .slide,html.js .rv{transition-duration:.01s}}
+
+/* ===== Elementos ===== */
+.kicker{font-size:.78rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--terracotta-ink)}
+.slide.dark .kicker{color:var(--gold)}
+.lead{font-size:1.2rem;max-width:44rem;color:var(--muted)}
+.slide.dark .lead{color:rgba(244,237,228,.82)}
+.brand{display:flex;align-items:center;gap:.8rem;text-decoration:none}
+.brand img{width:3rem;height:3rem;border-radius:50%;background:var(--cream)}
+.brand-t{display:flex;flex-direction:column;line-height:1}
+.brand-t b{font-weight:600;font-size:.78rem;letter-spacing:.18em;color:var(--petrol-deep)}
+.brand-t .script{font-size:1.5rem;margin-top:-.1rem}
+.slide.dark .brand-t b{color:var(--cream)}
+
+.grid2{display:grid;grid-template-columns:1.05fr .95fr;gap:2.4rem;align-items:center}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem}
+.card{background:#fff;border:1px solid var(--sand);border-radius:var(--r-md);padding:1.3rem 1.4rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card h3{margin-bottom:.45rem}
+.card p{font-size:.95rem;color:var(--muted)}
+.slide.dark .card{background:rgba(244,237,228,.06);border-color:rgba(244,237,228,.16);box-shadow:none}
+.slide.dark .card p{color:rgba(244,237,228,.78)}
+.card .n{font-family:var(--f-serif);font-style:italic;font-size:1.6rem;color:var(--gold);line-height:1;margin-bottom:.4rem}
+
+.stat{padding:1.3rem 1.4rem;border-left:3px solid var(--gold);background:var(--sand-soft);border-radius:0 var(--r-md) var(--r-md) 0}
+.stat b{display:block;font-family:var(--f-serif);font-weight:600;font-size:2.4rem;line-height:1;color:var(--petrol-deep)}
+.stat span{display:block;margin-top:.5rem;font-size:.92rem;color:var(--muted)}
+.slide.dark .stat{background:rgba(244,237,228,.06)}
+.slide.dark .stat b{color:var(--cream)}
+.slide.dark .stat span{color:rgba(244,237,228,.75)}
+
+.chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.chip{padding:.4rem .9rem;border-radius:999px;border:1px solid var(--sand);background:#fff;font-size:.86rem;font-weight:500;color:var(--petrol-deep)}
+.chip.gold{background:var(--gold-soft);border-color:var(--gold-soft)}
+.slide.dark .chip{background:rgba(244,237,228,.08);border-color:rgba(244,237,228,.2);color:var(--cream)}
+
+.list li{position:relative;padding-left:1.5rem;margin:.5rem 0;font-size:1rem}
+.list li::before{content:"";position:absolute;left:0;top:.62em;width:.55rem;height:.55rem;border-radius:50%;background:var(--terracotta)}
+.slide.dark .list li::before{background:var(--gold)}
+.list.check li::before{width:.6rem;height:.35rem;border-radius:0;border-left:2px solid var(--petrol);border-bottom:2px solid var(--petrol);background:none;transform:rotate(-45deg);top:.5em}
+.slide.dark .list.check li::before{border-color:var(--gold)}
+
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(5,1fr);gap:1rem}
+.steps li{counter-increment:s;background:#fff;border:1px solid var(--sand);border-radius:var(--r-md);padding:1.2rem 1.1rem;font-size:.95rem}
+.steps li::before{content:counter(s);display:block;font-family:var(--f-serif);font-style:italic;font-size:1.7rem;color:var(--gold);line-height:1;margin-bottom:.5rem}
+.steps li b{display:block;color:var(--petrol-deep);font-weight:600;margin-bottom:.25rem}
+.steps li span{color:var(--muted)}
+
+.photo{position:relative;border-radius:var(--r-lg);overflow:hidden;aspect-ratio:4/5;background:linear-gradient(160deg,var(--sand) 0%,var(--sand-soft) 55%,var(--gold-soft) 100%);box-shadow:var(--sh-lg)}
+.photo img{width:100%;height:100%;object-fit:cover}
+.photo.noimg img{display:none}
+.photo.wide{aspect-ratio:16/10}
+.photo .tag{position:absolute;left:1rem;bottom:1rem;background:rgba(20,52,56,.82);backdrop-filter:blur(6px);color:#fff;font-size:.78rem;font-weight:500;padding:.45rem .9rem;border-radius:999px;letter-spacing:.04em}
+.seal{position:absolute;top:-1rem;right:1rem;width:4.2rem;height:4.2rem;border-radius:50%;background:var(--cream);box-shadow:var(--sh-md);display:grid;place-items:center;border:1.5px solid var(--gold-soft)}
+.seal img{width:2.9rem;height:2.9rem}
+
+.col{background:#fff;border:1px solid var(--sand);border-radius:var(--r-md);overflow:hidden}
+.col .photo{border-radius:0;aspect-ratio:16/10;box-shadow:none}
+.col .cb{padding:1rem 1.1rem}
+.col h3{font-size:1.15rem}
+.col .cap{font-size:.82rem;color:var(--muted);margin:.15rem 0 .5rem}
+.col .price{font-family:var(--f-serif);font-weight:600;color:var(--terracotta-ink);font-size:1rem}
+
+.plan{position:relative;display:flex;flex-direction:column;gap:.7rem}
+.plan .badge{position:absolute;top:-.8rem;right:1rem;background:var(--gold);color:var(--petrol-deep);font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.3rem .7rem;border-radius:999px}
+.plan .letter{font-family:var(--f-serif);font-style:italic;font-size:2rem;color:var(--gold);line-height:1}
+.plan h3{font-size:1.2rem}
+.plan .who{font-size:.86rem;color:var(--terracotta-ink);font-weight:500}
+.plan .list li{font-size:.92rem;margin:.3rem 0}
+.plan.rec{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-soft)}
+
+.faq{display:grid;grid-template-columns:1fr 1fr;gap:1rem 2rem}
+.faq div{padding:1rem 0;border-top:1px solid var(--sand)}
+.faq b{display:block;color:var(--petrol-deep);font-family:var(--f-serif);font-size:1.1rem;font-weight:600;margin-bottom:.3rem}
+.faq p{font-size:.95rem;color:var(--muted)}
+
+.people{display:grid;grid-template-columns:1fr 1fr;gap:2.4rem;align-items:start}
+.person{display:grid;grid-template-rows:auto auto 1fr;gap:.9rem}
+.person .av{width:4.4rem;height:4.4rem;border-radius:50%;background:var(--petrol);color:var(--cream);display:grid;place-items:center;font-family:var(--f-serif);font-size:1.8rem;font-weight:600}
+.person .role{font-size:.9rem;color:var(--terracotta-ink);font-weight:500}
+.person .list li{font-size:.94rem;margin:.4rem 0}
+
+.fill{display:inline-block;min-width:11rem;border-bottom:1.5px dashed var(--gold);padding:0 .3rem;color:var(--gold);font-family:var(--f-serif);font-style:italic;outline:none}
+.fill:focus{border-bottom-style:solid;color:#fff}
+.next li{display:flex;gap:1rem;align-items:baseline;font-size:1.15rem;margin:.9rem 0}
+.next li .n{font-family:var(--f-serif);font-style:italic;color:var(--gold);font-size:1.7rem;line-height:1}
+.contact{display:flex;flex-wrap:wrap;gap:1.6rem;align-items:center}
+.contact a{color:#fff;text-decoration:none;font-weight:500}
+.contact a:hover{text-decoration:underline}
+.wa{display:inline-flex;align-items:center;gap:.6rem;background:var(--whatsapp);color:#0b3d1c !important;padding:.75rem 1.3rem;border-radius:var(--r-btn);font-weight:600;min-height:48px}
+.wa svg{width:1.25rem;height:1.25rem;fill:currentColor}
+.qr{width:8.5rem;height:8.5rem;background:#fff;padding:.55rem;border-radius:var(--r-md);flex:none}
+.qr svg{width:100%;height:100%;display:block}
+
+.foot{position:absolute;left:4.6rem;bottom:calc(env(safe-area-inset-bottom) + 1.55rem);max-width:30%;text-align:left;font-size:.72rem;letter-spacing:.06em;line-height:1.3;color:var(--muted);pointer-events:none}
+.slide.dark .foot{color:rgba(244,237,228,.55)}
+.hint{font-size:.85rem;color:rgba(244,237,228,.6)}
+
+/* ===== Controles ===== */
+.ctl{position:fixed;left:0;right:0;bottom:0;z-index:20;display:none;align-items:center;justify-content:space-between;padding:.6rem 1rem calc(env(safe-area-inset-bottom) + .6rem);pointer-events:none}
+html.js .ctl{display:flex}
+.ctl button{pointer-events:auto;min-width:48px;min-height:48px;border:1px solid var(--sand);background:rgba(255,255,255,.85);backdrop-filter:blur(8px);border-radius:999px;color:var(--petrol-deep);font-family:inherit;font-size:1.1rem;cursor:pointer;display:grid;place-items:center;transition:background .2s var(--ease),transform .2s var(--ease)}
+.ctl button:hover{background:#fff;transform:translateY(-1px)}
+.ctl button:disabled{opacity:.35;cursor:default;transform:none}
+.ctl .mid{display:flex;align-items:center;gap:.8rem;pointer-events:auto}
+.ctl .cnt{font-size:.8rem;letter-spacing:.12em;color:var(--muted);font-variant-numeric:tabular-nums}
+.ctl .small{min-width:40px;min-height:40px;font-size:.72rem;letter-spacing:.1em;font-weight:600;padding:0 .8rem}
+.slide.dark ~ .ctl .cnt{color:rgba(244,237,228,.7)}
+.bar{position:fixed;left:0;top:0;height:3px;width:0;background:var(--gold);z-index:21;transition:width .5s var(--ease)}
+html:not(.js) .bar{display:none}
+
+/* notas do apresentador */
+.notes{position:fixed;right:1rem;bottom:4.6rem;z-index:25;width:min(26rem,calc(100vw - 2rem));max-height:55vh;overflow:auto;background:#fff;color:var(--ink);border:1px solid var(--sand);border-radius:var(--r-md);box-shadow:var(--sh-lg);padding:1rem 1.2rem;font-size:.9rem;line-height:1.5;display:none}
+.notes.on{display:block}
+.notes b{color:var(--terracotta-ink);display:block;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;margin-bottom:.4rem}
+.notes p{margin:.35rem 0}
+
+/* ===== Responsivo ===== */
+@media (max-width:980px){
+  .wrap{padding:0 1.8rem}
+  .grid2{grid-template-columns:1fr;gap:1.6rem}
+  .grid2 .photo{order:-1;aspect-ratio:16/9;max-height:34dvh}
+  .grid4{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .steps li:last-child{grid-column:1/-1}
+}
+@media (max-width:640px){
+  html{font-size:13.5px}
+  h1{font-size:2.2rem} h2{font-size:1.8rem}
+  .wrap{padding:0 1.2rem;justify-content:flex-start;padding-top:1rem;gap:1.1rem}
+  .grid3,.grid4,.faq,.steps{grid-template-columns:1fr}
+  .steps li:last-child{grid-column:auto}
+  .grid2 .photo{max-height:28dvh}
+  .seal{display:none}
+  .contact{gap:1rem}
+  .foot{display:none}
+  .people{grid-template-columns:1fr;gap:1.6rem}
+  .slide{padding-bottom:calc(env(safe-area-inset-bottom) + 5rem)}
+}
+@media (min-width:1600px){.wrap{max-width:86rem}}
+</style>
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+<div class="bar" id="bar"></div>
+
+<div class="deck" id="deck">
+
+<!-- 1 · Capa -->
+<section class="slide dark" data-notes="<b>Abertura (2 min)</b><p>Antes de projetar qualquer coisa, pergunte: <i>“Qual foi o pedido mais especial que um hóspede já fez pra vocês?”</i> Deixe falarem. Quem conta uma história de pedido de casamento ou aniversário já está vendendo por você.</p><p>Objetivo da reunião, dito em voz alta: <i>“Em 20 minutos quero que vocês saibam exatamente o que ganham, o que garantimos e decidir se vale testar por 60 dias.”</i> Isso ancora a decisão como pequena e reversível.</p>">
+  <div class="wrap">
+    <a class="brand rv" href="/" aria-label="Descomplica Guarujá">
+      <img src="/logo.png" alt="" width="46" height="46">
+      <span class="brand-t"><b>DESCOMPLICA</b><span class="script">Guarujá</span></span>
+    </a>
+    <p class="kicker rv">Proposta de parceria · pousadas e hotéis à beira-mar</p>
+    <h1 class="rv" style="font-size:3.6rem;max-width:22ch">Experiências intimistas dentro da sua pousada.</h1>
+    <p class="lead rv">Piqueniques de luxo, pedidos de casamento e celebrações para até 4 pessoas, montados pela nossa equipe no seu espaço. Sem custo fixo. Sem exclusividade. Ganhos para os dois lados.</p>
+    <p class="rv" style="font-family:var(--f-serif);font-style:italic;font-size:1.25rem;color:var(--gold)">Você vive o momento. A gente cuida dos detalhes.</p>
+    <p class="hint rv">Sophia Savoia · Gustavo Castellano — setembro de 2026 &nbsp;·&nbsp; use → ← ou deslize para navegar</p>
+  </div>
+</section>
+
+<!-- 2 · Gancho -->
+<section class="slide" data-notes="<b>Gancho · técnica SPIN</b><p>Faça 2 perguntas de situação e 1 de problema antes de mostrar os números: <i>“Quantos casais vocês recebem por mês?” · “Já pediram ajuda para montar surpresa no quarto ou na área externa?” · “O que vocês fazem hoje quando isso acontece?”</i></p><p>O problema que você quer que eles verbalizem: <b>a demanda existe e a pousada não captura nada dela</b>. Só depois mostre o slide.</p>">
+  <div class="wrap">
+    <p class="kicker rv">Por que estamos aqui</p>
+    <h1 class="rv" style="max-width:24ch">Seus hóspedes já vêm ao Guarujá para viver momentos. A pergunta é <em>onde</em> esses momentos acontecem.</h1>
+    <div class="grid3 rv">
+      <div class="stat"><b>1,5 mi</b><span>de turistas esperados no Guarujá em um verão. Uma parte deles vem para comemorar algo.</span></div>
+      <div class="stat"><b>até 4</b><span>pessoas por experiência. Formato intimista, silencioso, sem alvoroço para outros hóspedes.</span></div>
+      <div class="stat"><b>1h30–2h30</b><span>de duração. Cabe em qualquer rotina de pousada, sem bloquear área por um dia inteiro.</span></div>
+    </div>
+    <p class="lead rv">Pedidos de casamento, aniversários, luas de mel, despedidas de solteira. Hoje quem quer isso monta sozinho, contrata de fora ou desiste. Nós transformamos o espaço da pousada no cenário desse momento, e a pousada em parte da história que o hóspede vai contar.</p>
+  </div>
+  <p class="foot">Descomplica Guarujá · Proposta de parceria</p>
+</section>
+
+<!-- 3 · O que é -->
+<section class="slide" data-notes="<b>Mostrar, não contar</b><p>Aqui abra o site no celular ou passe as fotos. Prova visual vale mais que qualquer descrição.</p><p>Frase-chave: <i>“Tudo chega pronto. O hóspede só chega e vive.”</i> Repita essa frase pelo menos 3 vezes na reunião: repetição cria memória e a pousada vai repetir isso para o hóspede depois.</p>">
+  <div class="wrap">
+    <div class="grid2">
+      <div>
+        <p class="kicker rv">O Descomplica Guarujá</p>
+        <h2 class="rv">Tudo chega pronto. O cliente só chega e vive.</h2>
+        <p class="lead rv" style="margin-top:.8rem">Criamos experiências personalizadas, sob agendamento: piqueniques românticos, aniversários, pedidos de casamento, comemorações e encontros entre amigas.</p>
+        <ul class="list rv" style="margin-top:.8rem">
+          <li>Decoração, mesa baixa, almofadas, flores, tábuas, fotos instantâneas: tudo levado e montado pela nossa equipe.</li>
+          <li>Reserva pelo site ou WhatsApp, com 50% via Pix. Comida sempre de fornecedores licenciados.</li>
+          <li>Montagem e desmontagem por nossa conta. O espaço volta como estava.</li>
+        </ul>
+        <div class="chips rv" style="margin-top:1rem">
+          <span class="chip">A Dois</span><span class="chip">Celebrar</span><span class="chip">Entre Amigas</span><span class="chip">Pedido</span><span class="chip gold">Pôr do sol: horário mais pedido</span>
+        </div>
+      </div>
+      <figure class="photo rv" style="margin:0">
+        <img src="https://images.unsplash.com/photo-1707296819777-f96b799efb41?q=80&w=1000&auto=format&fit=crop" alt="Piquenique de luxo montado ao pôr do sol" loading="lazy" onerror="this.parentNode.classList.add('noimg')">
+        <figcaption class="tag">Guarujá · Baixada Santista</figcaption>
+        <span class="seal" aria-hidden="true"><img src="/logo.png" alt=""></span>
+      </figure>
+    </div>
+  </div>
+  <p class="foot">descomplicaguaruja.com.br · @descomplicaguaruja</p>
+</section>
+
+<!-- 4 · Como funciona -->
+<section class="slide" data-notes="<b>Neutralizar o medo operacional</b><p>O maior freio de uma pousada não é dinheiro, é <b>“vai dar trabalho / vai incomodar hóspede”</b>. Este slide existe para matar esse medo antes de ele ser dito.</p><p>Pergunte ao final: <i>“Tem algum ponto da rotina de vocês que isso atrapalharia?”</i> Se disserem não, você acabou de conseguir o primeiro “sim”.</p>">
+  <div class="wrap">
+    <p class="kicker rv">Como funciona na pousada</p>
+    <h2 class="rv">Cinco passos. Nada muda na sua rotina.</h2>
+    <ol class="steps rv">
+      <li><b>Agendamento</b><span>Data, horário e local combinados com a pousada com antecedência.</span></li>
+      <li><b>Chegada discreta</b><span>Nossa equipe monta em silêncio, sem circular pelas áreas dos hóspedes.</span></li>
+      <li><b>A experiência</b><span>Até 2h30, até 4 pessoas, sem som amplificado.</span></li>
+      <li><b>Desmontagem</b><span>Retirada de todos os materiais e resíduos.</span></li>
+      <li><b>Espaço entregue</b><span>Limpo e organizado, como foi recebido.</span></li>
+    </ol>
+    <div class="chips rv">
+      <span class="chip">Sem som amplificado</span><span class="chip">Sem venda de alimentos no local</span><span class="chip">Horários combinados com vocês</span><span class="chip">Funcionários e hóspedes sem interrupção</span>
+    </div>
+  </div>
+  <p class="foot">Descomplica Guarujá · Proposta de parceria</p>
+</section>
+
+<!-- 5 · O que a pousada ganha -->
+<section class="slide dark" data-notes="<b>Benefícios na língua deles</b><p>Fale de <b>diária, ocupação, avaliação no Booking/Google e conteúdo</b>, não de “piquenique”. Ao terminar, pergunte: <i>“Desses seis, qual importa mais para vocês hoje?”</i> A resposta diz qual modelo de parceria oferecer primeiro no próximo slide.</p><p>Prova social: cite a audiência da Sophia com número (mais de 226 mil visualizações por mês) e mostre o Instagram dela na hora.</p>">
+  <div class="wrap">
+    <p class="kicker rv">O que a pousada ganha</p>
+    <h2 class="rv">Seis ganhos concretos, sem investir um real.</h2>
+    <div class="grid3 rv">
+      <div class="card"><div class="n">01</div><h3>Receita nova, custo zero</h3><p>Comissão sobre cada experiência vendida aos seus hóspedes, ou taxa por evento. Nenhum custo fixo, nenhum estoque, nenhuma equipe extra.</p></div>
+      <div class="card"><div class="n">02</div><h3>Diária que vale mais</h3><p>“Pedido de casamento na pousada” e “noite a dois com piquenique” viram motivo de escolha e de upgrade. Ocasiões especiais escolhem o lugar pela experiência.</p></div>
+      <div class="card"><div class="n">03</div><h3>Ocupação fora do pico</h3><p>A maior parte dos eventos acontece de domingo a quinta e fora da alta temporada. Um motivo real para o hóspede vir na baixa.</p></div>
+      <div class="card"><div class="n">04</div><h3>Conteúdo profissional do espaço</h3><p>Fotos e vídeos de cada experiência, liberados para a pousada usar no site, no Booking, no Airbnb e nas redes.</p></div>
+      <div class="card"><div class="n">05</div><h3>Visibilidade na audiência da Sophia</h3><p>Mais de 226 mil visualizações por mês, público de 25 a 34 anos com forte presença na Baixada Santista. A pousada é marcada em cada experiência.</p></div>
+      <div class="card"><div class="n">06</div><h3>Hóspede que vira promotor</h3><p>Quem vive um pedido de casamento na sua pousada volta no aniversário, avalia com 5 estrelas e indica para os amigos.</p></div>
+    </div>
+  </div>
+  <p class="foot">Descomplica Guarujá · Proposta de parceria</p>
+</section>
+
+<!-- 6 · Modelos de parceria -->
+<section class="slide" data-notes="<b>Arquitetura de escolha</b><p>Apresente os três e recomende o B. Ter três opções muda a pergunta de <i>“vamos fazer?”</i> para <i>“qual formato?”</i> (fechamento por alternativa).</p><p>A opção C (taxa em dinheiro) existe para dar ao dono a sensação de controle e para fazer o B parecer o caminho mais simples. Se pedirem taxa, aceite e diga que ela vira “taxa do local” repassada ao cliente: não sai da nossa margem.</p><p><b>Valores sugeridos (ajuste antes da reunião):</b> comissão 10% · taxa por evento entre R$ 80 e R$ 150.</p>">
+  <div class="wrap">
+    <p class="kicker rv">Modelos de parceria</p>
+    <h2 class="rv">Três formatos. Todos ganha-ganha. Vocês escolhem.</h2>
+    <div class="grid3 rv" style="margin-top:.6rem">
+      <div class="card plan">
+        <span class="letter">A</span>
+        <h3>Anfitrião</h3>
+        <p class="who">Para começar hoje, sem burocracia</p>
+        <ul class="list check">
+          <li>A pousada cede o espaço, sempre com agendamento prévio.</li>
+          <li>Recebe fotos e vídeos profissionais de cada evento.</li>
+          <li>É marcada em toda divulgação e entra na página “Onde montamos” do nosso site, com link.</li>
+          <li>Custo zero para os dois lados.</li>
+        </ul>
+      </div>
+      <div class="card plan rec">
+        <span class="badge">Recomendado</span>
+        <span class="letter">B</span>
+        <h3>Parceiro comercial</h3>
+        <p class="who">O que mais rende para a pousada</p>
+        <ul class="list check">
+          <li>Tudo do formato A, mais:</li>
+          <li>A pousada oferece as experiências aos hóspedes (cardápio no quarto, check-in, WhatsApp da reserva).</li>
+          <li>Recebe <b>10% de comissão</b> em cada reserva fechada por indicação, paga junto com o Pix do cliente.</li>
+          <li>Opcional: pacote “Noite a Dois” = diária + experiência, vendido pela pousada com a comissão embutida.</li>
+        </ul>
+      </div>
+      <div class="card plan">
+        <span class="letter">C</span>
+        <h3>Uso do espaço</h3>
+        <p class="who">Para pousadas com política de área</p>
+        <ul class="list check">
+          <li>Valor fixo por evento, combinado com vocês.</li>
+          <li>Repassado ao cliente como “taxa do local”, de forma transparente.</li>
+          <li>Sem mínimo de volume, sem mensalidade.</li>
+          <li>Pode combinar com o formato B.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="chips rv"><span class="chip">Sem exclusividade</span><span class="chip">Sem custo fixo</span><span class="chip">Sem obrigação de volume</span><span class="chip gold">Revisão conjunta a cada 90 dias</span></div>
+  </div>
+  <p class="foot">Descomplica Guarujá · Proposta de parceria</p>
+</section>
+
+<!-- 7 · Na prática -->
+<section class="slide" data-notes="<b>Ancoragem com números deles</b><p>Peça a diária média da pousada e refaça a conta na hora, com o número deles. Número próprio convence mais que qualquer estimativa nossa.</p><p>Deixe claro que é cenário ilustrativo. Honestidade aqui gera confiança para o fechamento.</p>">
+  <div class="wrap">
+    <p class="kicker rv">Na prática</p>
+    <h2 class="rv">Um cenário ilustrativo, com 4 experiências por mês.</h2>
+    <div class="grid3 rv">
+      <div class="stat"><b>≈ R$ 280</b><span>por mês em comissão (formato B), considerando 4 experiências de R$ 699, a mais escolhida da coleção A Dois.</span></div>
+      <div class="stat"><b>4 sessões</b><span>de conteúdo profissional do espaço por mês. Uma sessão de 30 minutos custa a partir de R$ 250 no mercado.</span></div>
+      <div class="stat"><b>+ diárias</b><span>Cada experiência vendida a quem ainda não é hóspede traz pelo menos uma diária nova. Coloque a diária média de vocês aqui.</span></div>
+    </div>
+    <p class="lead rv">Somando comissão, conteúdo e diárias, a parceria entrega mais de R$ 1.500 em valor por mês para a pousada, sem investimento e sem mudar a operação. Os números são ilustrativos: ajustamos juntos com a realidade de vocês.</p>
+  </div>
+  <p class="foot">Descomplica Guarujá · Proposta de parceria</p>
+</section>
+
+<!-- 8 · Regras -->
+<section class="slide dark" data-notes="<b>Clareza reduz objeção</b><p>Ler as regras em voz alta transmite profissionalismo. Pergunte o que precisaria ser diferente para a política deles. Cada ajuste que você aceita aqui é uma concessão barata que gera reciprocidade.</p>">
+  <div class="wrap">
+    <p class="kicker rv">Regras claras desde o primeiro dia</p>
+    <h2 class="rv">O que garantimos. O que pedimos.</h2>
+    <div class="grid2 rv" style="align-items:start">
+      <div class="card">
+        <h3>Garantimos</h3>
+        <ul class="list check">
+          <li>Agendamento prévio de todo evento, com data, horário e local aprovados por vocês.</li>
+          <li>Operação discreta e silenciosa. Sem som amplificado.</li>
+          <li>Responsabilidade total pela montagem, pelos materiais e pela limpeza.</li>
+          <li>Alimentos apenas de fornecedores licenciados.</li>
+          <li>Chuva: remarcação gratuita, sem custo para ninguém.</li>
+          <li>Empresa formalizada, com CNPJ, e cadastro no Cadastur.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Pedimos</h3>
+        <ul class="list check">
+          <li>Um espaço combinado: deck, jardim, varanda, área da piscina ou frente-mar.</li>
+          <li>Uma pessoa de contato para a agenda.</li>
+          <li>Acesso cerca de 1 hora antes e 30 minutos depois da experiência.</li>
+          <li>Janelas de horário preferidas. O pôr do sol é o mais pedido.</li>
+          <li>Autorização para fotografar o espaço durante os eventos.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <p class="foot">Descomplica Guarujá · Proposta de parceria</p>
+</section>
+
+<!-- 9 · Objeções -->
+<section class="slide" data-notes="<b>Objeções · método “sente, sentiu, descobriu”</b><p>Quando surgir uma objeção: <i>“Entendo como você se sente. Outras pousadas sentiram o mesmo. O que descobriram foi que…”</i> e responda com o item do slide.</p><p>Objeção de preço ou comissão: nunca discuta o número, volte ao ganho (conteúdo + diária + avaliação). Objeção de tempo: <i>“Por isso propomos 60 dias, com um evento demonstrativo primeiro.”</i></p>">
+  <div class="wrap">
+    <p class="kicker rv">Perguntas que sempre aparecem</p>
+    <h2 class="rv">Respondemos antes de vocês perguntarem.</h2>
+    <div class="faq rv">
+      <div><b>E se atrapalhar os outros hóspedes?</b><p>Até 4 pessoas, sem som, em horário e local combinados. A maioria dos hóspedes nem percebe. Quem percebe, pergunta como reserva.</p></div>
+      <div><b>E se chover?</b><p>Remarcamos sem custo. Se a pousada tiver área coberta, oferecemos como alternativa e o hóspede decide.</p></div>
+      <div><b>Quem responde por danos?</b><p>Nós. Materiais, montagem e limpeza são de nossa responsabilidade, com registro fotográfico antes e depois.</p></div>
+      <div><b>Precisa de exclusividade ou contrato longo?</b><p>Não. Acordo simples por escrito, sem exclusividade, com revisão a cada 90 dias. Qualquer lado pode encerrar avisando com 30 dias.</p></div>
+      <div><b>Tem algum custo para a pousada?</b><p>Nenhum. Nos formatos A e B a pousada só recebe. No C, ela define o valor do espaço.</p></div>
+      <div><b>E a burocracia?</b><p>Uma página de acordo, um contato para agenda e um WhatsApp para confirmar cada data. Só isso.</p></div>
+    </div>
+  </div>
+  <p class="foot">Descomplica Guarujá · Proposta de parceria</p>
+</section>
+
+<!-- 10 · Experiências -->
+<section class="slide" data-notes="<b>Portfólio</b><p>Passe rápido. Se perguntarem preço, diga o “a partir de” e volte ao ganho da pousada. Preço detalhado só se pedirem; está no site.</p><p>Destaque: 3 níveis em cada coleção (Essencial · Completa · Luxo) e o pôr do sol como horário mais pedido.</p>">
+  <div class="wrap">
+    <p class="kicker rv">As experiências</p>
+    <h2 class="rv">Quatro coleções. Três níveis em cada uma.</h2>
+    <div class="grid4 rv">
+      <div class="col"><div class="photo"><img src="https://images.unsplash.com/photo-1744221127502-727af70bc6e7?q=80&w=700&h=440&auto=format&fit=crop" alt="Casal ao pôr do sol na praia" loading="lazy" onerror="this.parentNode.classList.add('noimg')"></div><div class="cb"><h3>A Dois</h3><p class="cap">Romance, datas do casal · até 2 pessoas</p><p class="price">a partir de R$ 249</p></div></div>
+      <div class="col"><div class="photo"><img src="https://images.unsplash.com/photo-1772724317675-5a1afcefea9a?q=80&w=700&h=440&auto=format&fit=crop" alt="Piquenique decorado com flores" loading="lazy" onerror="this.parentNode.classList.add('noimg')"></div><div class="cb"><h3>Celebrar</h3><p class="cap">Aniversários e conquistas · até 4 pessoas</p><p class="price">a partir de R$ 549</p></div></div>
+      <div class="col"><div class="photo"><img src="https://images.unsplash.com/photo-1707296825230-3f106b3ac450?q=80&w=700&h=440&auto=format&fit=crop" alt="Piquenique boho para grupo" loading="lazy" onerror="this.parentNode.classList.add('noimg')"></div><div class="cb"><h3>Entre Amigas</h3><p class="cap">Despedidas e encontros · até 4 amigas</p><p class="price">a partir de R$ 549</p></div></div>
+      <div class="col"><div class="photo"><img src="https://images.unsplash.com/photo-1741318103098-767700b2b0aa?q=80&w=700&h=440&auto=format&fit=crop" alt="Cenário de pedido de casamento" loading="lazy" onerror="this.parentNode.classList.add('noimg')"></div><div class="cb"><h3>Pedido</h3><p class="cap">Casamento e namoro · o casal</p><p class="price">a partir de R$ 1.490</p></div></div>
+    </div>
+    <div class="chips rv"><span class="chip">Essencial · 1h30</span><span class="chip">Completa · 2h</span><span class="chip">Luxo · 2h30</span><span class="chip gold">Montagem e desmontagem sempre incluídas</span></div>
+  </div>
+  <p class="foot">Valores completos em descomplicaguaruja.com.br</p>
+</section>
+
+<!-- 11 · Piloto -->
+<section class="slide dark" data-notes="<b>O fechamento de verdade · reciprocidade + risco zero</b><p>O evento demonstrativo gratuito é a peça central: eles ganham conteúdo do espaço de graça e vivem a experiência. Depois de receber algo, dizer “não” fica desconfortável (reciprocidade).</p><p>A escassez é honesta: são só vocês dois na operação, então o piloto cabe em poucas pousadas por praia. Diga isso com naturalidade, não como pressão.</p><p>Fechamento por teste: <i>“Se o evento demonstrativo for como vocês imaginam, faz sentido seguirmos nos 60 dias?”</i></p>">
+  <div class="wrap">
+    <p class="kicker rv">Proposta de piloto</p>
+    <h2 class="rv">60 dias. Começando com um evento demonstrativo gratuito.</h2>
+    <div class="grid3 rv">
+      <div class="card"><div class="n">1</div><h3>Evento demonstrativo</h3><p>Montamos uma experiência completa no espaço de vocês, sem custo. Vocês vivem, fotografam, e a pousada fica com todo o conteúdo.</p></div>
+      <div class="card"><div class="n">2</div><h3>60 dias no formato escolhido</h3><p>A, B ou C. Sem exclusividade, sem custo fixo. Calendário e regras combinados na primeira semana.</p></div>
+      <div class="card"><div class="n">3</div><h3>Revisão conjunta</h3><p>Sentamos com os números: eventos realizados, conteúdo entregue, hóspedes trazidos. Ajustamos e decidimos o próximo passo.</p></div>
+    </div>
+    <p class="lead rv">Somos uma equipe enxuta que cuida pessoalmente de cada montagem. Por isso o piloto abre com poucas pousadas por praia: cada parceira recebe atenção integral.</p>
+  </div>
+  <p class="foot">Descomplica Guarujá · Proposta de parceria</p>
+</section>
+
+<!-- 12 · Quem somos -->
+<section class="slide" data-notes="<b>Credibilidade</b><p>Duas frases, não mais: <i>“A Sophia cuida da experiência e da audiência. Eu cuido da operação e da gestão. E nós dois moramos aqui: isso não é um projeto de fora.”</i></p><p>Ser morador do Guarujá é o argumento mais forte com dono de pousada local. Use.</p>">
+  <div class="wrap">
+    <p class="kicker rv">Quem está por trás</p>
+    <h2 class="rv">Dois sócios. Uma operação enxuta e presente.</h2>
+    <div class="people rv">
+      <div class="person">
+        <div class="av">S</div>
+        <div><h3>Sophia Savoia</h3><p class="role">Sócia · experiência, marca e relacionamento</p></div>
+        <ul class="list">
+          <li>Empresária e criadora de conteúdo de lifestyle, beleza e viagem, à frente de negócios digitais próprios.</li>
+          <li>Audiência de mais de 226 mil visualizações por mês e 14 mil contas alcançadas, com forte presença na Baixada Santista.</li>
+          <li>Parcerias de conteúdo com marcas como CeraVe, Pantene e Leapmotor.</li>
+          <li>Autora do e-book “Sua Primeira Publi Paga”, para criadores iniciantes.</li>
+          <li>Idealizadora do Descomplica Guarujá: curadoria das experiências, decoração e relacionamento com clientes e parceiros.</li>
+        </ul>
+      </div>
+      <div class="person">
+        <div class="av">G</div>
+        <div><h3>Gustavo Castellano</h3><p class="role">Sócio · operação, tecnologia e gestão</p></div>
+        <ul class="list">
+          <li>Mais de 18 anos em tecnologia e gestão de projetos, com passagens por IBM, Amdocs, BCG Platinion, Globo e Indeed.</li>
+          <li>Professor convidado da pós-graduação em Desenvolvimento de Software da UFSCar desde 2017.</li>
+          <li>MBA Executivo Internacional em Gestão de Projetos (FGV e University of California, Irvine) e bacharel em Ciência da Computação.</li>
+          <li>Certificações SAFe SPC, PRINCE2, ITIL, Scrum e Kanban. Treinador e palestrante internacional.</li>
+          <li>Morador do Guarujá. Responsável pela operação, pela agenda e pela tecnologia do Descomplica Guarujá.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <p class="foot">Descomplica Guarujá · Proposta de parceria</p>
+</section>
+
+<!-- 13 · Fechamento -->
+<section class="slide dark" data-notes="<b>Fechamento presumido</b><p>Não pergunte “o que acharam?”. Pergunte: <i>“Qual espaço vocês imaginam para o evento demonstrativo?”</i> e preencha os campos na tela, na frente deles. Depois: <i>“Que dia da próxima semana funciona para nós montarmos?”</i></p><p>Saia com data marcada. Em até 1 hora após a reunião, envie um WhatsApp resumindo os três campos preenchidos. Follow-up em 24h se não responderem.</p>">
+  <div class="wrap">
+    <p class="kicker rv">Vamos começar?</p>
+    <h2 class="rv">Três decisões para sairmos daqui com o piloto marcado.</h2>
+    <ul class="next rv">
+      <li><span class="n">1</span><span>Espaço da pousada para o evento demonstrativo: <span class="fill" contenteditable="true" spellcheck="false" aria-label="Espaço escolhido">toque para preencher</span></span></li>
+      <li><span class="n">2</span><span>Data do evento demonstrativo: <span class="fill" contenteditable="true" spellcheck="false" aria-label="Data">toque para preencher</span></span></li>
+      <li><span class="n">3</span><span>Formato de parceria: <span class="fill" contenteditable="true" spellcheck="false" aria-label="Formato">A · B · C</span></span></li>
+    </ul>
+    <div class="contact rv">
+      <a class="wa" href="https://wa.me/5513988523663?text=Ol%C3%A1%2C%20vi%20a%20apresenta%C3%A7%C3%A3o%20de%20parceria%20do%20Descomplica%20Guaruj%C3%A1%20e%20quero%20conversar." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22c5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.03a8.1 8.1 0 0 1-4.13-1.13l-.3-.18-3.12.82.83-3.04-.2-.31a8.07 8.07 0 0 1-1.24-4.28c0-4.47 3.64-8.1 8.16-8.1 4.47 0 8.1 3.63 8.1 8.1 0 4.47-3.63 8.12-8.1 8.12zm4.45-6.07c-.24-.12-1.44-.71-1.66-.79-.22-.08-.39-.12-.55.12-.16.24-.63.79-.77.95-.14.16-.28.18-.53.06-.24-.12-1.03-.38-1.96-1.21-.72-.64-1.21-1.44-1.35-1.68-.14-.24-.02-.37.11-.5.11-.11.24-.28.37-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.55-1.32-.75-1.81-.2-.48-.4-.41-.55-.42h-.47c-.16 0-.42.06-.65.3-.22.24-.85.83-.85 2.03s.87 2.36 1 2.52c.12.16 1.72 2.62 4.16 3.68.58.25 1.03.4 1.39.51.58.19 1.11.16 1.53.1.47-.07 1.44-.59 1.64-1.16.2-.57.2-1.05.14-1.16-.06-.1-.22-.16-.46-.28z"/></svg>(13) 98852-3663</a>
+      <div style="display:flex;flex-direction:column;gap:.3rem">
+        <a href="https://descomplicaguaruja.com.br" target="_blank" rel="noopener">descomplicaguaruja.com.br</a>
+        <a href="https://instagram.com/descomplicaguaruja" target="_blank" rel="noopener">@descomplicaguaruja</a>
+        <a href="https://instagram.com/savoiasophia" target="_blank" rel="noopener">@savoiasophia</a>
+      </div>
+      <div class="qr" aria-label="QR code para o site" role="img"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" shape-rendering="crispEdges"><path fill="#143438" d="M0 0h7v1h-7zM8 0h2v1h-2zM12 0h1v1h-1zM15 0h1v1h-1zM18 0h1v1h-1zM26 0h1v1h-1zM30 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h4v1h-4zM17 1h1v1h-1zM19 1h1v1h-1zM21 1h1v1h-1zM24 1h2v1h-2zM28 1h1v1h-1zM30 1h1v1h-1zM36 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM8 2h1v1h-1zM13 2h1v1h-1zM15 2h1v1h-1zM19 2h1v1h-1zM21 2h2v1h-2zM24 2h2v1h-2zM30 2h1v1h-1zM32 2h3v1h-3zM36 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM9 3h1v1h-1zM11 3h2v1h-2zM15 3h4v1h-4zM20 3h2v1h-2zM24 3h2v1h-2zM27 3h2v1h-2zM30 3h1v1h-1zM32 3h3v1h-3zM36 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM8 4h1v1h-1zM11 4h1v1h-1zM13 4h3v1h-3zM19 4h3v1h-3zM25 4h2v1h-2zM28 4h1v1h-1zM30 4h1v1h-1zM32 4h3v1h-3zM36 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM9 5h2v1h-2zM12 5h5v1h-5zM21 5h3v1h-3zM26 5h1v1h-1zM28 5h1v1h-1zM30 5h1v1h-1zM36 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h1v1h-1zM24 6h1v1h-1zM26 6h1v1h-1zM28 6h1v1h-1zM30 6h7v1h-7zM9 7h2v1h-2zM13 7h1v1h-1zM16 7h1v1h-1zM20 7h1v1h-1zM25 7h1v1h-1zM0 8h1v1h-1zM3 8h6v1h-6zM10 8h1v1h-1zM12 8h1v1h-1zM14 8h3v1h-3zM18 8h2v1h-2zM26 8h2v1h-2zM29 8h1v1h-1zM32 8h1v1h-1zM34 8h3v1h-3zM1 9h1v1h-1zM4 9h2v1h-2zM7 9h3v1h-3zM11 9h1v1h-1zM13 9h1v1h-1zM17 9h3v1h-3zM22 9h2v1h-2zM25 9h2v1h-2zM31 9h5v1h-5zM1 10h2v1h-2zM6 10h1v1h-1zM9 10h1v1h-1zM13 10h1v1h-1zM21 10h1v1h-1zM23 10h1v1h-1zM26 10h3v1h-3zM30 10h3v1h-3zM36 10h1v1h-1zM0 11h1v1h-1zM3 11h1v1h-1zM7 11h2v1h-2zM10 11h6v1h-6zM17 11h1v1h-1zM19 11h1v1h-1zM23 11h2v1h-2zM26 11h1v1h-1zM29 11h2v1h-2zM34 11h3v1h-3zM0 12h3v1h-3zM4 12h1v1h-1zM6 12h5v1h-5zM12 12h1v1h-1zM14 12h1v1h-1zM19 12h1v1h-1zM22 12h2v1h-2zM30 12h2v1h-2zM36 12h1v1h-1zM1 13h1v1h-1zM3 13h1v1h-1zM5 13h1v1h-1zM7 13h1v1h-1zM9 13h2v1h-2zM15 13h3v1h-3zM23 13h1v1h-1zM25 13h4v1h-4zM32 13h2v1h-2zM0 14h2v1h-2zM3 14h2v1h-2zM6 14h2v1h-2zM10 14h1v1h-1zM13 14h3v1h-3zM17 14h1v1h-1zM19 14h1v1h-1zM21 14h1v1h-1zM24 14h4v1h-4zM29 14h2v1h-2zM32 14h5v1h-5zM4 15h2v1h-2zM7 15h6v1h-6zM14 15h2v1h-2zM17 15h4v1h-4zM23 15h2v1h-2zM30 15h2v1h-2zM33 15h3v1h-3zM0 16h3v1h-3zM4 16h1v1h-1zM6 16h1v1h-1zM10 16h1v1h-1zM16 16h2v1h-2zM20 16h1v1h-1zM22 16h4v1h-4zM30 16h1v1h-1zM34 16h3v1h-3zM2 17h2v1h-2zM9 17h1v1h-1zM11 17h3v1h-3zM16 17h6v1h-6zM27 17h1v1h-1zM29 17h1v1h-1zM31 17h1v1h-1zM33 17h1v1h-1zM0 18h2v1h-2zM3 18h1v1h-1zM5 18h2v1h-2zM13 18h3v1h-3zM17 18h1v1h-1zM19 18h1v1h-1zM23 18h1v1h-1zM26 18h3v1h-3zM30 18h1v1h-1zM34 18h1v1h-1zM36 18h1v1h-1zM0 19h2v1h-2zM3 19h2v1h-2zM7 19h4v1h-4zM14 19h1v1h-1zM19 19h2v1h-2zM25 19h1v1h-1zM28 19h6v1h-6zM36 19h1v1h-1zM2 20h3v1h-3zM6 20h2v1h-2zM9 20h4v1h-4zM14 20h4v1h-4zM19 20h1v1h-1zM23 20h1v1h-1zM26 20h7v1h-7zM1 21h1v1h-1zM3 21h1v1h-1zM8 21h2v1h-2zM12 21h1v1h-1zM15 21h1v1h-1zM19 21h1v1h-1zM22 21h2v1h-2zM26 21h2v1h-2zM29 21h1v1h-1zM32 21h1v1h-1zM34 21h1v1h-1zM1 22h2v1h-2zM4 22h4v1h-4zM13 22h1v1h-1zM15 22h4v1h-4zM20 22h1v1h-1zM23 22h1v1h-1zM27 22h5v1h-5zM33 22h1v1h-1zM36 22h1v1h-1zM0 23h1v1h-1zM2 23h3v1h-3zM9 23h2v1h-2zM15 23h3v1h-3zM19 23h2v1h-2zM23 23h2v1h-2zM27 23h1v1h-1zM30 23h6v1h-6zM1 24h1v1h-1zM6 24h1v1h-1zM10 24h1v1h-1zM13 24h6v1h-6zM20 24h1v1h-1zM23 24h1v1h-1zM29 24h2v1h-2zM35 24h2v1h-2zM0 25h1v1h-1zM2 25h2v1h-2zM5 25h1v1h-1zM8 25h1v1h-1zM11 25h2v1h-2zM14 25h1v1h-1zM16 25h1v1h-1zM23 25h6v1h-6zM32 25h1v1h-1zM0 26h4v1h-4zM5 26h2v1h-2zM8 26h1v1h-1zM10 26h1v1h-1zM12 26h2v1h-2zM16 26h1v1h-1zM19 26h1v1h-1zM22 26h1v1h-1zM25 26h1v1h-1zM27 26h1v1h-1zM30 26h1v1h-1zM33 26h4v1h-4zM0 27h1v1h-1zM3 27h3v1h-3zM10 27h1v1h-1zM12 27h4v1h-4zM18 27h1v1h-1zM29 27h1v1h-1zM31 27h6v1h-6zM0 28h1v1h-1zM3 28h2v1h-2zM6 28h2v1h-2zM9 28h2v1h-2zM12 28h3v1h-3zM16 28h1v1h-1zM20 28h1v1h-1zM22 28h1v1h-1zM24 28h2v1h-2zM27 28h8v1h-8zM8 29h5v1h-5zM15 29h1v1h-1zM18 29h2v1h-2zM22 29h1v1h-1zM25 29h1v1h-1zM28 29h1v1h-1zM32 29h1v1h-1zM34 29h1v1h-1zM0 30h7v1h-7zM8 30h2v1h-2zM11 30h2v1h-2zM15 30h1v1h-1zM19 30h1v1h-1zM21 30h1v1h-1zM23 30h1v1h-1zM25 30h2v1h-2zM28 30h1v1h-1zM30 30h1v1h-1zM32 30h1v1h-1zM36 30h1v1h-1zM0 31h1v1h-1zM6 31h1v1h-1zM8 31h1v1h-1zM10 31h1v1h-1zM12 31h2v1h-2zM15 31h5v1h-5zM22 31h1v1h-1zM25 31h1v1h-1zM27 31h2v1h-2zM32 31h1v1h-1zM35 31h2v1h-2zM0 32h1v1h-1zM2 32h3v1h-3zM6 32h1v1h-1zM8 32h1v1h-1zM10 32h1v1h-1zM12 32h3v1h-3zM20 32h1v1h-1zM24 32h1v1h-1zM26 32h7v1h-7zM35 32h2v1h-2zM0 33h1v1h-1zM2 33h3v1h-3zM6 33h1v1h-1zM8 33h1v1h-1zM11 33h1v1h-1zM14 33h1v1h-1zM16 33h4v1h-4zM21 33h3v1h-3zM27 33h1v1h-1zM29 33h2v1h-2zM33 33h1v1h-1zM36 33h1v1h-1zM0 34h1v1h-1zM2 34h3v1h-3zM6 34h1v1h-1zM9 34h2v1h-2zM12 34h2v1h-2zM15 34h3v1h-3zM20 34h1v1h-1zM22 34h2v1h-2zM25 34h1v1h-1zM27 34h1v1h-1zM29 34h1v1h-1zM32 34h1v1h-1zM34 34h1v1h-1zM36 34h1v1h-1zM0 35h1v1h-1zM6 35h1v1h-1zM9 35h4v1h-4zM16 35h2v1h-2zM19 35h2v1h-2zM23 35h1v1h-1zM26 35h2v1h-2zM30 35h1v1h-1zM32 35h5v1h-5zM0 36h7v1h-7zM8 36h2v1h-2zM15 36h1v1h-1zM17 36h1v1h-1zM20 36h1v1h-1zM23 36h1v1h-1zM28 36h2v1h-2zM31 36h1v1h-1zM36 36h1v1h-1z"/></svg></div>
+    </div>
+    <p class="hint rv">Sophia Savoia · Gustavo Castellano — Descomplica Guarujá — Você vive o momento. A gente cuida dos detalhes.</p>
+  </div>
+</section>
+
+</div>
+
+<nav class="ctl" aria-label="Navegação da apresentação">
+  <button type="button" id="prev" aria-label="Slide anterior">←</button>
+  <div class="mid">
+    <button type="button" class="small" id="notesBtn" aria-pressed="false" title="Notas do apresentador (tecla N)">NOTAS</button>
+    <span class="cnt" id="cnt">1 / 13</span>
+    <button type="button" class="small" id="fsBtn" title="Tela cheia (tecla F)">TELA CHEIA</button>
+  </div>
+  <button type="button" id="next" aria-label="Próximo slide">→</button>
+</nav>
+<aside class="notes" id="notes" aria-live="polite"></aside>
+
+<script>
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var total = slides.length, cur = 0, lock = false;
+  var cnt = document.getElementById('cnt'), bar = document.getElementById('bar');
+  var prevBtn = document.getElementById('prev'), nextBtn = document.getElementById('next');
+  var notes = document.getElementById('notes'), notesBtn = document.getElementById('notesBtn');
+  var fsBtn = document.getElementById('fsBtn');
+
+  function fromHash(){ var n = parseInt((location.hash||'').replace('#',''),10); return (n>=1 && n<=total) ? n-1 : 0; }
+  function show(i, dir){
+    if(i<0||i>=total) return;
+    slides.forEach(function(s,k){
+      s.classList.toggle('is-active', k===i);
+      s.classList.toggle('is-prev', k<i);
+    });
+    slides[i].scrollTop = 0;
+    cur = i;
+    cnt.textContent = (i+1)+' / '+total;
+    bar.style.width = ((i+1)/total*100)+'%';
+    prevBtn.disabled = i===0; nextBtn.disabled = i===total-1;
+    notes.innerHTML = slides[i].getAttribute('data-notes') || '<p>Sem notas para este slide.</p>';
+    if(history.replaceState) history.replaceState(null,'','#'+(i+1));
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', slides[i].classList.contains('dark') ? '#143438' : '#F4EDE4');
+    document.title = 'Slide '+(i+1)+' · Descomplica Guarujá — Parceria';
+  }
+  function go(d){
+    if(lock) return;
+    var n = cur + d; if(n<0||n>=total) return;
+    lock = true; show(n, d); setTimeout(function(){lock=false;}, 650);
+  }
+  prevBtn.addEventListener('click', function(){go(-1)});
+  nextBtn.addEventListener('click', function(){go(1)});
+
+  // teclado
+  document.addEventListener('keydown', function(e){
+    if(e.target && e.target.isContentEditable) return;
+    var k = e.key;
+    if(k==='ArrowRight'||k==='ArrowDown'||k==='PageDown'||k===' '||k==='Enter'){ e.preventDefault(); go(1); }
+    else if(k==='ArrowLeft'||k==='ArrowUp'||k==='PageUp'||k==='Backspace'){ e.preventDefault(); go(-1); }
+    else if(k==='Home'){ show(0); } else if(k==='End'){ show(total-1); }
+    else if(k==='n'||k==='N'){ toggleNotes(); }
+    else if(k==='f'||k==='F'){ toggleFs(); }
+  });
+
+  // roda do mouse: avança; se o slide tiver rolagem interna, rola primeiro
+  var wheelAcc = 0, wheelT = null;
+  document.addEventListener('wheel', function(e){
+    var s = slides[cur];
+    var canScroll = s.scrollHeight - s.clientHeight > 4;
+    if(canScroll){
+      var atTop = s.scrollTop <= 0, atBottom = s.scrollTop + s.clientHeight >= s.scrollHeight - 2;
+      if((e.deltaY>0 && !atBottom) || (e.deltaY<0 && !atTop)) return;
+    }
+    e.preventDefault();
+    wheelAcc += e.deltaY;
+    clearTimeout(wheelT);
+    wheelT = setTimeout(function(){ wheelAcc = 0; }, 200);
+    if(Math.abs(wheelAcc) > 40){ go(wheelAcc>0?1:-1); wheelAcc = 0; }
+  }, {passive:false});
+
+  // toque: deslizar horizontalmente
+  var tx=0, ty=0, tt=0;
+  document.addEventListener('touchstart', function(e){ var t=e.changedTouches[0]; tx=t.clientX; ty=t.clientY; tt=Date.now(); }, {passive:true});
+  document.addEventListener('touchend', function(e){
+    var t=e.changedTouches[0], dx=t.clientX-tx, dy=t.clientY-ty;
+    if(Date.now()-tt > 700) return;
+    if(Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)*1.3){ go(dx<0?1:-1); }
+  }, {passive:true});
+
+  // clique no slide (fora de links/botões/campos) avança — útil com apresentador remoto ou TV
+  document.getElementById('deck').addEventListener('click', function(e){
+    var el = e.target;
+    while(el && el !== document.body){
+      if(el.tagName==='A'||el.tagName==='BUTTON'||el.isContentEditable) return;
+      el = el.parentNode;
+    }
+    if(window.getSelection && String(window.getSelection())) return;
+    go(1);
+  });
+
+  function toggleNotes(){ var on = !notes.classList.contains('on'); notes.classList.toggle('on', on); notesBtn.setAttribute('aria-pressed', on?'true':'false'); }
+  notesBtn.addEventListener('click', toggleNotes);
+  function toggleFs(){
+    var d = document, el = d.documentElement;
+    if(!d.fullscreenElement && el.requestFullscreen){ el.requestFullscreen().catch(function(){}); }
+    else if(d.exitFullscreen){ d.exitFullscreen(); }
+  }
+  fsBtn.addEventListener('click', toggleFs);
+  if(!document.documentElement.requestFullscreen) fsBtn.style.display='none';
+
+  // campos editáveis: limpa o placeholder no primeiro toque
+  Array.prototype.forEach.call(document.querySelectorAll('.fill'), function(f){
+    var ph = f.textContent;
+    f.addEventListener('focus', function(){ if(f.textContent===ph) f.textContent=''; });
+    f.addEventListener('blur', function(){ if(!f.textContent.trim()) f.textContent=ph; });
+  });
+
+  window.addEventListener('hashchange', function(){ show(fromHash()); });
+  window.addEventListener('resize', function(){ slides[cur].scrollTop = Math.min(slides[cur].scrollTop, slides[cur].scrollHeight); });
+  show(fromHash());
+})();
+</script>
+</body>
+</html>

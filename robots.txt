@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /apresentacao
 
 Sitemap: https://descomplicaguaruja.com.br/sitemap.xml
