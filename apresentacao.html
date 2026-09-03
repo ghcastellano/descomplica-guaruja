@@ -134,8 +134,9 @@ html:not(.js) .slide{border-bottom:1px solid var(--sand)}
 
 .stat{padding:1.3rem 1.4rem;border-left:3px solid var(--gold);background:var(--sand-soft);border-radius:0 var(--r-md) var(--r-md) 0}
 .stat b{display:block;font-family:var(--f-serif);font-weight:600;font-size:2.6rem;line-height:1;color:var(--petrol-deep);font-variant-numeric:tabular-nums}
-.stat span{display:block;margin-top:.5rem;font-size:.92rem;color:var(--muted)}
-.slide.dark .stat{background:rgba(244,237,228,.06)} .slide.dark .stat b{color:var(--cream)} .slide.dark .stat span{color:rgba(244,237,228,.75)}
+.stat > span{display:block;margin-top:.5rem;font-size:.92rem;color:var(--muted)}
+.stat b span{display:inline;margin:0;font-size:inherit;color:inherit}
+.slide.dark .stat{background:rgba(244,237,228,.06)} .slide.dark .stat b{color:var(--cream)} .slide.dark .stat > span{color:rgba(244,237,228,.75)}
 
 .chips{display:flex;flex-wrap:wrap;gap:.5rem}
 .chip{padding:.4rem .9rem;border-radius:999px;border:1px solid var(--sand);background:#fff;font-size:.86rem;font-weight:500;color:var(--petrol-deep)}
