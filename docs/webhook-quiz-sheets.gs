@@ -49,46 +49,67 @@ function doPost(e) {
       JSON.stringify(data)
     ]);
 
-    /* HACK #4 — dispara alerta só quando alguém deixa o telefone (lead quente) */
+    /* HACK #4 — dispara alerta só quando alguém deixa o telefone (lead quente).
+       Uma falha no e-mail não descarta o lead: ela fica registrada na aba Erros. */
     if (data.event === 'lead_capture' && ALERT_EMAIL) {
-      enviarAlerta_(data, a, u);
+      try {
+        enviarAlerta_(data, a, u);
+      } catch (emailErr) {
+        registrarErro_('alerta_email', emailErr, data);
+      }
     }
 
     return ContentService.createTextOutput('ok');
   } catch (err) {
     // Registra o erro numa aba separada para depuração
-    try {
-      const ss = SpreadsheetApp.getActiveSpreadsheet();
-      const log = ss.getSheetByName('Erros') || ss.insertSheet('Erros');
-      log.appendRow([new Date(), String(err), e && e.postData ? e.postData.contents : '']);
-    } catch (_) {}
+    registrarErro_('webhook', err, e && e.postData ? e.postData.contents : '');
     return ContentService.createTextOutput('error');
   }
 }
 
 /* HACK #4 — monta e envia o e-mail de lead quente */
 function enviarAlerta_(data, a, u) {
+  const fone = data.phone || '';
+  const digitos = String(fone).replace(/[^0-9]/g, '');
+  /* se já vem com DDI 55 (12-13 dígitos), usa direto; senão prefixa 55 */
+  const foneLimpo = (digitos.indexOf('55') === 0 && digitos.length >= 12) ? digitos : '55' + digitos;
+  const msg = encodeURIComponent('Oi! Vi que você montou seu piquenique no site do Descomplica Guarujá. Posso te ajudar a reservar sua data?');
+  const waLink = 'https://wa.me/' + foneLimpo + '?text=' + msg;
+  const origem = u.utm_source ? (u.utm_source + (u.utm_medium ? ' / ' + u.utm_medium : '')) : 'direto';
+  const assunto = '🔥 Novo lead — ' + fone + ' (' + (a.ocasiao || 'quiz') + ')';
+  const corpo =
+    '🌅 Novo lead deixou o WhatsApp no quiz!\n\n' +
+    '📱 Telefone: ' + fone + '\n' +
+    '⏰ Melhor horário: ' + (data.best_time || '—') + '\n' +
+    '🎀 Ocasião: ' + (a.ocasiao || '—') + '\n' +
+    '📦 Pacote recomendado: ' + (data.result || '—') + '\n' +
+    '💵 Preço do pacote: ' + (data.preco || '—') + '\n' +
+    '💰 Quanto quer investir: ' + (a.budget || '—') + '\n' +
+    '📍 Origem: ' + origem + '\n\n' +
+    '🎯 Dica de venda: ' + (data.dica || '—') + '\n\n' +
+    '👉 Chamar agora no WhatsApp:\n' + waLink + '\n\n' +
+    '— Responda rápido: leads contatados em minutos têm muito mais chance de fechar.';
+
+  getAlertEmails_().forEach(email => MailApp.sendEmail(email, assunto, corpo));
+}
+
+/** Executar no editor após publicar para autorizar o MailApp e validar os destinatários. */
+function testarAlertaEmail() {
+  const assunto = '✅ Teste do alerta de leads — Descomplica Guarujá';
+  const corpo = 'O alerta de novos contatos do quiz está ativo para este endereço.';
+  getAlertEmails_().forEach(email => MailApp.sendEmail(email, assunto, corpo));
+}
+
+function getAlertEmails_() {
+  return ALERT_EMAIL.split(',').map(email => email.trim()).filter(Boolean);
+}
+
+function registrarErro_(contexto, err, payload) {
   try {
-    const fone = data.phone || '';
-    const digitos = String(fone).replace(/[^0-9]/g, '');
-    /* se já vem com DDI 55 (12-13 dígitos), usa direto; senão prefixa 55 */
-    const foneLimpo = (digitos.indexOf('55') === 0 && digitos.length >= 12) ? digitos : '55' + digitos;
-    const msg = encodeURIComponent('Oi! Vi que você montou seu piquenique no site do Descomplica Guarujá. Posso te ajudar a reservar sua data?');
-    const waLink = 'https://wa.me/' + foneLimpo + '?text=' + msg;
-    const origem = u.utm_source ? (u.utm_source + (u.utm_medium ? ' / ' + u.utm_medium : '')) : 'direto';
-    const corpo =
-      '🌅 Novo lead deixou o WhatsApp no quiz!\n\n' +
-      '📱 Telefone: ' + fone + '\n' +
-      '⏰ Melhor horário: ' + (data.best_time || '—') + '\n' +
-      '🎀 Ocasião: ' + (a.ocasiao || '—') + '\n' +
-      '📦 Pacote recomendado: ' + (data.result || '—') + '\n' +
-      '💵 Preço do pacote: ' + (data.preco || '—') + '\n' +
-      '💰 Quanto quer investir: ' + (a.budget || '—') + '\n' +
-      '📍 Origem: ' + origem + '\n\n' +
-      '🎯 Dica de venda: ' + (data.dica || '—') + '\n\n' +
-      '👉 Chamar agora no WhatsApp:\n' + waLink + '\n\n' +
-      '— Responda rápido: leads contatados em minutos têm muito mais chance de fechar.';
-    MailApp.sendEmail(ALERT_EMAIL, '🔥 Novo lead — ' + fone + ' (' + (a.ocasiao || 'quiz') + ')', corpo);
+    const ss = SpreadsheetApp.openById(LEADS_SHEET_ID);
+    const log = ss.getSheetByName('Erros') || ss.insertSheet('Erros');
+    const bruto = typeof payload === 'string' ? payload : JSON.stringify(payload || {});
+    log.appendRow([new Date(), contexto, String(err), bruto]);
   } catch (_) {}
 }
 
