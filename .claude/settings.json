@@ -2,14 +2,16 @@
   "permissions": {
     "defaultMode": "bypassPermissions",
     "allow": [
-      "Read", "Write", "Edit", "Glob", "Grep", "WebFetch", "WebSearch", "Agent", "Artifact",
-      "Bash", "Bash(*)",
-      "Bash(git *)", "Bash(node *)", "Bash(npm *)", "Bash(npx *)", "Bash(python3 *)", "Bash(pip *)",
-      "Bash(curl *)", "Bash(ls *)", "Bash(cat *)", "Bash(grep *)", "Bash(find *)", "Bash(sed *)", "Bash(mkdir *)",
-      "mcp__github__*", "mcp__Vercel__*", "mcp__Gmail__*", "mcp__Google_Drive__*", "mcp__Brightdeck__*",
-      "mcp__Hostinger_Connector__*", "mcp__Hostinger_Mail__*", "mcp__Claude_Code_Remote__*", "mcp__Canva__*"
+      "Bash", "Read", "Write", "Edit", "Glob", "Grep", "WebFetch", "WebSearch", "Agent", "Artifact",
+      "NotebookEdit", "TaskCreate", "TaskUpdate", "Monitor",
+      "mcp__github", "mcp__Vercel", "mcp__Gmail", "mcp__Google_Drive", "mcp__Google_Calendar",
+      "mcp__Hostinger_Connector", "mcp__Hostinger_Mail", "mcp__Claude_Code_Remote", "mcp__Brightdeck",
+      "mcp__Canva", "mcp__Slack", "mcp__Supabase", "mcp__Stripe", "mcp__Miro", "mcp__Atlassian_Rovo",
+      "mcp__Docusign", "mcp__Zoom_for_Claude", "mcp__vidIQ", "mcp__Brand24", "mcp__Hugging_Face",
+      "mcp__PubMed", "mcp__Health_Data_Avatar_HDA"
     ]
   },
   "skipDangerousModePermissionPrompt": true,
-  "skipAutoPermissionPrompt": true
+  "skipAutoPermissionPrompt": true,
+  "inputNeededNotifEnabled": false
 }
