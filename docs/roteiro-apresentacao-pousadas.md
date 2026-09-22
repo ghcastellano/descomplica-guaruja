@@ -1,6 +1,6 @@
 # Roteiro de apresentação para pousadas e hotéis
 
-> Apresentação ao vivo: **descomplicaguaruja.com.br/apresentacao** (atalhos: `/parceria`, `/pousadas`, `/apresentacao-executiva`).
+> Apresentação ao vivo: **www.descomplicaguaruja.com.br/parceria-pousadas** (atalhos: `/apresentacao`, `/parceria`, `/pousadas`, `/apresentacao-executiva`).
 > Navegação: `→` `←`, roda do mouse, deslizar no celular/tablet, ou clicar no slide. `N` abre as notas do apresentador. `F` tela cheia. `#7` na URL abre direto o slide 7.
 > Base de conteúdo: e-mail de parceria da Sophia + deck de 02/09. Este roteiro traz as técnicas de venda usadas em cada slide e o que fazer antes, durante e depois da reunião.
 
@@ -61,7 +61,7 @@
 
 ## 3. Depois da reunião
 
-- **Até 1 hora depois**: WhatsApp com o resumo dos três campos (espaço, data, formato) + link da apresentação `descomplicaguaruja.com.br/apresentacao`.
+- **Até 1 hora depois**: WhatsApp com o resumo dos três campos (espaço, data, formato) + link da apresentação `www.descomplicaguaruja.com.br/parceria-pousadas`.
 - **24 h sem resposta**: follow-up curto: "Oi [nome], reservei [data] na nossa agenda para o evento demonstrativo. Confirmo?"
 - **Depois do evento demonstrativo**: enviar as fotos no mesmo dia (reciprocidade imediata) + acordo de uma página para assinar.
 - **A cada 30 dias no piloto**: mensagem com números (eventos, conteúdo entregue, hóspedes indicados).
@@ -74,7 +74,7 @@ Resumo do que combinamos:
 • Espaço: [deck / jardim / …]
 • Evento demonstrativo (sem custo): [data e horário]
 • Formato: [A / B / C]
-A apresentação fica aqui: descomplicaguaruja.com.br/apresentacao
+A apresentação fica aqui: www.descomplicaguaruja.com.br/parceria-pousadas
 Qualquer ajuste, é só me chamar. — Gustavo e Sophia · Descomplica Guarujá
 ```
 

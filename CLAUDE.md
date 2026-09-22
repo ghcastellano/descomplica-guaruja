@@ -8,6 +8,13 @@ Landing page com quiz de recomendação para o **Descomplica Guarujá**: negóci
 - Deploy alvo: **Vercel** (projeto estático).
 - Imagens: Unsplash temporárias com fallback automático (`phErr()` troca por SVG local se falhar). Serão substituídas por fotos reais do "mock event" (8 fotos — ver TAREFAS.md).
 
+## Apresentações (decks HTML, mesmo design system)
+- `parceria-pousadas.html` (`/parceria-pousadas`; atalhos `/apresentacao`, `/parceria`, `/pousadas`): proposta para pousadas e hotéis, apresentada ao vivo (tem notas do apresentador).
+- `resumo-executivo.html` (`/resumo-executivo`, atalho `/resumo`): resumo lido online por parceiros institucionais; foco em comércio local e no Guarujá querido por moradores e turistas de SP. NÃO citar prefeitura nem nomes de autoridades.
+- `visao.html` (`/visao`, atalho `/futuro`): visão da plataforma (marketplace de prestadores locais, agenda integrada, organização de eventos). Mesma audiência do resumo.
+- CSS e JS compartilhados: `deck.css` e `deck.js`. Curvas de easing orgânicas (cubic-bezier, sem linear, sem overshoot), cards flutuam no hover, transições longas. Não reintroduzir `--ease-back` com overshoot.
+- Todos com `noindex` e bloqueados no `robots.txt`. Host canônico do site: **www.descomplicaguaruja.com.br** (apex redireciona 308 no painel da Vercel).
+
 ## Configuração obrigatória antes do deploy
 No topo do `<script>` principal do `index.html`:
 - `WHATSAPP_NUMBER` — trocar o placeholder `5513999999999` pelo número real (DDI+DDD+número, só dígitos). **Perguntar ao Gustavo.**

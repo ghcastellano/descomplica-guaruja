@@ -24,23 +24,38 @@
     },
     {
       "source": "/apresentacao-executiva",
-      "destination": "/apresentacao",
+      "destination": "/parceria-pousadas",
       "permanent": false
     },
     {
       "source": "/parceria",
-      "destination": "/apresentacao",
+      "destination": "/parceria-pousadas",
       "permanent": false
     },
     {
       "source": "/pousadas",
-      "destination": "/apresentacao",
+      "destination": "/parceria-pousadas",
+      "permanent": false
+    },
+    {
+      "source": "/apresentacao",
+      "destination": "/parceria-pousadas",
+      "permanent": false
+    },
+    {
+      "source": "/resumo",
+      "destination": "/resumo-executivo",
+      "permanent": false
+    },
+    {
+      "source": "/futuro",
+      "destination": "/visao",
       "permanent": false
     }
   ],
   "headers": [
     {
-      "source": "/(favicon.png|apple-touch-icon.png|og-image.png|logo.png|logo.webp)",
+      "source": "/(favicon.png|apple-touch-icon.png|og-image.png|logo.png|logo.webp|deck.css|deck.js)",
       "headers": [
         {
           "key": "Cache-Control",
