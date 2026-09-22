@@ -9,9 +9,14 @@
   --r-sm:8px; --r-md:16px; --r-lg:24px; --r-btn:12px;
   --sh-md:0 4px 16px rgba(0,0,0,.10);
   --sh-lg:0 8px 32px rgba(20,52,56,.12);
-  /* Curvas orgânicas: saída longa e suave, sem overshoot nem trechos lineares */
-  --ease:cubic-bezier(.22,1,.36,1); --ease-in:cubic-bezier(.16,1,.3,1); --ease-back:cubic-bezier(.2,.8,.2,1); --ease-io:cubic-bezier(.65,0,.35,1);
-  --sh-float:0 22px 48px rgba(20,52,56,.14);
+  --sh-float:0 18px 40px rgba(20,52,56,.14);
+  /* Curvas (skills animate / emil-design-eng): entrada e saída em ease-out forte; movimento em tela em ease-in-out forte.
+     Hover e cor usam `ease` nativo. Nunca ease-in, nunca linear em UI. */
+  --ease-out:cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out:cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer:cubic-bezier(0.32, 0.72, 0, 1);
+  /* Durações: pressão 100–160 ms · hover ~200 ms · UI < 300 ms · troca de slide (explicativa) pode passar de 300 ms */
+  --d-press:140ms; --d-hover:220ms; --d-ui:200ms; --d-slide-in:480ms; --d-slide-out:280ms; --d-reveal:420ms; --stagger:45ms;
 }
 /* Escala tipográfica proporcional à tela: 13px no celular → 22px em TV/projetor */
 html{font-size:clamp(13px, calc(.55vw + .55vh + 6px), 22px);-webkit-text-size-adjust:100%}
@@ -19,26 +24,30 @@ html{font-size:clamp(13px, calc(.55vw + .55vh + 6px), 22px);-webkit-text-size-ad
 html,body{margin:0;height:100%}
 body{background:var(--cream);color:var(--ink);font-family:var(--f-sans);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{max-width:100%;display:block}
-h1,h2,h3{font-family:var(--f-serif);color:var(--petrol-deep);line-height:1.12;letter-spacing:-.01em;margin:0;text-wrap:balance;font-weight:600}
-h1{font-size:2.9rem} h2{font-size:2.3rem} h3{font-size:1.25rem}
+/* Tipografia (apple-design): tracking negativo cresce com o tamanho; leading apertado no display, folgado no corpo */
+h1,h2,h3{font-family:var(--f-serif);font-optical-sizing:auto;color:var(--petrol-deep);line-height:1.1;margin:0;text-wrap:balance;font-weight:600}
+h1{font-size:2.9rem;letter-spacing:-.022em;line-height:1.06} h2{font-size:2.3rem;letter-spacing:-.016em} h3{font-size:1.25rem;letter-spacing:-.006em;line-height:1.2}
 p{margin:0} ul,ol{margin:0;padding:0;list-style:none}
 .script{font-family:var(--f-script);font-weight:400;color:var(--terracotta-ink);letter-spacing:0}
 a{color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 
-/* ===== Cursor personalizado (só com mouse) ===== */
-@media (hover:hover) and (pointer:fine){
+/* ===== Cursor personalizado (só com mouse; decorativo, por isso ganha suavização por mola no JS) ===== */
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
   html.js, html.js body, html.js a, html.js button, html.js [contenteditable]{cursor:none}
-  .cur{position:fixed;left:0;top:0;pointer-events:none;z-index:999;will-change:transform}
-  .cur-dot{width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:var(--terracotta);transition:transform .35s var(--ease),background .35s var(--ease)}
-  .cur-ring{width:38px;height:38px;margin:-19px 0 0 -19px;border-radius:50%;border:1.5px solid var(--gold);opacity:.9;transition:width .45s var(--ease),height .45s var(--ease),margin .45s var(--ease),border-color .35s var(--ease),background .35s var(--ease)}
-  html.js.cur-hover .cur-ring{width:56px;height:56px;margin:-28px 0 0 -28px;background:rgba(201,162,75,.14);border-color:var(--terracotta)}
-  html.js.cur-hover .cur-dot{transform:scale(.6)}
-  html.js.cur-down .cur-ring{width:28px;height:28px;margin:-14px 0 0 -14px}
+  .cur{position:fixed;left:0;top:0;pointer-events:none;z-index:999;will-change:transform;opacity:1;transition:opacity var(--d-ui) ease}
+  .cur-dot{width:8px;height:8px;margin:-4px 0 0 -4px}
+  .cur-dot::before{content:"";display:block;width:100%;height:100%;border-radius:50%;background:var(--terracotta);transition:transform var(--d-ui) var(--ease-out)}
+  .cur-ring{width:38px;height:38px;margin:-19px 0 0 -19px}
+  .cur-ring::before{content:"";display:block;width:100%;height:100%;border-radius:50%;border:1.5px solid var(--gold);opacity:.9;transition:transform var(--d-ui) var(--ease-out),background-color var(--d-ui) ease,border-color var(--d-ui) ease}
+  html.js.cur-hover .cur-ring::before{transform:scale(1.45);background:rgba(201,162,75,.14);border-color:var(--terracotta)}
+  html.js.cur-hover .cur-dot::before{transform:scale(.6)}
+  html.js.cur-down .cur-ring::before{transform:scale(.8)}
   html.js.cur-hide .cur{opacity:0}
 }
-@media (hover:none){.cur{display:none}}
+@media (hover:none),(prefers-reduced-motion:reduce){.cur{display:none}}
 
-/* ===== Deck 3D ===== */
+/* ===== Deck ===== */
 .deck{position:relative;min-height:100dvh}
 .slide{position:relative;min-height:100dvh;padding:calc(env(safe-area-inset-top) + 2.2rem) 0 calc(env(safe-area-inset-bottom) + 3.6rem);background:var(--cream);overflow:hidden}
 .wrap{position:relative;z-index:2;max-width:78rem;margin:0 auto;padding:0 3.2rem;min-height:calc(100dvh - 5.8rem);display:flex;flex-direction:column;justify-content:center;gap:1.4rem}
@@ -47,42 +56,42 @@ a{color:inherit}
 .slide.dark .script{color:var(--gold)}
 .muted{color:var(--muted)} .slide.dark .muted{color:rgba(244,237,228,.72)}
 
-html.js .deck{height:100dvh;overflow:hidden;perspective:1600px;perspective-origin:50% 50%}
-html.js .slide{position:absolute;inset:0;min-height:0;height:100dvh;overflow:auto;overscroll-behavior:contain;transform-style:preserve-3d;backface-visibility:hidden;
-  opacity:0;visibility:hidden;transform:translate3d(16%,0,-160px) rotateY(-9deg);
-  transition:opacity .9s var(--ease),transform 1.15s var(--ease-in),visibility 0s .9s}
-html.js .slide.is-active{opacity:1;visibility:visible;transform:none;transition-delay:0s;z-index:2}
-html.js .slide.is-prev{transform:translate3d(-16%,0,-160px) rotateY(9deg)}
-html.js .slide[data-fx="zoom"]{transform:translate3d(0,0,180px) scale(1.03)}
-html.js .slide[data-fx="zoom"].is-prev{transform:translate3d(0,0,-220px) scale(.96)}
-html.js .slide[data-fx="flip"]{transform:translate3d(0,14%,-140px) rotateX(10deg)}
-html.js .slide[data-fx="flip"].is-prev{transform:translate3d(0,-14%,-140px) rotateX(-10deg)}
-html.js .slide.is-active[data-fx]{transform:none}
+/* Troca de slide: um único modelo espacial (apple-design, consistência espacial). O próximo entra da direita,
+   o atual sai pela esquerda; ao voltar, o caminho é espelhado. Entrada mais longa que a saída (emil: exit faster). */
+html.js .deck{height:100dvh;overflow:hidden}
+html.js .slide{position:absolute;inset:0;min-height:0;height:100dvh;overflow:auto;overscroll-behavior:contain;
+  opacity:0;visibility:hidden;transform:translate3d(5%,0,0) scale(.985);
+  transition:opacity var(--d-slide-out) var(--ease-out),transform var(--d-slide-out) var(--ease-out),visibility 0s var(--d-slide-out)}
+html.js .slide.is-active{opacity:1;visibility:visible;transform:none;z-index:2;
+  transition:opacity var(--d-slide-in) var(--ease-out),transform var(--d-slide-in) var(--ease-out),visibility 0s}
+html.js .slide.is-prev{transform:translate3d(-5%,0,0) scale(.985)}
 
-/* reveals com direção e escalonamento */
-html.js .rv{opacity:0;transition:opacity .9s var(--ease),transform 1.1s var(--ease-in);transition-delay:calc(var(--i,0) * .08s + .3s);transform:translateY(18px)}
-html.js .rv.l{transform:translateX(-36px)} html.js .rv.r{transform:translateX(36px)}
-html.js .rv.z{transform:scale(.94)} html.js .rv.f{transform:rotateX(-18deg) translateY(22px);transform-origin:top}
-html.js .rv.d{transform:translateY(-26px)}
+/* Reveals: entrada em ease-out, deslocamentos curtos (nada nasce do nada), escalonamento de 45 ms.
+   Enquanto o slide não terminou de revelar (sem .rv-done) a transição do reveal vale; depois, cada elemento volta
+   à sua própria transição de hover. Na saída, tudo some rápido e sem escalonamento. */
+html.js .slide:not(.rv-done) .rv{opacity:0;transform:translateY(10px);transition:opacity var(--d-reveal) var(--ease-out),transform var(--d-reveal) var(--ease-out);transition-delay:calc(var(--i,0) * var(--stagger) + 140ms)}
+html.js .slide:not(.rv-done) .rv.l{transform:translateX(-12px)} html.js .slide:not(.rv-done) .rv.r{transform:translateX(12px)}
+html.js .slide:not(.rv-done) .rv.z{transform:scale(.96)} html.js .slide:not(.rv-done) .rv.f{transform:translateY(12px)}
+html.js .slide:not(.rv-done) .rv.d{transform:translateY(-10px)}
 html.js .slide.is-active .rv{opacity:1;transform:none}
+html.js .slide:not(.is-active) .rv{transition-delay:0s;transition-duration:var(--d-ui)}
 html:not(.js) .slide{border-bottom:1px solid var(--sand)}
-@media (prefers-reduced-motion:reduce){html.js .slide,html.js .rv,.orb,.wave path{transition-duration:.01s!important;animation:none!important}}
 
-/* fundo "tecnológico": orbs e ondas */
-.orbs{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
-.orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:.55;will-change:transform;animation:drift 18s ease-in-out infinite alternate}
+/* Fundo: orbs e ondas. Movimento lento e decorativo; desligado em movimento reduzido. */
+.orbs{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;will-change:transform}
+.orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:.55;animation:drift 24s ease-in-out infinite alternate}
 .orb.a{width:38vw;height:38vw;left:-10vw;top:-12vw;background:radial-gradient(circle,var(--gold-soft),transparent 65%)}
-.orb.b{width:44vw;height:44vw;right:-14vw;bottom:-18vw;background:radial-gradient(circle,rgba(200,118,90,.55),transparent 65%);animation-delay:-7s}
-.orb.c{width:26vw;height:26vw;right:18vw;top:-10vw;background:radial-gradient(circle,rgba(31,78,84,.35),transparent 65%);animation-delay:-13s}
+.orb.b{width:44vw;height:44vw;right:-14vw;bottom:-18vw;background:radial-gradient(circle,rgba(200,118,90,.55),transparent 65%);animation-delay:-9s}
+.orb.c{width:26vw;height:26vw;right:18vw;top:-10vw;background:radial-gradient(circle,rgba(31,78,84,.35),transparent 65%);animation-delay:-17s}
 .slide.dark .orb.a{background:radial-gradient(circle,rgba(201,162,75,.35),transparent 65%)}
 .slide.dark .orb.b{background:radial-gradient(circle,rgba(200,118,90,.35),transparent 65%)}
 .slide.dark .orb.c{background:radial-gradient(circle,rgba(132,163,166,.35),transparent 65%)}
-@keyframes drift{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(6vw,4vh,0) scale(1.15)}}
+@keyframes drift{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(5vw,3vh,0) scale(1.12)}}
 .grid-bg{position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.35;
   background-image:linear-gradient(rgba(244,237,228,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(244,237,228,.06) 1px,transparent 1px);background-size:4rem 4rem;
   -webkit-mask-image:radial-gradient(ellipse at 70% 30%,#000 20%,transparent 70%);mask-image:radial-gradient(ellipse at 70% 30%,#000 20%,transparent 70%)}
 .wave{position:absolute;left:0;right:0;bottom:-2px;z-index:1;pointer-events:none;height:16vh;width:100%}
-.wave path{fill:rgba(244,237,228,.06)} .wave path:nth-child(2){fill:rgba(201,162,75,.08);animation:sway 9s ease-in-out infinite alternate}
+.wave path{fill:rgba(244,237,228,.06)} .wave path:nth-child(2){fill:rgba(201,162,75,.08);animation:sway 12s ease-in-out infinite alternate}
 .slide:not(.dark) .wave path{fill:rgba(31,78,84,.05)} .slide:not(.dark) .wave path:nth-child(2){fill:rgba(200,118,90,.08)}
 @keyframes sway{from{transform:translateX(0)}to{transform:translateX(-4%)}}
 
@@ -101,20 +110,21 @@ html:not(.js) .slide{border-bottom:1px solid var(--sand)}
 .grid2{display:grid;grid-template-columns:1.05fr .95fr;gap:2.4rem;align-items:center}
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
 .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem}
-.card{position:relative;background:#fff;border:1px solid var(--sand);border-radius:var(--r-md);padding:1.3rem 1.4rem;box-shadow:0 1px 3px rgba(0,0,0,.05);transition:transform .65s var(--ease),box-shadow .65s var(--ease),border-color .65s var(--ease);will-change:transform}
-.card:hover{transform:translateY(-7px);box-shadow:var(--sh-float);border-color:var(--gold-soft)}
+
+/* Superfícies que flutuam no hover: transição curta com `ease` (hover), só transform/box-shadow/cor */
+.card,.col,.steps li,.stat,.person,.cat span{transition:transform var(--d-hover) ease,box-shadow var(--d-hover) ease,border-color var(--d-hover) ease,background-color var(--d-hover) ease}
+
+.card{position:relative;background:#fff;border:1px solid var(--sand);border-radius:var(--r-md);padding:1.3rem 1.4rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
 .card h3{margin-bottom:.45rem} .card p{font-size:.95rem;color:var(--muted)}
 .slide.dark .card{background:rgba(244,237,228,.06);border-color:rgba(244,237,228,.16);box-shadow:none;backdrop-filter:blur(6px)}
-.slide.dark .card:hover{background:rgba(244,237,228,.09);border-color:rgba(201,162,75,.45);box-shadow:0 22px 48px rgba(0,0,0,.28)}
 .slide.dark .card p{color:rgba(244,237,228,.78)}
 .card .n{font-family:var(--f-serif);font-style:italic;font-size:1.6rem;color:var(--gold);line-height:1;margin-bottom:.4rem}
 .card .ico{width:2.4rem;height:2.4rem;border-radius:12px;background:var(--sand-soft);display:grid;place-items:center;margin-bottom:.7rem}
 .card .ico svg{width:1.3rem;height:1.3rem;stroke:var(--terracotta-ink);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .slide.dark .card .ico{background:rgba(201,162,75,.15)} .slide.dark .card .ico svg{stroke:var(--gold)}
 
-.stat{padding:1.3rem 1.4rem;border-left:3px solid var(--gold);background:var(--sand-soft);border-radius:0 var(--r-md) var(--r-md) 0;transition:transform .65s var(--ease),box-shadow .65s var(--ease)}
-.stat:hover{transform:translateY(-5px);box-shadow:var(--sh-float)}
-.stat b{display:block;font-family:var(--f-serif);font-weight:600;font-size:2.6rem;line-height:1;color:var(--petrol-deep);font-variant-numeric:tabular-nums}
+.stat{padding:1.3rem 1.4rem;border-left:3px solid var(--gold);background:var(--sand-soft);border-radius:0 var(--r-md) var(--r-md) 0}
+.stat b{display:block;font-family:var(--f-serif);font-weight:600;font-size:2.6rem;line-height:1;letter-spacing:-.02em;color:var(--petrol-deep);font-variant-numeric:tabular-nums}
 .stat > span{display:block;margin-top:.5rem;font-size:.92rem;color:var(--muted)}
 .stat b span{display:inline;margin:0;font-size:inherit;color:inherit}
 .slide.dark .stat{background:rgba(244,237,228,.06)} .slide.dark .stat b{color:var(--cream)} .slide.dark .stat > span{color:rgba(244,237,228,.75)}
@@ -131,24 +141,22 @@ html:not(.js) .slide{border-bottom:1px solid var(--sand)}
 .slide.dark .list.check li::before{border-color:var(--gold)}
 
 .steps{counter-reset:s;display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;position:relative}
-.steps li{counter-increment:s;background:#fff;border:1px solid var(--sand);border-radius:var(--r-md);padding:1.2rem 1.1rem;font-size:.95rem;position:relative;transition:transform .65s var(--ease),box-shadow .65s var(--ease)}
-.steps li:hover{transform:translateY(-6px);box-shadow:var(--sh-float)}
+.steps li{counter-increment:s;background:#fff;border:1px solid var(--sand);border-radius:var(--r-md);padding:1.2rem 1.1rem;font-size:.95rem;position:relative}
 .steps li::before{content:counter(s);display:block;font-family:var(--f-serif);font-style:italic;font-size:1.7rem;color:var(--gold);line-height:1;margin-bottom:.5rem}
 .steps li b{display:block;color:var(--petrol-deep);font-weight:600;margin-bottom:.25rem} .steps li span{color:var(--muted)}
 .steps li:not(:last-child)::after{content:"";position:absolute;right:-.9rem;top:50%;width:.8rem;height:2px;background:var(--gold);opacity:.7}
 
-.photo{position:relative;border-radius:var(--r-lg);overflow:hidden;aspect-ratio:4/5;background:linear-gradient(160deg,var(--sand) 0%,var(--sand-soft) 55%,var(--gold-soft) 100%);box-shadow:var(--sh-lg);transform-style:preserve-3d;will-change:transform}
-.photo img{width:100%;height:100%;object-fit:cover;transform:scale(1.08);transition:transform 1.8s var(--ease)}
+/* Fotos: entrada com leve aproximação (ease-out, explicativa, pode ser mais longa); hover curto com `ease` */
+.photo{position:relative;border-radius:var(--r-lg);overflow:hidden;aspect-ratio:4/5;background:linear-gradient(160deg,var(--sand) 0%,var(--sand-soft) 55%,var(--gold-soft) 100%);box-shadow:var(--sh-lg)}
+.photo.px{will-change:transform}
+.photo img{width:100%;height:100%;object-fit:cover;transform:scale(1.06);transition:transform 900ms var(--ease-out)}
 .slide.is-active .photo img{transform:scale(1)}
-.slide.is-active .photo:hover img{transform:scale(1.035);transition-duration:1.4s}
 .photo.noimg img{display:none}
 .photo .tag{position:absolute;left:1rem;bottom:1rem;background:rgba(20,52,56,.82);backdrop-filter:blur(6px);color:#fff;font-size:.78rem;font-weight:500;padding:.45rem .9rem;border-radius:999px;letter-spacing:.04em}
 .seal{position:absolute;top:-1rem;right:1rem;width:4.2rem;height:4.2rem;border-radius:50%;background:var(--cream);box-shadow:var(--sh-md);display:grid;place-items:center;border:1.5px solid var(--gold-soft)}
 .seal img{width:2.9rem;height:2.9rem}
 
-.col{background:#fff;border:1px solid var(--sand);border-radius:var(--r-md);overflow:hidden;transition:transform .65s var(--ease),box-shadow .65s var(--ease);will-change:transform}
-.col:hover{transform:translateY(-8px);box-shadow:var(--sh-float)}
-.slide.is-active .col:hover .photo img{transform:scale(1.05)}
+.col{background:#fff;border:1px solid var(--sand);border-radius:var(--r-md);overflow:hidden}
 .col .photo{border-radius:0;aspect-ratio:16/10;box-shadow:none}
 .col .cb{padding:1rem 1.1rem} .col h3{font-size:1.15rem}
 .col .cap{font-size:.82rem;color:var(--muted);margin:.15rem 0 .5rem}
@@ -161,15 +169,15 @@ html:not(.js) .slide{border-bottom:1px solid var(--sand)}
 .plan .list li{font-size:.92rem;margin:.3rem 0}
 .plan.rec{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-soft)}
 
-/* barras de valor (slide "na prática") */
+/* Barras de valor: crescem via transform (nunca width), ease-out, depois do reveal */
 .bars{display:grid;gap:.9rem}
 .bar-row{display:grid;grid-template-columns:11rem 1fr 6rem;gap:1rem;align-items:center;font-size:.95rem}
 .bar-row .lab{color:var(--muted)} .bar-row .val{font-family:var(--f-serif);font-weight:600;color:var(--petrol-deep);text-align:right;font-variant-numeric:tabular-nums}
 .bar-track{height:.9rem;border-radius:999px;background:var(--sand-soft);overflow:hidden}
-.bar-fill{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--terracotta),var(--gold));transition:width 1.6s var(--ease-in);transition-delay:.6s}
-.slide.is-active .bar-fill{width:var(--w)}
+.bar-fill{height:100%;width:var(--w);border-radius:999px;background:linear-gradient(90deg,var(--terracotta),var(--gold));transform:scaleX(0);transform-origin:left;transition:transform 900ms var(--ease-out) 320ms}
+.slide.is-active .bar-fill{transform:scaleX(1)}
 .total{display:flex;align-items:baseline;gap:1rem;border-top:1px solid var(--sand);padding-top:1rem}
-.total b{font-family:var(--f-serif);font-size:2.4rem;color:var(--terracotta-ink);line-height:1}
+.total b{font-family:var(--f-serif);font-size:2.4rem;letter-spacing:-.02em;color:var(--terracotta-ink);line-height:1}
 
 .faq{display:grid;grid-template-columns:1fr 1fr;gap:1rem 2rem}
 .faq div{padding:1rem 0;border-top:1px solid var(--sand)}
@@ -177,23 +185,20 @@ html:not(.js) .slide{border-bottom:1px solid var(--sand)}
 .faq p{font-size:.95rem;color:var(--muted)}
 
 .people{display:grid;grid-template-columns:1fr 1fr;gap:2.4rem;align-items:stretch}
-.person{display:grid;grid-template-rows:auto auto 1fr auto;gap:.9rem;background:#fff;border:1px solid var(--sand);border-radius:var(--r-md);padding:1.5rem 1.6rem;transition:transform .65s var(--ease),box-shadow .65s var(--ease)}
-.person:hover{transform:translateY(-6px);box-shadow:var(--sh-float)}
+.person{display:grid;grid-template-rows:auto auto 1fr auto;gap:.9rem;background:#fff;border:1px solid var(--sand);border-radius:var(--r-md);padding:1.5rem 1.6rem}
 .person .av{width:4.4rem;height:4.4rem;border-radius:50%;background:var(--petrol);color:var(--cream);display:grid;place-items:center;font-family:var(--f-serif);font-size:1.8rem;font-weight:600;box-shadow:0 0 0 5px var(--gold-soft)}
 .person .role{font-size:.9rem;color:var(--terracotta-ink);font-weight:500}
 .person .list li{font-size:.95rem;margin:.45rem 0}
 .person .links{display:flex;flex-wrap:wrap;gap:.5rem;padding-top:.6rem;border-top:1px solid var(--sand)}
-.person .links a{font-size:.82rem;text-decoration:none;color:var(--petrol-deep);background:var(--sand-soft);padding:.35rem .8rem;border-radius:999px;font-weight:500;transition:background .45s var(--ease)}
-.person .links a:hover{background:var(--gold-soft)}
+.person .links a{font-size:.82rem;text-decoration:none;color:var(--petrol-deep);background:var(--sand-soft);padding:.35rem .8rem;border-radius:999px;font-weight:500}
 
-.fill{display:inline-block;min-width:11rem;border-bottom:1.5px dashed var(--gold);padding:0 .3rem;color:var(--gold);font-family:var(--f-serif);font-style:italic;outline:none}
+.fill{display:inline-block;min-width:11rem;border-bottom:1.5px dashed var(--gold);padding:0 .3rem;color:var(--gold);font-family:var(--f-serif);font-style:italic;outline:none;transition:color var(--d-ui) ease,border-color var(--d-ui) ease}
 .fill:focus{border-bottom-style:solid;color:#fff}
 .next li{display:flex;gap:1rem;align-items:baseline;font-size:1.15rem;margin:.9rem 0}
 .next li .n{font-family:var(--f-serif);font-style:italic;color:var(--gold);font-size:1.7rem;line-height:1}
 .contact{display:flex;flex-wrap:wrap;gap:1.6rem;align-items:center}
 .contact a{color:#fff;text-decoration:none;font-weight:500} .contact a:hover{text-decoration:underline}
-.wa{display:inline-flex;align-items:center;gap:.6rem;background:var(--whatsapp);color:#0b3d1c !important;padding:.75rem 1.3rem;border-radius:var(--r-btn);font-weight:600;min-height:48px;box-shadow:0 8px 24px rgba(37,211,102,.25);transition:transform .55s var(--ease),box-shadow .55s var(--ease)}
-.wa:hover{transform:translateY(-3px);box-shadow:0 14px 32px rgba(37,211,102,.32);text-decoration:none!important}
+.wa{display:inline-flex;align-items:center;gap:.6rem;background:var(--whatsapp);color:#0b3d1c !important;padding:.75rem 1.3rem;border-radius:var(--r-btn);font-weight:600;min-height:48px;box-shadow:0 8px 24px rgba(37,211,102,.25)}
 .wa svg{width:1.25rem;height:1.25rem;fill:currentColor}
 .qr{width:8.5rem;height:8.5rem;background:#fff;padding:.55rem;border-radius:var(--r-md);flex:none} .qr svg{width:100%;height:100%;display:block}
 
@@ -201,27 +206,65 @@ html:not(.js) .slide{border-bottom:1px solid var(--sand)}
 .slide.dark .foot{color:rgba(244,237,228,.55)}
 .hint{font-size:.85rem;color:rgba(244,237,228,.6)}
 
-/* ===== Controles ===== */
+/* ===== Elementos pressionáveis: feedback no toque (scale .97, 140 ms ease-out), hover só cor/sombra ===== */
+.ctl button,.dots button,.wa,.person .links a,.brand{transition:transform var(--d-press) var(--ease-out),background-color var(--d-hover) ease,box-shadow var(--d-hover) ease,border-color var(--d-hover) ease,opacity var(--d-hover) ease}
+.ctl button:active,.dots button:active,.wa:active,.person .links a:active,.brand:active{transform:scale(.97)}
+.dots button.on:active{transform:scale(1.25)}
+
+/* ===== Controles: material translúcido (apple-design) com borda clara no topo ===== */
 .ctl{position:fixed;left:0;right:0;bottom:0;z-index:20;display:none;align-items:center;justify-content:space-between;padding:.6rem 1rem calc(env(safe-area-inset-bottom) + .6rem);pointer-events:none}
 html.js .ctl{display:flex}
-.ctl button{pointer-events:auto;min-width:48px;min-height:48px;border:1px solid var(--sand);background:rgba(255,255,255,.85);backdrop-filter:blur(8px);border-radius:999px;color:var(--petrol-deep);font-family:inherit;font-size:1.1rem;display:grid;place-items:center;transition:background .45s var(--ease),transform .45s var(--ease),box-shadow .45s var(--ease)}
-.ctl button:hover{background:#fff;transform:translateY(-2px);box-shadow:var(--sh-md)} .ctl button:disabled{opacity:.35;transform:none}
+.ctl button{pointer-events:auto;min-width:48px;min-height:48px;border:1px solid rgba(255,255,255,.55);background:rgba(255,255,255,.72);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);box-shadow:0 1px 2px rgba(20,52,56,.08);border-radius:999px;color:var(--petrol-deep);font-family:inherit;font-size:1.1rem;display:grid;place-items:center}
+.ctl button:disabled{opacity:.35}
 .ctl .mid{display:flex;align-items:center;gap:.8rem;pointer-events:auto}
 .ctl .cnt{font-size:.8rem;letter-spacing:.12em;color:var(--muted);font-variant-numeric:tabular-nums}
+.slide.dark ~ .ctl .cnt{color:var(--muted)}
 .ctl .small{min-width:40px;min-height:40px;font-size:.72rem;letter-spacing:.1em;font-weight:600;padding:0 .8rem}
-.bar{position:fixed;left:0;top:0;height:3px;width:0;background:linear-gradient(90deg,var(--terracotta),var(--gold));z-index:21;transition:width 1s var(--ease)}
+.bar{position:fixed;left:0;top:0;height:3px;width:100%;transform:scaleX(0);transform-origin:left;background:linear-gradient(90deg,var(--terracotta),var(--gold));z-index:21;transition:transform 300ms var(--ease-out)}
 html:not(.js) .bar{display:none}
 .dots{position:fixed;right:1rem;top:50%;transform:translateY(-50%);z-index:20;display:none;flex-direction:column;gap:.55rem}
 html.js .dots{display:flex}
-.dots button{width:14px;height:14px;padding:0;border:0;border-radius:50%;background:rgba(107,101,94,.35);transition:transform .5s var(--ease),background .5s var(--ease)}
+.dots button{width:14px;height:14px;padding:0;border:0;border-radius:50%;background:rgba(107,101,94,.35);cursor:pointer}
 .dots button.on{background:var(--gold);transform:scale(1.35)}
 @media (max-width:640px){.dots{display:none!important}}
 
 /* notas do apresentador */
-.notes{position:fixed;right:1rem;bottom:4.6rem;z-index:25;width:min(26rem,calc(100vw - 2rem));max-height:55vh;overflow:auto;background:#fff;color:var(--ink);border:1px solid var(--sand);border-radius:var(--r-md);box-shadow:var(--sh-lg);padding:1rem 1.2rem;font-size:.9rem;line-height:1.5;display:none}
+.notes{position:fixed;right:1rem;bottom:4.6rem;z-index:25;width:min(26rem,calc(100vw - 2rem));max-height:55vh;overflow:auto;background:rgba(255,255,255,.92);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);color:var(--ink);border:1px solid rgba(255,255,255,.6);border-radius:var(--r-md);box-shadow:var(--sh-lg);padding:1rem 1.2rem;font-size:.9rem;line-height:1.5;display:none}
 .notes.on{display:block}
 .notes b{color:var(--terracotta-ink);display:block;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;margin-bottom:.4rem}
 .notes p{margin:.35rem 0}
+
+/* ===== Hover: só com ponteiro fino e sem movimento reduzido (toque dispara hover falso) ===== */
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  html.js .slide.is-active .card:hover,html.js .slide.is-active .col:hover,html.js .slide.is-active .steps li:hover,html.js .slide.is-active .person:hover{transform:translateY(-4px)}
+  html.js .slide.is-active .stat:hover,html.js .slide.is-active .cat span:hover{transform:translateY(-3px)}
+  .card:hover,.col:hover,.steps li:hover,.person:hover,.stat:hover{box-shadow:var(--sh-float);border-color:var(--gold-soft)}
+  .slide.dark .card:hover{background:rgba(244,237,228,.09);border-color:rgba(201,162,75,.45);box-shadow:0 18px 40px rgba(0,0,0,.28)}
+  .cat span:hover{background:rgba(244,237,228,.09);border-color:rgba(201,162,75,.5)}
+  .slide:not(.dark) .cat span:hover{background:#fff;border-color:var(--gold-soft);box-shadow:var(--sh-md)}
+  .slide.rv-done .photo:hover img,.slide.rv-done .col:hover .photo img{transform:scale(1.03);transition:transform 400ms ease}
+  .person .links a:hover{background:var(--gold-soft)}
+  .ctl button:hover:not(:disabled){background:rgba(255,255,255,.95);box-shadow:var(--sh-md)}
+  .wa:hover{box-shadow:0 12px 28px rgba(37,211,102,.34);text-decoration:none!important}
+  .dots button:hover{background:rgba(107,101,94,.6)}
+}
+
+/* ===== Movimento reduzido: crossfade em vez de deslocamento; fundo parado; sem cursor ===== */
+@media (prefers-reduced-motion:reduce){
+  html.js .slide{transform:none!important;transition:opacity var(--d-ui) ease,visibility 0s var(--d-ui)}
+  html.js .slide.is-active{transition:opacity var(--d-ui) ease,visibility 0s}
+  html.js .slide .rv{transform:none!important;transition:opacity var(--d-ui) ease!important;transition-delay:0s!important}
+  .orb,.wave path{animation:none!important}
+  .orbs{transform:none!important}
+  .photo img,.photo.px{transform:none!important;transition:none!important}
+  .bar-fill,.bar{transition:none}
+}
+/* Transparência reduzida / contraste alto: superfícies sólidas */
+@media (prefers-reduced-transparency:reduce),(prefers-contrast:more){
+  .ctl button{background:#fff;backdrop-filter:none;-webkit-backdrop-filter:none;border-color:var(--sand)}
+  .notes{background:#fff;backdrop-filter:none;-webkit-backdrop-filter:none;border-color:var(--sand)}
+  .slide.dark .card{background:rgba(20,52,56,.92);backdrop-filter:none}
+}
 
 /* ===== Responsivo ===== */
 @media (max-width:980px){
@@ -241,8 +284,6 @@ html.js .dots{display:flex}
   .grid2 .photo{max-height:28dvh} .seal{display:none} .contact{gap:1rem} .foot{display:none}
   .slide{padding-bottom:calc(env(safe-area-inset-bottom) + 5rem)}
   .bar-row{grid-template-columns:1fr;gap:.3rem} .bar-row .val{text-align:left}
-  html.js .slide{transform:translate3d(18%,0,0);transition-duration:.7s} html.js .slide.is-prev{transform:translate3d(-18%,0,0)}
-  html.js .slide[data-fx]{transform:translate3d(18%,0,0)} html.js .slide[data-fx].is-prev{transform:translate3d(-18%,0,0)}
 }
 @media (min-width:1600px){.wrap{max-width:86rem}}
 
@@ -253,23 +294,9 @@ html.js .dots{display:flex}
 .tl .card::before{content:"";position:absolute;top:-2.2rem;left:1.4rem;width:.9rem;height:.9rem;border-radius:50%;background:var(--gold);box-shadow:0 0 0 5px rgba(201,162,75,.2);transform:translateY(-.45rem)}
 .tl .card .n{font-size:1.1rem;font-style:normal;letter-spacing:.06em}
 .cat{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem}
-.cat span{padding:.85rem 1rem;border-radius:var(--r-sm);border:1px solid rgba(244,237,228,.16);background:rgba(244,237,228,.05);font-size:.92rem;font-weight:500;color:var(--cream);transition:transform .6s var(--ease),background .6s var(--ease),border-color .6s var(--ease)}
-.cat span:hover{transform:translateY(-4px);background:rgba(244,237,228,.09);border-color:rgba(201,162,75,.5)}
+.cat span{padding:.85rem 1rem;border-radius:var(--r-sm);border:1px solid rgba(244,237,228,.16);background:rgba(244,237,228,.05);font-size:.92rem;font-weight:500;color:var(--cream)}
 .slide:not(.dark) .cat span{background:#fff;border-color:var(--sand);color:var(--petrol-deep)}
-.slide:not(.dark) .cat span:hover{border-color:var(--gold-soft);box-shadow:var(--sh-md)}
 .read{font-size:.85rem;color:var(--muted)} .slide.dark .read{color:rgba(244,237,228,.6)}
 .read a{color:inherit}
 @media (max-width:980px){.tl{grid-template-columns:1fr 1fr} .tl::before{display:none} .tl .card{margin-top:0} .tl .card::before{display:none} .cat{grid-template-columns:1fr 1fr}}
 @media (max-width:640px){.tl{grid-template-columns:1fr} .cat{grid-template-columns:1fr 1fr;gap:.55rem} .cat span{padding:.65rem .75rem;font-size:.84rem}}
-
-/* Depois que o reveal termina (classe rv-done, aplicada pelo deck.js), o hover deixa de herdar
-   o atraso escalonado e a lista de propriedades do reveal: cards flutuam sem delay e a sombra anima. */
-html.js .slide.rv-done .rv{transition-delay:0s}
-html.js .slide.rv-done .card.rv,html.js .slide.rv-done .col.rv,html.js .slide.rv-done .steps li.rv,html.js .slide.rv-done .stat.rv,html.js .slide.rv-done .person.rv,html.js .slide.rv-done .cat span.rv{transition:transform .65s var(--ease),box-shadow .65s var(--ease),border-color .65s var(--ease),background .65s var(--ease)}
-html.js .slide.is-active .card:hover{transform:translateY(-7px)}
-html.js .slide.is-active .col:hover{transform:translateY(-8px)}
-html.js .slide.is-active .steps li:hover{transform:translateY(-6px)}
-html.js .slide.is-active .stat:hover{transform:translateY(-5px)}
-html.js .slide.is-active .person:hover{transform:translateY(-6px)}
-html.js .slide.is-active .cat span:hover{transform:translateY(-4px)}
-@media (prefers-reduced-motion:reduce){html.js .slide.is-active .card:hover,html.js .slide.is-active .col:hover,html.js .slide.is-active .steps li:hover,html.js .slide.is-active .stat:hover,html.js .slide.is-active .person:hover,html.js .slide.is-active .cat span:hover{transform:none}}

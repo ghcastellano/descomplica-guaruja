@@ -12,7 +12,11 @@ Landing page com quiz de recomendação para o **Descomplica Guarujá**: negóci
 - `parceria-pousadas.html` (`/parceria-pousadas`; atalhos `/apresentacao`, `/parceria`, `/pousadas`): proposta para pousadas e hotéis, apresentada ao vivo (tem notas do apresentador).
 - `resumo-executivo.html` (`/resumo-executivo`, atalho `/resumo`): resumo lido online por parceiros institucionais; foco em comércio local e no Guarujá querido por moradores e turistas de SP. NÃO citar prefeitura nem nomes de autoridades.
 - `visao.html` (`/visao`, atalho `/futuro`): visão da plataforma (marketplace de prestadores locais, agenda integrada, organização de eventos). Mesma audiência do resumo.
-- CSS e JS compartilhados: `deck.css` e `deck.js`. Curvas de easing orgânicas (cubic-bezier, sem linear, sem overshoot), cards flutuam no hover, transições longas. Não reintroduzir `--ease-back` com overshoot.
+- CSS e JS compartilhados: `deck.css` e `deck.js`. O sistema de movimento segue as skills globais `emil-design-eng`, `animate` e `apple-design` (em `~/.claude/skills`): carregar as três antes de mexer em animação dos decks.
+  - Tokens exatos das skills: `--ease-out: cubic-bezier(0.23,1,0.32,1)` (entrada/saída), `--ease-in-out: cubic-bezier(0.77,0,0.175,1)` (movimento em tela), `ease` nativo para hover/cor. Nunca `ease-in`, nunca `linear` em UI, nunca curva inventada.
+  - Durações: pressão 140 ms · hover 220 ms · UI ≤ 300 ms · troca de slide 480 ms entrada / 280 ms saída (explicativa, pode passar de 300 ms) · reveal 420 ms com stagger de 45 ms.
+  - Um único modelo espacial: próximo slide entra da direita, atual sai pela esquerda, caminho espelhado ao voltar. Não reintroduzir `data-fx` (zoom/flip).
+  - Só `transform`/`opacity` animam (barras usam `scaleX`, nunca `width`). Hover gated por `(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference)`. Todo pressionável tem `:active{transform:scale(.97)}`. Movimento reduzido = crossfade, sem deslocamento. Nunca travar a navegação durante a transição.
 - Todos com `noindex` e bloqueados no `robots.txt`. Host canônico do site: **www.descomplicaguaruja.com.br** (apex redireciona 308 no painel da Vercel).
 
 ## Configuração obrigatória antes do deploy

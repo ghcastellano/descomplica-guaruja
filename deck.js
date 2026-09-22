@@ -1,7 +1,7 @@
 (function(){
   var root = document.documentElement;
   var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
-  var total = slides.length, cur = 0, lock = false, rvT = null;
+  var total = slides.length, cur = 0, rvT = null;
   var cnt = document.getElementById('cnt'), bar = document.getElementById('bar');
   var prevBtn = document.getElementById('prev'), nextBtn = document.getElementById('next');
   var notes = document.getElementById('notes'), notesBtn = document.getElementById('notesBtn');
@@ -30,10 +30,11 @@
   function show(i){
     if(i<0||i>=total) return;
     slides.forEach(function(s,k){ s.classList.toggle('is-active', k===i); s.classList.toggle('is-prev', k<i); s.classList.remove('rv-done'); });
-    clearTimeout(rvT); rvT = setTimeout(function(){ slides[i].classList.add('rv-done'); }, reduce ? 50 : 1700);
+    var nRv = slides[i].querySelectorAll('.rv').length;
+    clearTimeout(rvT); rvT = setTimeout(function(){ slides[i].classList.add('rv-done'); }, reduce ? 220 : 140 + nRv*45 + 440);
     slides[i].scrollTop = 0; cur = i;
     cnt.textContent = (i+1)+' / '+total;
-    bar.style.width = ((i+1)/total*100)+'%';
+    bar.style.transform = 'scaleX('+((i+1)/total)+')';
     prevBtn.disabled = i===0; nextBtn.disabled = i===total-1;
     dotBtns.forEach(function(b,k){ b.classList.toggle('on', k===i); });
     notes.innerHTML = slides[i].getAttribute('data-notes') || '<p>Sem notas para este slide.</p>';
@@ -42,7 +43,7 @@
     document.title = 'Slide '+(i+1)+' · '+baseTitle;
     setTimeout(function(){ Array.prototype.forEach.call(slides[i].querySelectorAll('[data-count]'), countUp); }, 350);
   }
-  function go(d){ if(lock) return; var n = cur + d; if(n<0||n>=total) return; lock = true; show(n); setTimeout(function(){lock=false;}, 800); }
+  function go(d){ var n = cur + d; if(n<0||n>=total) return; show(n); }
   prevBtn.addEventListener('click', function(){go(-1)});
   nextBtn.addEventListener('click', function(){go(1)});
 
@@ -57,12 +58,12 @@
   });
 
   // roda do mouse: avança; se o slide tiver rolagem interna, rola primeiro
-  var wheelAcc = 0, wheelT = null;
+  var wheelAcc = 0, wheelT = null, wheelCool = 0;
   document.addEventListener('wheel', function(e){
     var s = slides[cur]; var canScroll = s.scrollHeight - s.clientHeight > 4;
     if(canScroll){ var atTop = s.scrollTop <= 0, atBottom = s.scrollTop + s.clientHeight >= s.scrollHeight - 2; if((e.deltaY>0 && !atBottom) || (e.deltaY<0 && !atTop)) return; }
     e.preventDefault(); wheelAcc += e.deltaY; clearTimeout(wheelT); wheelT = setTimeout(function(){ wheelAcc = 0; }, 200);
-    if(Math.abs(wheelAcc) > 40){ go(wheelAcc>0?1:-1); wheelAcc = 0; }
+    if(Math.abs(wheelAcc) > 40){ wheelAcc = 0; var now = Date.now(); if(now - wheelCool < 550) return; wheelCool = now; go(wheelAcc>0?1:-1); }
   }, {passive:false});
 
   // toque: deslizar horizontalmente
@@ -95,6 +96,7 @@
   if(fine && !reduce){
     var dot = document.getElementById('curDot'), ring = document.getElementById('curRing');
     var mx = innerWidth/2, my = innerHeight/2, rx = mx, ry = my, shown = false;
+    var tpx = 0, tpy = 0, cpx = 0, cpy = 0;
     document.addEventListener('mousemove', function(e){
       mx = e.clientX; my = e.clientY;
       dot.style.transform = 'translate3d('+mx+'px,'+my+'px,0)';
@@ -102,17 +104,21 @@
       var t = e.target, hov = false;
       while(t && t !== document.body){ if(t.tagName==='A'||t.tagName==='BUTTON'||t.isContentEditable||(t.classList&&(t.classList.contains('card')||t.classList.contains('col')))){ hov = true; break; } t = t.parentNode; }
       root.classList.toggle('cur-hover', hov);
-      var px = (mx/innerWidth - .5), py = (my/innerHeight - .5);
-      var s = slides[cur];
-      Array.prototype.forEach.call(s.querySelectorAll('.px'), function(el){ el.style.transform = 'rotateY('+(px*8)+'deg) rotateX('+(-py*6)+'deg) translate3d('+(px*10)+'px,'+(py*10)+'px,0)'; });
-      Array.prototype.forEach.call(s.querySelectorAll('.orb'), function(el,k){ var f = (k+1)*14; el.style.marginLeft = (px*f)+'px'; el.style.marginTop = (py*f)+'px'; });
+      tpx = (mx/innerWidth - .5); tpy = (my/innerHeight - .5);
     });
     document.addEventListener('mousedown', function(){ root.classList.add('cur-down'); });
     document.addEventListener('mouseup', function(){ root.classList.remove('cur-down'); });
     document.addEventListener('mouseleave', function(){ root.classList.add('cur-hide'); });
     document.addEventListener('mouseenter', function(){ root.classList.remove('cur-hide'); });
     root.classList.add('cur-hide');
-    (function loop(){ rx += (mx-rx)*.18; ry += (my-ry)*.18; ring.style.transform = 'translate3d('+rx+'px,'+ry+'px,0)'; requestAnimationFrame(loop); })();
+    (function loop(){
+      rx += (mx-rx)*.18; ry += (my-ry)*.18; ring.style.transform = 'translate3d('+rx+'px,'+ry+'px,0)';
+      cpx += (tpx-cpx)*.08; cpy += (tpy-cpy)*.08;
+      var s = slides[cur];
+      Array.prototype.forEach.call(s.querySelectorAll('.px'), function(el){ el.style.transform = 'perspective(900px) rotateY('+(cpx*5)+'deg) rotateX('+(-cpy*4)+'deg) translate3d('+(cpx*6)+'px,'+(cpy*6)+'px,0)'; });
+      var orbs = s.querySelector('.orbs'); if(orbs){ orbs.style.transform = 'translate3d('+(cpx*22)+'px,'+(cpy*16)+'px,0)'; }
+      requestAnimationFrame(loop);
+    })();
   }
 
   window.addEventListener('hashchange', function(){ show(fromHash()); });
