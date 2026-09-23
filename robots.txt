@@ -1,30 +1,206 @@
+# https://www.descomplicaguaruja.com.br/
+# Páginas privadas: propostas comerciais, apresentações e painel interno.
+# Cada agente precisa repetir os Disallow, porque um bloco específico
+# substitui inteiramente o bloco User-agent: *.
+
 User-agent: *
 Allow: /
 Disallow: /parceria-pousadas
 Disallow: /resumo-executivo
 Disallow: /visao
 Disallow: /apresentacao
+Disallow: /apresentacao-executiva
 Disallow: /painel
 Disallow: /proposta
 
-# Crawlers de IA (ChatGPT, Claude, Perplexity, Gemini): permitidos na página pública
+User-agent: Googlebot
+Allow: /
+Disallow: /parceria-pousadas
+Disallow: /resumo-executivo
+Disallow: /visao
+Disallow: /apresentacao
+Disallow: /apresentacao-executiva
+Disallow: /painel
+Disallow: /proposta
+
+User-agent: Bingbot
+Allow: /
+Disallow: /parceria-pousadas
+Disallow: /resumo-executivo
+Disallow: /visao
+Disallow: /apresentacao
+Disallow: /apresentacao-executiva
+Disallow: /painel
+Disallow: /proposta
+
 User-agent: GPTBot
 Allow: /
+Disallow: /parceria-pousadas
+Disallow: /resumo-executivo
+Disallow: /visao
+Disallow: /apresentacao
+Disallow: /apresentacao-executiva
+Disallow: /painel
+Disallow: /proposta
+
 User-agent: OAI-SearchBot
 Allow: /
+Disallow: /parceria-pousadas
+Disallow: /resumo-executivo
+Disallow: /visao
+Disallow: /apresentacao
+Disallow: /apresentacao-executiva
+Disallow: /painel
+Disallow: /proposta
+
 User-agent: ChatGPT-User
 Allow: /
+Disallow: /parceria-pousadas
+Disallow: /resumo-executivo
+Disallow: /visao
+Disallow: /apresentacao
+Disallow: /apresentacao-executiva
+Disallow: /painel
+Disallow: /proposta
+
 User-agent: ClaudeBot
 Allow: /
+Disallow: /parceria-pousadas
+Disallow: /resumo-executivo
+Disallow: /visao
+Disallow: /apresentacao
+Disallow: /apresentacao-executiva
+Disallow: /painel
+Disallow: /proposta
+
 User-agent: Claude-SearchBot
 Allow: /
+Disallow: /parceria-pousadas
+Disallow: /resumo-executivo
+Disallow: /visao
+Disallow: /apresentacao
+Disallow: /apresentacao-executiva
+Disallow: /painel
+Disallow: /proposta
+
 User-agent: anthropic-ai
 Allow: /
+Disallow: /parceria-pousadas
+Disallow: /resumo-executivo
+Disallow: /visao
+Disallow: /apresentacao
+Disallow: /apresentacao-executiva
+Disallow: /painel
+Disallow: /proposta
+
 User-agent: PerplexityBot
 Allow: /
+Disallow: /parceria-pousadas
+Disallow: /resumo-executivo
+Disallow: /visao
+Disallow: /apresentacao
+Disallow: /apresentacao-executiva
+Disallow: /painel
+Disallow: /proposta
+
+User-agent: Perplexity-User
+Allow: /
+Disallow: /parceria-pousadas
+Disallow: /resumo-executivo
+Disallow: /visao
+Disallow: /apresentacao
+Disallow: /apresentacao-executiva
+Disallow: /painel
+Disallow: /proposta
+
 User-agent: Google-Extended
 Allow: /
+Disallow: /parceria-pousadas
+Disallow: /resumo-executivo
+Disallow: /visao
+Disallow: /apresentacao
+Disallow: /apresentacao-executiva
+Disallow: /painel
+Disallow: /proposta
+
+User-agent: Applebot
+Allow: /
+Disallow: /parceria-pousadas
+Disallow: /resumo-executivo
+Disallow: /visao
+Disallow: /apresentacao
+Disallow: /apresentacao-executiva
+Disallow: /painel
+Disallow: /proposta
+
 User-agent: Applebot-Extended
 Allow: /
+Disallow: /parceria-pousadas
+Disallow: /resumo-executivo
+Disallow: /visao
+Disallow: /apresentacao
+Disallow: /apresentacao-executiva
+Disallow: /painel
+Disallow: /proposta
+
+User-agent: Amazonbot
+Allow: /
+Disallow: /parceria-pousadas
+Disallow: /resumo-executivo
+Disallow: /visao
+Disallow: /apresentacao
+Disallow: /apresentacao-executiva
+Disallow: /painel
+Disallow: /proposta
+
+User-agent: Bytespider
+Allow: /
+Disallow: /parceria-pousadas
+Disallow: /resumo-executivo
+Disallow: /visao
+Disallow: /apresentacao
+Disallow: /apresentacao-executiva
+Disallow: /painel
+Disallow: /proposta
+
+User-agent: CCBot
+Allow: /
+Disallow: /parceria-pousadas
+Disallow: /resumo-executivo
+Disallow: /visao
+Disallow: /apresentacao
+Disallow: /apresentacao-executiva
+Disallow: /painel
+Disallow: /proposta
+
+User-agent: meta-externalagent
+Allow: /
+Disallow: /parceria-pousadas
+Disallow: /resumo-executivo
+Disallow: /visao
+Disallow: /apresentacao
+Disallow: /apresentacao-executiva
+Disallow: /painel
+Disallow: /proposta
+
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /parceria-pousadas
+Disallow: /resumo-executivo
+Disallow: /visao
+Disallow: /apresentacao
+Disallow: /apresentacao-executiva
+Disallow: /painel
+Disallow: /proposta
+
+User-agent: YandexBot
+Allow: /
+Disallow: /parceria-pousadas
+Disallow: /resumo-executivo
+Disallow: /visao
+Disallow: /apresentacao
+Disallow: /apresentacao-executiva
+Disallow: /painel
+Disallow: /proposta
 
 Sitemap: https://www.descomplicaguaruja.com.br/sitemap.xml

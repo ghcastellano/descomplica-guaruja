@@ -84,6 +84,15 @@
       ]
     },
     {
+      "source": "/img/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
       "source": "/(favicon.png|apple-touch-icon.png|og-image.png|logo.png|logo.webp|deck.css|deck.js|app.css)",
       "headers": [
         {
