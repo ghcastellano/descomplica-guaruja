@@ -231,6 +231,6 @@ footer{background:var(--petrol-deep);color:rgba(244,237,228,.76);padding:var(--s
 .card-meta span{display:inline-flex;gap:5px}
 .card-meta b{color:var(--ink);font-weight:500}
 .vazio{text-align:center;padding:var(--s7) var(--s4);color:var(--muted);background:var(--white);border:1px dashed var(--sand);border-radius:var(--r-md)}
-.login{max-width:420px;margin:var(--s8) auto;background:var(--white);border:1px solid var(--sand);border-radius:var(--r-lg);padding:var(--s6);box-shadow:var(--sh-md)}
+.login{max-width:420px;margin:var(--s8) auto;padding:var(--s6)}
 
 .opcional{color:var(--muted);font-weight:400}
