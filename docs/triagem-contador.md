@@ -137,6 +137,45 @@ contribuição previdenciária patronal sai do DAS e é paga à parte.
 
 ---
 
+## 5A. A arquitetura que os dois lados da pesquisa recomendaram
+
+Três pesquisas independentes convergiram na mesma saída: **não tente ser agente
+em tudo.** A norma contábil que trata disso, o CPC 47, autoriza expressamente
+ser principal em alguns serviços e agente em outros dentro do mesmo contrato.
+
+**Produto A, o piquenique próprio.** Kit, equipe e montagem são seus. Você é o
+responsável primário, define o preço e tem o kit como estoque de verdade. Isso
+é receita bruta, e está tudo bem: o ticket é pequeno e a alíquota de entrada é
+6%. Código de serviço 17.11, que mantém o ISS em Guarujá.
+
+**Produto B, a celebração com fornecedores.** O cliente escolhe, cada fornecedor
+tem preço visível e atribuído, e você cobra uma taxa destacada. Receita é só a
+taxa. Aqui o código de serviço muda para **17.12, administração em geral,
+inclusive de bens e negócios de terceiros**, ou 10.05, agenciamento. Emitir esse
+produto sob 17.11 contradiz a própria tese.
+
+**O teste que decide, em uma frase:** a nota do buffet sai no CPF do cliente ou
+no CNPJ do Descomplica? Enquanto sair no seu CNPJ, o valor cheio é sua receita,
+por mais bem escrito que esteja o contrato.
+
+**Três coisas que nunca podem acontecer**
+
+- nota de débito para o repasse, que a Receita já disse não ser documento idôneo
+- valor de fornecedor dentro da sua nota, ainda que discriminado
+- comprar a decoração por um valor e repassar por outro sem o cliente ver
+
+**A escala é o argumento, não a economia pontual.** Faturando cheio, o teto do
+Simples chega em cerca de 240 festas por ano. Faturando só a taxa, chega perto
+de 1.600. E a 100 festas por ano o imposto sobre o valor cheio consome quase
+toda a comissão.
+
+**O gargalo é o fornecedor sem CNPJ.** Sem nota dele para o cliente, aquela
+parcela não sustenta a tese. A partir de 2027 fica pior: a lei da reforma
+torna a plataforma solidária pelo imposto do fornecedor que não emitir nota.
+Ajudar o fornecedor a abrir MEI deixa de ser gentileza e vira parte do produto.
+
+---
+
 ## 6. Onde procurar
 
 **Escritórios que declaram atender eventos e buffet**, com a citação conferida
