@@ -242,7 +242,7 @@ p{margin:0}ul{margin:0;padding:0;list-style:none}a{color:inherit}
           <p class="ajuda">Se ainda não tem data fechada, deixe em branco e escolha só o período.</p>
           <div class="campo">
             <label for="data">Data do evento</label>
-            <input type="date" id="data" name="data">
+            <input type="date" id="data" name="data" min="2026-01-01" max="2031-12-31">
             <p class="erro" id="erroData" role="alert"></p>
           </div>
           <div class="opts" role="group" aria-label="Período do dia">
@@ -457,6 +457,12 @@ p{margin:0}ul{margin:0;padding:0;list-style:none}a{color:inherit}
     return !msg;
   }
 
+  (function(){ var d=document.getElementById("data"); if(!d) return;
+
+    d.min = new Date().toISOString().slice(0,10);
+
+    d.max = new Date(Date.now() + 1095*864e5).toISOString().slice(0,10); })();
+
   function valida(i){
     if(i === 0) return !!dados.ocasiao;
     if(i === 1){
@@ -468,6 +474,8 @@ p{margin:0}ul{margin:0;padding:0;list-style:none}a{color:inherit}
     if(i === 2){
       var v = document.getElementById("data").value;
       if(v && v < new Date().toISOString().slice(0,10)) return erro("erroData","Essa data já passou.");
+        var teto = new Date(Date.now() + 1095*864e5).toISOString().slice(0,10);
+        if(v && v > teto) return erro("erroData","Confira o ano. Atendemos com até três anos de antecedência.");
       erro("erroData","");
       return !!dados.periodo;
     }
