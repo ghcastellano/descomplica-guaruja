@@ -1,3 +1,8 @@
 .vercel
 .claude/settings.local.json
 .DS_Store
+
+# áudios e vídeos de trabalho não entram no repositório
+*.opus
+*.m4a
+*.mp4
