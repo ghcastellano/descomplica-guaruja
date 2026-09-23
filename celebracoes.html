@@ -35,7 +35,42 @@
 {"@type":"Offer","name":"Reunida — 21 a 50 pessoas","priceCurrency":"BRL","price":"8000"},
 {"@type":"Offer","name":"Completa — 51 a 100 pessoas","priceCurrency":"BRL","price":"18000"}]}}
 </script>
-<link rel="stylesheet" href="/app.css">
+<style>
+:root{--cream:#F4EDE4;--sand:#E7D8C5;--sand-soft:#EFE5D6;--terracotta:#C8765A;--terracotta-ink:#A35236;--gold:#C9A24B;--gold-soft:#E4CD96;--petrol:#1F4E54;--petrol-deep:#143438;--ink:#2B2B2B;--muted:#6B655E;--white:#FFF;--success:#3F8F5B;--danger:#9C3B2E;--whatsapp:#25D366;--f-serif:'Fraunces',Georgia,serif;--f-sans:'Jost',-apple-system,'Segoe UI',sans-serif;--f-script:'Allura',cursive;--s1:4px;--s2:8px;--s3:16px;--s4:24px;--s5:32px;--s6:48px;--s7:64px;--s8:96px;--r-sm:8px;--r-md:16px;--r-lg:24px;--r-btn:12px;--sh-sm:0 1px 3px rgba(0,0,0,.08);--sh-md:0 4px 16px rgba(0,0,0,.10);--sh-lg:0 8px 32px rgba(20,52,56,.12);--dur-fast:150ms;--dur:250ms;--dur-slow:400ms;--ease-out:cubic-bezier(.23,1,.32,1);--maxw:1080px}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--f-sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+h1,h2{font-family:var(--f-serif);color:var(--petrol-deep);line-height:1.12;margin:0;font-weight:600;text-wrap:balance}
+h1{font-size:clamp(2rem,5.2vw,3.1rem);letter-spacing:-.022em}
+p{margin:0}ul{margin:0;padding:0;list-style:none}a{color:inherit}
+.script{font-family:var(--f-script);color:var(--terracotta-ink)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--s4)}
+.eyebrow{font-size:.76rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--terracotta-ink);display:inline-flex;align-items:center;gap:var(--s2)}
+.eyebrow::before{content:"";width:26px;height:2px;background:var(--gold);border-radius:2px}
+.lead{font-size:1.1rem;color:var(--muted);max-width:60ch}
+.top{position:sticky;top:0;z-index:50;background:rgba(244,237,228,.82);backdrop-filter:blur(18px) saturate(180%);-webkit-backdrop-filter:blur(18px) saturate(180%);border-bottom:1px solid rgba(231,216,197,.7)}
+.top-in{max-width:var(--maxw);margin:0 auto;padding:var(--s2) var(--s4);display:flex;align-items:center;justify-content:space-between;gap:var(--s3)}
+.brand{display:flex;align-items:center;gap:var(--s2);text-decoration:none;min-height:48px}
+.brand img{width:40px;height:40px;border-radius:50%}
+.brand-t{display:flex;flex-direction:column;line-height:1}
+.brand-t b{font-size:.68rem;letter-spacing:.18em;color:var(--petrol-deep);font-weight:600}
+.brand-t .script{font-size:1.25rem;margin-top:-2px}
+.top-cta{display:flex;align-items:center;gap:var(--s3)}
+.top-link{font-size:.92rem;color:var(--muted);text-decoration:none}
+@media(max-width:760px){.top-link{display:none}}
+.top-wa{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:var(--whatsapp);color:#0b3d1c;text-decoration:none}
+.top-wa svg{width:22px;height:22px;fill:currentColor}
+.hero{padding:var(--s7) 0 var(--s6);position:relative;overflow:hidden}
+.hero h1{margin:var(--s3) 0 var(--s4);max-width:17ch}
+.hero .lead{font-size:1.18rem}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:var(--s3);margin-top:var(--s5)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--s2);min-height:52px;padding:0 var(--s5);border:0;border-radius:var(--r-btn);font-family:inherit;font-size:1rem;font-weight:600;text-decoration:none;cursor:pointer}
+.btn-primary{background:var(--petrol-deep);color:var(--cream);box-shadow:var(--sh-md)}
+.btn-secondary{background:transparent;color:var(--petrol-deep);border:1.5px solid var(--sand)}
+@media(max-width:620px){body{font-size:16px}.wrap{padding:0 var(--s3)}.hero{padding:var(--s6) 0 var(--s5)}.btn{width:100%}.hero-ctas{flex-direction:column}}
+</style>
+<link rel="preload" as="style" href="/app.css" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="/app.css"></noscript>
 </head>
 <body>
 

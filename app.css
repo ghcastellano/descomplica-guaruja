@@ -170,7 +170,7 @@ footer{background:var(--petrol-deep);color:rgba(244,237,228,.76);padding:var(--s
 .foot a{color:rgba(244,237,228,.76);text-decoration:none;font-size:.92rem}
 .foot a:hover{color:var(--cream)}
 .foot-l{display:flex;flex-wrap:wrap;gap:var(--s4)}
-.foot-c{font-size:.82rem;color:rgba(244,237,228,.5);width:100%;padding-top:var(--s4);border-top:1px solid rgba(244,237,228,.12);display:flex;flex-wrap:wrap;gap:var(--s3);justify-content:space-between}
+.foot-c{font-size:.82rem;color:rgba(244,237,228,.62);width:100%;padding-top:var(--s4);border-top:1px solid rgba(244,237,228,.12);display:flex;flex-wrap:wrap;gap:var(--s3);justify-content:space-between}
 
 /* ── responsivo ── */
 @media (max-width:900px){
