@@ -38,7 +38,10 @@
     prevBtn.disabled = i===0; nextBtn.disabled = i===total-1;
     dotBtns.forEach(function(b,k){ b.classList.toggle('on', k===i); });
     notes.innerHTML = slides[i].getAttribute('data-notes') || '<p>Sem notas para este slide.</p>';
-    if(history.replaceState) history.replaceState(null,'','#'+(i+1));
+    if(history.replaceState){
+      // slide 1 deixa a URL limpa; os demais mantêm o hash para link direto
+      history.replaceState(null,'', i===0 ? (location.pathname+location.search) : '#'+(i+1));
+    }
     document.querySelector('meta[name="theme-color"]').setAttribute('content', slides[i].classList.contains('dark') ? '#143438' : '#F4EDE4');
     document.title = 'Slide '+(i+1)+' · '+baseTitle;
     setTimeout(function(){ Array.prototype.forEach.call(slides[i].querySelectorAll('[data-count]'), countUp); }, 350);

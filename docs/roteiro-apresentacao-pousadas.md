@@ -1,6 +1,6 @@
 # Roteiro de apresentação para pousadas e hotéis
 
-> Apresentação ao vivo: **www.descomplicaguaruja.com.br/parceria-pousadas** (atalhos: `/apresentacao`, `/parceria`, `/pousadas`, `/apresentacao-executiva`).
+> Apresentação ao vivo: **www.descomplicaguaruja.com.br/parceria-pousadas** (atalhos: `/apresentacao`, `/parceria`, `/pousadas`).
 > Navegação: `→` `←`, roda do mouse, deslizar no celular/tablet, ou clicar no slide. `N` abre as notas do apresentador. `F` tela cheia. `#7` na URL abre direto o slide 7.
 > Base de conteúdo: e-mail de parceria da Sophia + deck de 02/09. Este roteiro traz as técnicas de venda usadas em cada slide e o que fazer antes, durante e depois da reunião.
 

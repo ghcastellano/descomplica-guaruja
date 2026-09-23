@@ -10,8 +10,9 @@ Landing page com quiz de recomendação para o **Descomplica Guarujá**: negóci
 
 ## Apresentações (decks HTML, mesmo design system)
 - `parceria-pousadas.html` (`/parceria-pousadas`; atalhos `/apresentacao`, `/parceria`, `/pousadas`): proposta para pousadas e hotéis, apresentada ao vivo (tem notas do apresentador).
-- `resumo-executivo.html` (`/resumo-executivo`, atalho `/resumo`): resumo lido online por parceiros institucionais; foco em comércio local e no Guarujá querido por moradores e turistas de SP. NÃO citar prefeitura nem nomes de autoridades.
+- `resumo-executivo.html` (`/resumo-executivo`; atalhos `/resumo`, `/apresentacao-executiva`): resumo lido online por parceiros institucionais; foco em comércio local e no Guarujá querido por moradores e turistas de SP. NÃO citar prefeitura nem nomes de autoridades.
 - `visao.html` (`/visao`, atalho `/futuro`): visão da plataforma (marketplace de prestadores locais, agenda integrada, organização de eventos). Mesma audiência do resumo.
+- URL dos decks: o slide 1 mantém a URL limpa; do slide 2 em diante o hash `#n` permite link direto.
 - CSS e JS compartilhados: `deck.css` e `deck.js`. O sistema de movimento segue as skills globais `emil-design-eng`, `animate` e `apple-design` (em `~/.claude/skills`): carregar as três antes de mexer em animação dos decks.
   - Tokens exatos das skills: `--ease-out: cubic-bezier(0.23,1,0.32,1)` (entrada/saída), `--ease-in-out: cubic-bezier(0.77,0,0.175,1)` (movimento em tela), `ease` nativo para hover/cor. Nunca `ease-in`, nunca `linear` em UI, nunca curva inventada.
   - Durações: pressão 140 ms · hover 220 ms · UI ≤ 300 ms · troca de slide 480 ms entrada / 280 ms saída (explicativa, pode passar de 300 ms) · reveal 420 ms com stagger de 45 ms.
