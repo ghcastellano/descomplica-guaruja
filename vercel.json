@@ -51,11 +51,31 @@
       "source": "/futuro",
       "destination": "/visao",
       "permanent": false
+    },
+    {
+      "source": "/celebracao",
+      "destination": "/celebracoes",
+      "permanent": false
+    },
+    {
+      "source": "/festa",
+      "destination": "/celebracoes",
+      "permanent": false
+    },
+    {
+      "source": "/parceiro",
+      "destination": "/parceiros",
+      "permanent": false
+    },
+    {
+      "source": "/fornecedores",
+      "destination": "/parceiros",
+      "permanent": false
     }
   ],
   "headers": [
     {
-      "source": "/(favicon.png|apple-touch-icon.png|og-image.png|logo.png|logo.webp|deck.css|deck.js)",
+      "source": "/(favicon.png|apple-touch-icon.png|og-image.png|logo.png|logo.webp|deck.css|deck.js|app.css)",
       "headers": [
         {
           "key": "Cache-Control",

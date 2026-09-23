@@ -4,6 +4,8 @@ Disallow: /parceria-pousadas
 Disallow: /resumo-executivo
 Disallow: /visao
 Disallow: /apresentacao
+Disallow: /painel
+Disallow: /proposta
 
 # Crawlers de IA (ChatGPT, Claude, Perplexity, Gemini): permitidos na página pública
 User-agent: GPTBot

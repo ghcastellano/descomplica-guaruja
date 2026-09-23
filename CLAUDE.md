@@ -20,6 +20,14 @@ Landing page com quiz de recomendação para o **Descomplica Guarujá**: negóci
   - Só `transform`/`opacity` animam (barras usam `scaleX`, nunca `width`). Hover gated por `(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference)`. Todo pressionável tem `:active{transform:scale(.97)}`. Movimento reduzido = crossfade, sem deslocamento. Nunca travar a navegação durante a transição.
 - Todos com `noindex` e bloqueados no `robots.txt`. Host canônico do site: **www.descomplicaguaruja.com.br** (apex redireciona 308 no painel da Vercel).
 
+## Sistema de Celebrações (novo, setembro de 2026)
+- Páginas: `celebracoes.html` (pública, formulário em 6 etapas), `parceiros.html` (cadastro de fornecedor), `painel.html` (operação, exige login), `proposta.html` (cliente vê pelo token).
+- CSS compartilhado: `app.css`. Mesmos tokens do `index.html`.
+- **Continua estático.** Nenhum framework, nenhum build. O navegador fala com o Supabase por funções RPC, nunca com as tabelas.
+- Banco: Supabase projeto `cuaocjxofaizefzcxlyc`, schema `descomplica` (isolado do schema `public`, que é de outro negócio). O schema NÃO está exposto na API REST: todo acesso passa por funções `public.descomplica_*` com SECURITY DEFINER.
+- Escrita pública: `descomplica_criar_pedido`, `descomplica_cadastrar_fornecedor`. Leitura do painel exige `auth.role() = 'authenticated'`. A proposta do cliente é lida pelo token de 32 caracteres.
+- O modelo de receita é **mandato**: o cliente paga cada fornecedor direto e o Descomplica fatura só serviços próprios e comissão. Por isso não há split de pagamento. Não introduzir split sem revisar a estrutura jurídica (ver estrategia/deck.js, slides 11 e 12).
+
 ## Configuração obrigatória antes do deploy
 No topo do `<script>` principal do `index.html`:
 - `WHATSAPP_NUMBER` — trocar o placeholder `5513999999999` pelo número real (DDI+DDD+número, só dígitos). **Perguntar ao Gustavo.**
