@@ -708,7 +708,9 @@ footer{background:var(--petrol-deep);color:rgba(255,255,255,.75);padding:var(--s
 <script>
 /* placeholder local (pôr do sol em SVG) para quando imagens externas falharem/forem bloqueadas */
 window.PH="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23E7D8C5'/%3E%3Cstop offset='.55' stop-color='%23E4CD96'/%3E%3Cstop offset='1' stop-color='%23C8765A'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='600' fill='url(%23g)'/%3E%3Ccircle cx='400' cy='438' r='128' fill='%23C9A24B' opacity='.9'/%3E%3Cpath d='M0 472Q100 444 200 472T400 472T600 472T800 472V600H0Z' fill='%231F4E54' opacity='.28'/%3E%3C/svg%3E";
-window.phErr=function(el){el.onerror=null;el.src=window.PH};
+/* dentro de <picture> o <source> manda, não o src do <img>: se o AVIF não decodifica (Safari do iPhone/iPad),
+   tira o <source> que falhou e o navegador desce para o próximo formato (AVIF → WebP → JPEG → placeholder) */
+window.phErr=function(el){var p=el.parentNode,s=p&&p.tagName==='PICTURE'&&p.querySelector('source');if(s){p.removeChild(s);return}el.onerror=null;el.src=window.PH};
 </script>
 </head>
 <body>
