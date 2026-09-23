@@ -20,6 +20,13 @@ Landing page com quiz de recomendação para o **Descomplica Guarujá**: negóci
   - Só `transform`/`opacity` animam (barras usam `scaleX`, nunca `width`). Hover gated por `(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference)`. Todo pressionável tem `:active{transform:scale(.97)}`. Movimento reduzido = crossfade, sem deslocamento. Nunca travar a navegação durante a transição.
 - Todos com `noindex` e bloqueados no `robots.txt`. Host canônico do site: **www.descomplicaguaruja.com.br** (apex redireciona 308 no painel da Vercel).
 
+## Como as duas linhas se conectam
+A régua é o **número de pessoas**: até 4 é piquenique (home), de 5 a 100 é celebração (`/celebracoes`).
+- A home tem a seção `#tamanho` entre as coleções e o quiz, que explica a régua e oferece os dois caminhos.
+- O quiz tem a opção "5 ou mais pessoas" que **sai do quiz** e vai para `/celebracoes` com UTM, em vez de bater no teto de 4. Evento `quiz_para_celebracoes`.
+- Navegação e rodapé da home apontam para Celebrações e para Seja fornecedor.
+Se mudar o teto de 4 pessoas, os três pontos acima precisam mudar juntos.
+
 ## Sistema de Celebrações (novo, setembro de 2026)
 - Páginas: `celebracoes.html` (pública, formulário em 6 etapas), `parceiros.html` (cadastro de fornecedor), `painel.html` (operação, exige login), `proposta.html` (cliente vê pelo token).
 - CSS compartilhado: `app.css`. Mesmos tokens do `index.html`.

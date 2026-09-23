@@ -460,6 +460,27 @@ footer{background:var(--petrol-deep);color:rgba(255,255,255,.75);padding:var(--s
 .fab.show{opacity:1;transform:none;pointer-events:auto}
 .fab svg{width:28px;height:28px;fill:#fff}
 @media(min-width:1000px){.fab{display:none}}
+
+/* ═══ ponte piquenique → celebrações ═══ */
+.ponte{background:var(--petrol-deep);color:var(--cream);padding:var(--s8) 0;position:relative;overflow:hidden}
+.ponte::after{content:"";position:absolute;right:-16%;top:-30%;width:54vw;height:54vw;max-width:560px;max-height:560px;border-radius:50%;background:radial-gradient(circle,rgba(201,162,75,.2),transparent 68%);pointer-events:none}
+.ponte .wrap{position:relative;z-index:1}
+.ponte .eyebrow{color:var(--gold)}
+.ponte h2{color:var(--cream);margin:var(--s3) 0 var(--s3)}
+.ponte-lead{color:rgba(244,237,228,.8);max-width:58ch;font-size:1.08rem}
+.regua{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);margin-top:var(--s6)}
+.regua-card{background:rgba(244,237,228,.06);border:1px solid rgba(244,237,228,.16);border-radius:var(--r-lg);padding:var(--s5);
+  transition:transform var(--dur) var(--ease-in),border-color var(--dur) var(--ease),background-color var(--dur) var(--ease)}
+.regua-card.aqui{background:rgba(201,162,75,.12);border-color:var(--gold)}
+@media (hover:hover) and (pointer:fine){.regua-card:hover{transform:translateY(-5px);border-color:rgba(201,162,75,.5)}}
+.regua-n{font-family:var(--f-serif);font-size:2.4rem;color:var(--gold);line-height:1;display:block}
+.regua-card h3{color:var(--cream);font-size:1.3rem;margin:var(--s2) 0 var(--s1)}
+.regua-card p{color:rgba(244,237,228,.74);font-size:.95rem;margin-bottom:var(--s4)}
+.regua-card .btn{width:100%}
+.regua-tag{display:inline-block;font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--petrol-deep);background:var(--gold);padding:4px 10px;border-radius:999px;margin-bottom:var(--s3)}
+.btn-gold{background:var(--gold);color:var(--petrol-deep)}
+.btn-ghost{background:transparent;color:var(--cream);border:1.5px solid rgba(244,237,228,.3)}
+@media (max-width:760px){.regua{grid-template-columns:1fr}.ponte{padding:var(--s7) 0}}
 </style>
 <script>
 /* placeholder local (pôr do sol em SVG) para quando imagens externas falharem/forem bloqueadas */
@@ -477,7 +498,8 @@ window.phErr=function(el){el.onerror=null;el.src=window.PH};
       <span class="brand-t"><b>DESCOMPLICA</b><span class="script">Guarujá</span></span>
     </a>
     <div class="top-cta">
-      <a class="top-link" href="#colecoes">Experiências</a>
+      <a class="top-link" href="#colecoes">Piqueniques</a>
+      <a class="top-link" href="/celebracoes">Celebrações</a>
       <a class="top-link" href="#quiz">Monte o seu</a>
       <a class="top-link" href="#faq">Dúvidas</a>
       <a class="top-wa wa-link" href="#" data-src="topbar" aria-label="Falar no WhatsApp">
@@ -687,6 +709,30 @@ window.phErr=function(el){el.onerror=null;el.src=window.PH};
 </section>
 
 <!-- ═══ QUIZ ═══ -->
+<!-- ═══ PONTE: até 4 pessoas é piquenique, acima disso é celebração ═══ -->
+<section class="ponte" id="tamanho">
+  <div class="wrap">
+    <p class="eyebrow">Qual é o tamanho da sua</p>
+    <h2>A régua é simples: o número de pessoas.</h2>
+    <p class="ponte-lead">Tudo que você viu até aqui é para até 4 pessoas, porque é o que cabe numa montagem intimista. Se a sua comemoração é maior, a gente monta a equipe inteira: espaço, buffet, fotografia, som e decoração, com um contrato só.</p>
+    <div class="regua">
+      <article class="regua-card aqui">
+        <span class="regua-tag">Você está aqui</span>
+        <span class="regua-n">até 4</span>
+        <h3>Piqueniques e experiências</h3>
+        <p>Date a dois, pedido de casamento, aniversário íntimo ou encontro entre amigas. A partir de R$ 249, montado e desmontado por nós.</p>
+        <a class="btn btn-gold" href="#quiz" data-track="ponte_quiz">Descobrir meu pacote</a>
+      </article>
+      <article class="regua-card">
+        <span class="regua-n">5 a 100</span>
+        <h3>Celebrações completas</h3>
+        <p>Aniversário, bodas, confraternização ou casamento íntimo. Você diz o que quer comemorar e recebe uma proposta única em 48 horas.</p>
+        <a class="btn btn-ghost" href="/celebracoes?utm_source=site&amp;utm_medium=ponte">Ver as celebrações</a>
+      </article>
+    </div>
+  </div>
+</section>
+
 <section id="quiz">
   <div class="wrap">
     <p class="eyebrow rv">Monte o seu · 30 segundos</p>
@@ -781,7 +827,9 @@ window.phErr=function(el){el.onerror=null;el.src=window.PH};
       <span class="brand-t"><b>DESCOMPLICA</b><span class="script">Guarujá</span></span>
     </a>
     <ul class="foot-l">
-      <li><a href="#colecoes">Experiências</a></li>
+      <li><a href="#colecoes">Piqueniques</a></li>
+      <li><a href="/celebracoes">Celebrações</a></li>
+      <li><a href="/parceiros">Seja fornecedor</a></li>
       <li><a href="#quiz">Monte o seu</a></li>
       <li><a href="#faq">Dúvidas</a></li>
       <li><a href="https://instagram.com/descomplicaguaruja" target="_blank" rel="noopener">Instagram</a></li>
@@ -880,7 +928,8 @@ const QUESTIONS = [
   ]},
   { id:'pessoas', title:'Quantas pessoas?', opts:[
     { v:'2', l:'Só nós dois' },
-    { v:'3-4', l:'3 a 4 pessoas', s:'Nosso máximo por experiência — intimista de verdade' },
+    { v:'3-4', l:'3 a 4 pessoas', s:'Nosso máximo por piquenique — intimista de verdade' },
+    { v:'5+', l:'5 ou mais pessoas', s:'A partir daí montamos uma celebração completa' },
   ]},
   { id:'clima', title:'Que clima você imagina?', opts:[
     { v:'intimista', l:'Intimista e romântico' },
@@ -1022,6 +1071,12 @@ function render(){
   qPane.querySelectorAll('.q-opt').forEach(btn => btn.addEventListener('click', () => {
     answers[q.id] = btn.dataset.v;
     track('quiz_question', { q: q.id, value: btn.dataset.v, step: step+1 });
+    /* 5 ou mais pessoas sai do piquenique e vai para celebrações, em vez de bater no teto de 4 */
+    if (q.id === 'pessoas' && btn.dataset.v === '5+') {
+      track('quiz_para_celebracoes', { origem: answers.ocasiao || 'sem_ocasiao' });
+      location.href = '/celebracoes?utm_source=site&utm_medium=quiz&utm_campaign=acima_de_4';
+      return;
+    }
     step++;
     step < QUESTIONS.length ? render() : showResult();
   }));
