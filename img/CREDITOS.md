@@ -21,3 +21,7 @@ mesmos nomes de arquivo e proporções para não mexer no HTML.
 Proporções por uso: `hero` original, `col` 16/10, `gal` 3/4, `card` original
 recortada em 16/9 pelo CSS. Larguras: hero 480/800/1400, col 480/800/1200,
 gal 400/800, card 800.
+
+> 24/09/2026: as variantes AVIF deixaram de ser referenciadas no HTML. O WebKit do
+> iPhone/iPad falhava ao decodificar e mostrava a foto quebrada em vez de cair para o
+> WebP. Os arquivos .avif continuam na pasta, mas as páginas usam só WebP + JPG.
