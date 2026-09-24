@@ -71,6 +71,16 @@
       "source": "/fornecedores",
       "destination": "/parceiros",
       "permanent": false
+    },
+    {
+      "source": "/entrar",
+      "destination": "/painel",
+      "permanent": false
+    },
+    {
+      "source": "/adm",
+      "destination": "/painel",
+      "permanent": false
     }
   ],
   "headers": [

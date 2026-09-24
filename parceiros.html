@@ -34,6 +34,9 @@
 @font-face{font-family:'Jost-fb';src:local('Arial'),local('Helvetica Neue');size-adjust:93.76%;ascent-override:114.12%;descent-override:39.99%;line-gap-override:0%}
 @font-face{font-family:'Allura-fb';src:local('Georgia'),local('Times New Roman');size-adjust:86.24%;ascent-override:92.76%;descent-override:52.18%;line-gap-override:0%}
 @font-face{font-family:'Allura';font-style:normal;font-weight:400;font-display:swap;src:url(/fonts/allura-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+.aviso-comissao{background:var(--sand-soft);border:1px solid var(--sand);border-radius:var(--r-md);padding:var(--s3)}
+.aviso-comissao strong{display:block;color:var(--petrol-deep);margin-bottom:.35rem}
+.aviso-comissao small{display:block;color:var(--muted);line-height:1.55}
 </style>
 <style>
 :root{--cream:#F4EDE4;--sand:#E7D8C5;--sand-soft:#EFE5D6;--terracotta:#C8765A;--terracotta-ink:#A35236;--gold:#C9A24B;--gold-soft:#E4CD96;--petrol:#1F4E54;--petrol-deep:#143438;--ink:#2B2B2B;--muted:#6B655E;--white:#FFF;--success:#3F8F5B;--danger:#9C3B2E;--whatsapp:#25D366;--f-serif:'Fraunces','Fraunces-fb',Georgia,serif;--f-sans:'Jost','Jost-fb',-apple-system,'Segoe UI',sans-serif;--f-script:'Allura','Allura-fb',Georgia,serif;--s1:4px;--s2:8px;--s3:16px;--s4:24px;--s5:32px;--s6:48px;--s7:64px;--s8:96px;--r-sm:8px;--r-md:16px;--r-lg:24px;--r-btn:12px;--sh-sm:0 1px 3px rgba(0,0,0,.08);--sh-md:0 4px 16px rgba(0,0,0,.10);--sh-lg:0 8px 32px rgba(20,52,56,.12);--dur-fast:150ms;--dur:250ms;--dur-slow:400ms;--ease-out:cubic-bezier(.23,1,.32,1);--maxw:1080px}
@@ -223,25 +226,13 @@ p{margin:0}ul{margin:0;padding:0;list-style:none}a{color:inherit}
         </div>
 
         <div class="campo">
-          <label class="check" for="aceita">
-            <input type="checkbox" id="aceita">
-            <span>Aceito pagar comissão de agenciamento
-              <small>Sobre eventos que o Descomplica trouxer para você, com nota fiscal nossa contra o seu CNPJ. Isso é o que nos permite não cobrar nada do cliente por indicar você.</small>
-            </span>
-          </label>
+          <div class="aviso-comissao">
+            <strong>Sem comissão</strong>
+            <small>Não cobramos comissão de fornecedor. Nossa remuneração vem de uma taxa de coordenação paga pelo cliente, informada a ele desde a proposta. Você recebe pelo que entregou, sem desconto e sem precisar embutir nada no seu preço.</small>
+          </div>
         </div>
 
-        <div class="campo" id="campoPct" hidden>
-          <label for="pct">Percentual que você aceita</label>
-          <select id="pct">
-            <option value="10">10%</option>
-            <option value="12">12%</option>
-            <option value="15" selected>15%</option>
-            <option value="20">20%</option>
-          </select>
-        </div>
-
-        <div class="campo">
+                <div class="campo">
           <label for="obs">Conte um pouco do seu trabalho <span class="opcional">(opcional)</span></label>
           <textarea id="obs" placeholder="Capacidade máxima, tempo de estrada, link do Instagram, o que te diferencia…"></textarea>
         </div>
@@ -301,10 +292,6 @@ p{margin:0}ul{margin:0;padding:0;list-style:none}a{color:inherit}
     });
   });
 
-  document.getElementById("aceita").addEventListener("change",function(e){
-    document.getElementById("campoPct").hidden = !e.target.checked;
-  });
-
   document.getElementById("whatsapp").addEventListener("input",function(e){
     var v=e.target.value.replace(/\D/g,"").slice(0,11);
     e.target.value = v.length>10 ? v.replace(/(\d{2})(\d{5})(\d{0,4})/,"($1) $2-$3")
@@ -324,7 +311,6 @@ p{margin:0}ul{margin:0;padding:0;list-style:none}a{color:inherit}
     if(!ok) return;
 
     btn.disabled=true; btn.textContent="Enviando…";
-    var aceita=document.getElementById("aceita").checked;
     try{
       var r=await fetch(SUPA+"/rest/v1/rpc/descomplica_cadastrar_fornecedor",{
         method:"POST", headers:{"apikey":ANON,"Content-Type":"application/json"},
@@ -332,8 +318,8 @@ p{margin:0}ul{margin:0;padding:0;list-style:none}a{color:inherit}
           p_nome:nome, p_categoria:cat, p_whatsapp:wa,
           p_email:document.getElementById("email").value.trim()||null,
           p_cnpj:document.getElementById("cnpj").value.trim()||null,
-          p_comissao_pct: aceita ? parseFloat(document.getElementById("pct").value) : 0,
-          p_aceita_comissao: aceita,
+          p_comissao_pct: 0,
+          p_aceita_comissao: false,
           p_agenda_url:document.getElementById("agenda").value.trim()||null,
           p_observacoes:document.getElementById("obs").value.trim()||null
         })
@@ -342,7 +328,7 @@ p{margin:0}ul{margin:0;padding:0;list-style:none}a{color:inherit}
       document.getElementById("form").hidden=true;
       document.getElementById("ok").hidden=false;
       document.getElementById("ok").scrollIntoView({behavior:"smooth",block:"center"});
-      if(window.dataLayer) window.dataLayer.push({event:"fornecedor_cadastro",categoria:cat,aceita_comissao:aceita});
+      if(window.dataLayer) window.dataLayer.push({event:"fornecedor_cadastro",categoria:cat});
     }catch(e){
       btn.disabled=false; btn.textContent="Enviar cadastro";
       erro("erroWa","Não conseguimos enviar agora. Tente de novo ou chame no WhatsApp.");
