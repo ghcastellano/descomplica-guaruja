@@ -97,7 +97,7 @@
   deckEl.addEventListener('click', function(e){
     if(window.matchMedia('(max-width:980px)').matches) return;
     var el = e.target;
-    while(el && el !== document.body){ if(el.tagName==='A'||el.tagName==='BUTTON'||el.isContentEditable) return; el = el.parentNode; }
+    while(el && el !== document.body){ if(el.tagName==='A'||el.tagName==='BUTTON'||el.tagName==='INPUT'||el.tagName==='SELECT'||el.tagName==='TEXTAREA'||el.tagName==='LABEL'||el.isContentEditable) return; el = el.parentNode; }
     if(window.getSelection && String(window.getSelection())) return;
     go(1);
   });
@@ -108,18 +108,41 @@
   fsBtn.addEventListener('click', toggleFs);
   if(!document.documentElement.requestFullscreen) fsBtn.style.display='none';
 
-  Array.prototype.forEach.call(document.querySelectorAll('.fill'), function(f){
-    var ph = f.textContent;
-    f.addEventListener('focus', function(){ if(f.textContent===ph) f.textContent=''; });
-    f.addEventListener('blur', function(){ if(!f.textContent.trim()) f.textContent=ph; });
-  });
+  // Proposta da pousada: rascunho nesta aba e mensagem preenchida pelo cliente.
+  var pilot = document.getElementById('pilotFields');
+  if(pilot){
+    var pilotSlide = pilot.closest('.slide');
+    var pilotFields = ['space','date','format'].map(function(name){ return pilot.querySelector('[name="'+name+'"]'); });
+    var draftKey = 'descomplica:pousada:pilot:v1';
+    try {
+      var saved = JSON.parse(sessionStorage.getItem(draftKey) || '{}');
+      pilotFields.forEach(function(field){ if(typeof saved[field.name] === 'string') field.value = saved[field.name].slice(0,180); });
+    } catch(e){}
+    function updatePilot(){
+      var values = {};
+      pilotFields.forEach(function(field){ values[field.name] = field.value.trim(); });
+      var date = /^\d{4}-\d{2}-\d{2}$/.test(values.date) ? values.date.split('-').reverse().join('/') : 'A combinar';
+      var formats = {A:'A — Anfitrião', B:'B — Parceiro comercial', C:'C — Taxa de utilização'};
+      var message = 'Olá! Vi a apresentação de parceria do Descomplica Guarujá e quero planejar um piloto na minha pousada.\n\n' +
+        'Espaço: ' + (values.space || 'A combinar') + '\n' +
+        'Data sugerida: ' + date + '\n' +
+        'Formato de parceria: ' + (formats[values.format] || 'A combinar') + '\n\n' +
+        'Podemos conversar sobre disponibilidade e próximos passos?';
+      pilotSlide.querySelectorAll('[data-pilot-whatsapp]').forEach(function(link){ link.href = 'https://wa.me/5513988523663?text=' + encodeURIComponent(message); });
+      var email = pilotSlide.querySelector('[data-pilot-email]');
+      if(email) email.href = 'mailto:ola@descomplicaguaruja.com.br?subject=' + encodeURIComponent('Proposta de piloto na pousada') + '&body=' + encodeURIComponent(message);
+      try { sessionStorage.setItem(draftKey, JSON.stringify(values)); } catch(e){}
+    }
+    pilot.addEventListener('input', updatePilot);
+    pilot.addEventListener('change', updatePilot);
+    updatePilot();
+  }
 
-  // cursor personalizado + parallax (só com mouse)
+  // Cursor personalizado (só com mouse); fundos e fotos não deslocam o slide.
   var fine = window.matchMedia && window.matchMedia('(min-width:981px) and (hover:hover) and (pointer:fine)').matches;
   if(fine && !reduce){
     var dot = document.getElementById('curDot'), ring = document.getElementById('curRing');
     var mx = innerWidth/2, my = innerHeight/2, rx = mx, ry = my, shown = false;
-    var tpx = 0, tpy = 0, cpx = 0, cpy = 0;
     document.addEventListener('mousemove', function(e){
       mx = e.clientX; my = e.clientY;
       dot.style.transform = 'translate3d('+mx+'px,'+my+'px,0)';
@@ -127,7 +150,6 @@
       var t = e.target, hov = false;
       while(t && t !== document.body){ if(t.tagName==='A'||t.tagName==='BUTTON'||t.isContentEditable||(t.classList&&(t.classList.contains('card')||t.classList.contains('col')))){ hov = true; break; } t = t.parentNode; }
       root.classList.toggle('cur-hover', hov);
-      tpx = (mx/innerWidth - .5); tpy = (my/innerHeight - .5);
     });
     document.addEventListener('mousedown', function(){ root.classList.add('cur-down'); });
     document.addEventListener('mouseup', function(){ root.classList.remove('cur-down'); });
@@ -136,10 +158,6 @@
     root.classList.add('cur-hide');
     (function loop(){
       rx += (mx-rx)*.18; ry += (my-ry)*.18; ring.style.transform = 'translate3d('+rx+'px,'+ry+'px,0)';
-      cpx += (tpx-cpx)*.08; cpy += (tpy-cpy)*.08;
-      var s = slides[cur];
-      Array.prototype.forEach.call(s.querySelectorAll('.px'), function(el){ el.style.transform = 'perspective(900px) rotateY('+(cpx*5)+'deg) rotateX('+(-cpy*4)+'deg) translate3d('+(cpx*6)+'px,'+(cpy*6)+'px,0)'; });
-      var orbs = s.querySelector('.orbs'); if(orbs){ orbs.style.transform = 'translate3d('+(cpx*22)+'px,'+(cpy*16)+'px,0)'; }
       requestAnimationFrame(loop);
     })();
   }

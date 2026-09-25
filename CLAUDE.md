@@ -25,7 +25,7 @@ A expansão só aparece na visão e no resumo executivo. Nunca oferecê-la para 
 - `/resumo-executivo`: resumo institucional para leitura online.
 - `/visao`: visão para interlocutores da Prefeitura do Guarujá e Sebrae, focada em turismo, negócios locais, mentoria e piloto. Preservar a discrição da apresentação; não citar autoridades nem atribuir apoios existentes.
 - Não afirmar que a empresa já tem CNPJ/Cadastur sem comprovação atual.
-- Todas usam `deck.css`/`deck.js`, mantêm o slide 1 sem hash e os demais em `#n`. `noindex` em meta/header; o robots permite leitura para processamento do noindex.
+- Todas usam `deck.css`/`deck.js`, mantêm o slide 1 sem hash e os demais em `#n`. Não mover o contêiner de fundo com o mouse: isso cria overflow nos slides. Fotos grandes mantêm o enquadramento completo. `noindex` em meta/header; o robots permite leitura para processamento do noindex.
 - Antes de mudar animação/UI dos decks, ler as skills em `~/.claude/skills/{emil-design-eng,animate,apple-design}/SKILL.md`. Manter os tokens e suporte a movimento reduzido. Validar todos os slides visualmente.
 
 ## Design e instrumentação
@@ -42,3 +42,5 @@ Arquivos de apoio, documentos privados e áudios não entram no deploy. Nunca fa
 ## Verificação
 
 Rodar `node tests/static-checks.cjs`. Testar cards e quiz de 2 a 8 pessoas, limites de A Dois, mudança/reinício de respostas, mensagens de WhatsApp, imagens, FAQ, navegação dos decks, responsividade e movimento reduzido. Antes de testar, interceptar analytics/webhook para não criar leads reais.
+
+Na proposta para pousadas, os campos de espaço, data e formato preenchem WhatsApp e e-mail. O envio é confirmado pelo usuário no aplicativo. sessionStorage mantém o rascunho nesta aba; não há envio automático ao webhook do quiz. Testar com `tests/pilot-form-checks.py` e `tests/deck-scroll-checks.py`, incluindo movimento normal.

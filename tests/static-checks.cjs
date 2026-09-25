@@ -37,7 +37,7 @@ for (const [key, pkg] of Object.entries(model.packages)) {
 }
 for (const name of ['visao','resumo-executivo','parceria-pousadas']) {
  assert(read(name+'.html').includes('content="noindex'));
- assert(read(name+'.html').includes('deck.css?v=20260925'));
+ assert(read(name+'.html').includes('deck.css?v=20260925-2'));
 }
 assert.equal((read('sitemap.xml').match(/<loc>/g)||[]).length,1);
 assert(!/piquenique/i.test(read('llms.txt')));

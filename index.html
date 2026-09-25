@@ -735,7 +735,7 @@ window.phErr=function(el){var p=el.parentNode,s=p&&p.tagName==="PICTURE"&&p.quer
     </a>
     <div class="top-cta">
       <a class="top-link" href="#colecoes">Experiências</a>
-      <a class="top-link" href="#quiz">Monte o seu</a>
+      <a class="top-link" href="#quiz">Encontre a sua</a>
       <a class="top-link" href="#faq">Dúvidas</a>
       <a class="top-wa wa-link" href="#" data-src="topbar" aria-label="Falar no WhatsApp">
         <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22c5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.03a8.1 8.1 0 0 1-4.13-1.13l-.3-.18-3.12.82.83-3.04-.2-.31a8.07 8.07 0 0 1-1.24-4.28c0-4.47 3.64-8.1 8.16-8.1 4.47 0 8.1 3.63 8.1 8.1 0 4.47-3.63 8.12-8.1 8.12zm4.45-6.07c-.24-.12-1.44-.71-1.66-.79-.22-.08-.39-.12-.55.12-.16.24-.63.79-.77.95-.14.16-.28.18-.53.06-.24-.12-1.03-.38-1.96-1.21-.72-.64-1.21-1.44-1.35-1.68-.14-.24-.02-.37.11-.5.11-.11.24-.28.37-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.55-1.32-.75-1.81-.2-.48-.4-.41-.55-.42h-.47c-.16 0-.42.06-.65.3-.22.24-.85.83-.85 2.03s.87 2.36 1 2.52c.12.16 1.72 2.62 4.16 3.68.58.25 1.03.4 1.39.51.58.19 1.11.16 1.53.1.47-.07 1.44-.59 1.64-1.16.2-.57.2-1.05.14-1.16-.06-.1-.22-.16-.46-.28z"/></svg>
@@ -754,10 +754,10 @@ window.phErr=function(el){var p=el.parentNode,s=p&&p.tagName==="PICTURE"&&p.quer
       <h1 class="rv" style="--i:1">Experiências montadas à beira-mar no <span class="script">Guarujá</span> — você só chega e vive.</h1>
       <p class="lead rv" style="--i:2">Experiências e celebrações completas, montadas e desmontadas para você: a dois, entre amigas, aniversários e pedidos inesquecíveis.</p>
       <div class="hero-ctas rv" style="--i:3">
-        <a class="btn btn-primary" href="#quiz" data-track="cta_hero_quiz">Descobrir meu pacote ideal</a>
+        <a class="btn btn-primary" href="#quiz" data-track="cta_hero_quiz">Encontrar minha experiência</a>
         <a class="btn btn-secondary wa-link" href="#" data-src="hero">Falar no WhatsApp</a>
       </div>
-      <p class="hero-note rv" style="--i:4">Leva 30 segundos · até 6 perguntas · recomendação na hora</p>
+      <p class="hero-note rv" style="--i:4">Até 6 perguntas · sugestão e estimativa na hora</p>
     </div>
     <figure class="hero-fig rv" style="--i:2">
       <picture><source type="image/webp" srcset="/img/hero-experiencia-por-do-sol-hero-480.webp 480w, /img/hero-experiencia-por-do-sol-hero-800.webp 800w, /img/hero-experiencia-por-do-sol-hero-1400.webp 1400w" sizes="(max-width: 760px) 94vw, 520px"><img class="hero-img" src="/img/hero-experiencia-por-do-sol-hero-1400.jpg" sizes="(max-width: 760px) 94vw, 520px" alt="Experiência personalizada montada ao pôr do sol com almofadas e mesa baixa" fetchpriority="high" onerror="phErr(this)"></picture>
@@ -787,7 +787,7 @@ window.phErr=function(el){var p=el.parentNode,s=p&&p.tagName==="PICTURE"&&p.quer
       <div class="step rv" style="--i:0">
         <div class="step-n">01</div>
         <h3>Escolha</h3>
-        <p>Monte o seu ou chame no WhatsApp. Em minutos, sua data e horário estão reservados — manhã, tarde, pôr do sol ou noite.</p>
+        <p>Use o quiz ou chame no WhatsApp. Combinamos a experiência, confirmamos o orçamento e consultamos a disponibilidade para a sua data e horário.</p>
       </div>
       <div class="step rv" style="--i:1">
         <div class="step-n">02</div>
@@ -942,16 +942,17 @@ window.phErr=function(el){var p=el.parentNode,s=p&&p.tagName==="PICTURE"&&p.quer
 <!-- ═══ QUIZ ═══ -->
 <section id="quiz">
   <div class="wrap">
-    <p class="eyebrow rv">Monte o seu · 30 segundos</p>
+    <p class="eyebrow rv">Encontre sua experiência</p>
     <h2 class="rv" style="--i:1">Não sabe por onde começar? A gente descobre com você.</h2>
-    <p class="lead rv" style="--i:2">Responda até 6 perguntas rápidas e descubra o pacote perfeito para o seu momento — com recomendação na hora.</p>
+    <p class="lead rv" style="--i:2">Conte a ocasião, o número de pessoas e suas preferências. Em até 6 perguntas, veja uma sugestão de experiência e uma estimativa do valor total.</p>
 
     <div class="quiz-card rv" style="--i:3" id="quizCard" aria-live="polite">
       <!-- estado inicial -->
       <div class="q-pane" id="qStart">
-        <p class="q-step">Descomplica · Monte o seu</p>
-        <p class="q-title">Pronta(o)? São até 6 perguntas e a recomendação sai na hora.</p>
-        <button class="btn btn-primary btn-block" id="qBegin">Montar o meu</button>
+        <p class="q-step">Quiz · Até 6 perguntas</p>
+        <p class="q-title">Vamos encontrar uma experiência para o seu momento?</p>
+        <p class="price-note">A Dois é exclusivo para o casal. Celebrar, Entre Amigas e Pedido recebem de 2 a 8 pessoas, incluindo o casal em Pedido. O orçamento final é confirmado antes da reserva.</p>
+        <button class="btn btn-primary btn-block" id="qBegin">Começar</button>
       </div>
       <!-- perguntas e resultado renderizados via JS -->
       <div id="qBody" hidden>
@@ -1017,7 +1018,7 @@ window.phErr=function(el){var p=el.parentNode,s=p&&p.tagName==="PICTURE"&&p.quer
     <h2 class="rv">Pronta(o) para viver um momento que ninguém esquece?</h2>
     <p class="lead rv" style="--i:1">Conte a sua ideia e vamos encontrar o formato ideal para o seu momento.</p>
     <div class="final-ctas rv" style="--i:2">
-      <a class="btn btn-primary" href="#quiz" data-track="cta_final_quiz">Descobrir meu pacote ideal</a>
+      <a class="btn btn-primary" href="#quiz" data-track="cta_final_quiz">Encontrar minha experiência</a>
       <a class="btn btn-wa wa-link" href="#" data-src="final">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22c5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2z"/></svg>
         Falar com a gente
@@ -1036,7 +1037,7 @@ window.phErr=function(el){var p=el.parentNode,s=p&&p.tagName==="PICTURE"&&p.quer
     </a>
     <ul class="foot-l">
       <li><a href="#colecoes">Experiências</a></li>
-      <li><a href="#quiz">Monte o seu</a></li>
+      <li><a href="#quiz">Encontre a sua</a></li>
       <li><a href="#faq">Dúvidas</a></li>
       <li><a href="https://instagram.com/descomplicaguaruja" target="_blank" rel="noopener">Instagram</a></li>
       <li><a href="mailto:ola@descomplicaguaruja.com.br?subject=Ol%C3%A1%2C%20Descomplica%20Guaruj%C3%A1">ola@descomplicaguaruja.com.br</a></li>
@@ -1237,7 +1238,7 @@ function recommend(a){
 
 /* labels p/ mensagem do WhatsApp */
 const LBL = {
-  ocasiao:{adois:'surpresa a dois',pedido:'pedido de casamento',celebrar:'aniversário/comemoração',amigas:'entre amigas'},
+  ocasiao:{adois:'surpresa a dois',pedido:'pedido de casamento ou namoro',celebrar:'aniversário/comemoração',amigas:'entre amigas'},
   clima:{intimista:'intimista e romântico',festivo:'animado e festivo',uau:'sofisticado'},
   fotos:{sim:'fotos essenciais',talvez:'fotos talvez',nao:'sem fotos'},
   budget:{'500':'até R$ 500','1200':'R$ 500 a R$ 1.200','2500':'R$ 1.200 a R$ 2.500','2500+':'R$ 2.500+'},
@@ -1351,7 +1352,7 @@ function showResult(){
           Quero esta experiência
         </a>
         <a class="btn btn-secondary btn-block" href="#colecoes">Ver todas as experiências</a>
-        <button class="q-restart" id="qRestart">Montar de novo</button>
+        <button class="q-restart" id="qRestart">Refazer o quiz</button>
       </div>
       <div class="q-capture" id="qCapture">
         <p>Prefere que a gente te chame? Deixa seu WhatsApp — opcional.</p>
