@@ -11,10 +11,10 @@ mesmos nomes de arquivo e proporções para não mexer no HTML.
 
 | arquivo | foto de origem |
 |---|---|
-| hero-piquenique-por-do-sol | unsplash.com/photos/1707296819777-f96b799efb41 |
+| hero-experiencia-por-do-sol | unsplash.com/photos/1707296819777-f96b799efb41 |
 | casal-por-do-sol | unsplash.com/photos/1744221127502-727af70bc6e7 |
-| piquenique-flores | unsplash.com/photos/1772724317675-5a1afcefea9a |
-| piquenique-boho-praia | unsplash.com/photos/1707296825230-3f106b3ac450 |
+| experiencia-flores | unsplash.com/photos/1772724317675-5a1afcefea9a |
+| experiencia-boho-praia | unsplash.com/photos/1707296825230-3f106b3ac450 |
 | pedido-casamento-praia | unsplash.com/photos/1741318103098-767700b2b0aa |
 | tabua-de-frios | unsplash.com/photos/1695606452817-e28a67339e57 |
 

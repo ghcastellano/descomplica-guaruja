@@ -51,36 +51,6 @@
       "source": "/futuro",
       "destination": "/visao",
       "permanent": false
-    },
-    {
-      "source": "/celebracao",
-      "destination": "/celebracoes",
-      "permanent": false
-    },
-    {
-      "source": "/festa",
-      "destination": "/celebracoes",
-      "permanent": false
-    },
-    {
-      "source": "/parceiro",
-      "destination": "/parceiros",
-      "permanent": false
-    },
-    {
-      "source": "/fornecedores",
-      "destination": "/parceiros",
-      "permanent": false
-    },
-    {
-      "source": "/entrar",
-      "destination": "/painel",
-      "permanent": false
-    },
-    {
-      "source": "/adm",
-      "destination": "/painel",
-      "permanent": false
     }
   ],
   "headers": [
@@ -103,7 +73,7 @@
       ]
     },
     {
-      "source": "/(favicon.png|apple-touch-icon.png|og-image.png|logo.png|logo.webp|deck.css|deck.js|app.css)",
+      "source": "/(favicon.png|apple-touch-icon.png|og-image.png|logo.png|logo.webp|deck.css|deck.js)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -129,6 +99,15 @@
         {
           "key": "Permissions-Policy",
           "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ]
+    },
+    {
+      "source": "/(visao|resumo-executivo|parceria-pousadas)(.html)?",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
         }
       ]
     }

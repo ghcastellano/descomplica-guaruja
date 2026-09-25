@@ -1,0 +1,16 @@
+# Publicar somente o site, sem documentação e dados de trabalho.
+.git
+.claude
+.DS_Store
+docs
+tests
+README.md
+CLAUDE.md
+TAREFAS.md
+*.opus
+*.m4a
+*.mp3
+*.wav
+*.mp4
+*.docx
+*.pdf
