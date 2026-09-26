@@ -47,7 +47,8 @@ Não auditamos dados, políticas ou configuração do banco antigo. Não verific
 ```mermaid
 flowchart TD
  A[Quiz ou atendimento] --> B[Preferências e quantidade]
- B --> C[Proposta inicial por link]
+ B --> R[Revisão da Sophia pelo WhatsApp]
+ R --> C[Proposta aprovada por link]
  C --> D[Quero esta experiência]
  D --> E[Local aprovado e período]
  E --> F[Data e horário disponíveis]
@@ -85,6 +86,93 @@ A pessoa abre o link em qualquer celular, sem instalar aplicativo. Não precisa 
 - O cliente escolhe uma janela preferida e depois um horário concreto. “Pôr do sol” não é um horário fixo para o ano todo.
 - Surpresa não altera sem consentimento alimentação, valor, local, acessibilidade ou requisitos essenciais.
 - Proposta aprovada congela a versão dos preços e termos. Alterações futuras de catálogo não mudam um contrato aceito.
+
+## 3A. Questionário mantido e revisão pela Sophia no WhatsApp
+
+**Atualização solicitada por Gustavo em 26/09/2026:** manter o questionário como entrada comercial, acrescentar local de preferência e preparar a proposta automaticamente para revisão da Sophia pelo WhatsApp. Somente depois da liberação dela o cliente recebe o link da proposta e do agendamento. Esta seção substitui a prioridade anterior de deixar WhatsApp para uma etapa tardia. O bot ainda não foi implantado e o questionário de produção ainda não foi alterado por este plano.
+
+### Entrada do cliente
+
+Manter o quiz curto. Acrescentar **“Onde você gostaria de viver essa experiência?”**, com opções iniciais propostas:
+
+- Na praia.
+- Na minha hospedagem ou casa.
+- Quero ajuda para escolher.
+
+Se escolher praia, pode indicar Tombo, Astúrias, Pitangueiras ou “outra / não sei”. Essa preferência opcional pode ficar dentro da mesma etapa, sem outra tela obrigatória. O texto informa que a definição depende das condições e autorizações do local. Hospedagem/casa pede apenas região ou nome para avaliação inicial; endereço completo entra na etapa apropriada, após identificação.
+
+Registrar `location_type_preference`, `preferred_location_id` opcional, `location_free_text` limitado e `location_status = preference_only`. Não transformar preferência em ponto autorizado nem bloquear a agenda ao responder ao quiz. A recomendação de experiência continua imediatamente disponível, identificada como estimativa.
+
+Para receber uma proposta revisada, coletar nome e **um canal escolhido pelo cliente**: WhatsApp, e-mail ou ambos. O quiz pode continuar funcionando sem contato, mas não prometer envio posterior sem destinatário válido. Solicitar autorização específica para mensagens sobre aquela solicitação; marketing é opcional e separado. Se for WhatsApp, registrar opt-in e oferecer o botão para iniciar a conversa, sem exigir redigitar respostas.
+
+Com uma nova etapa obrigatória, a contagem passa de 5 para 6 perguntas em A Dois e de 6 para 7 nas demais coleções. Atualizar textos, progresso e testes a partir das etapas realmente exibidas. Não confundir contagem de perguntas com limite de participantes. A pergunta de praia complementar pode ser opcional dentro da etapa de local.
+
+### Fluxo assistido inicial
+
+```mermaid
+flowchart TD
+ Q[Quiz com local de preferência] --> L[Contato persistido e protocolo]
+ L --> R[Rascunho de proposta e cálculo determinístico]
+ R --> S[Sophia recebe aviso no WhatsApp]
+ S --> E[Revisar ou ajustar pelo bot]
+ E --> V[Nova versão e validação de custo e escopo]
+ V --> P[Sophia aprova e libera versão específica]
+ P --> C[Cliente recebe link por canal autorizado]
+ C --> A[Cliente escolhe local aprovado e horário]
+ A --> F[Resumo final e aceite]
+ F --> PG[Sinal confirmado e reserva]
+```
+
+A Sophia revisa **antes do primeiro envio da proposta**. No início, toda proposta passa por ela, mesmo que o cálculo seja automático. A proposta aprovada define ofertas, quantidades, locais/faixas de preço e condições permitidas. Se o cliente selecionar algo fora desse conjunto, a proposta volta para revisão antes do aceite/cobrança. Dentro dos limites já aprovados, a escolha do horário não exige que a Sophia repita a aprovação.
+
+### Como o bot funciona para a Sophia
+
+Primeiro aviso com conteúdo mínimo: “Nova solicitação DG-0042 para revisar”, sem expor histórias pessoais ou restrições na notificação. Ao abrir a revisão, mostrar proposta/versão, coleção, quantidade, preferência de local/período, orçamento desejado, composição e pendências. Margem e custo são dados internos, separados da visualização do cliente.
+
+Ações iniciais: **Revisar**, **Pedir informação** e **Abrir painel**. Na revisão, menus permitem alterar componentes já cadastrados, nível da experiência, quantidades permitidas, texto, extras, validade e local candidato. Depois, um resumo do que mudou e a ação explícita **Aprovar e enviar**. Não colocar todas as operações no mesmo menu.
+
+Exemplo hipotético:
+
+> DG-0042 · versão 3 · Celebrar · 6 pessoas
+> Preferência: Astúrias, tarde. Local ainda a validar.
+> Ajuste solicitado: retirar o item A e incluir o item B do catálogo.
+> O bot recalcula total e margem e mostra a diferença antes da aprovação.
+
+Alterações de preço fora da política, componente novo sem custo, edição detalhada de ficha, restrições sensíveis e estornos abrem o painel protegido no celular. A meta é resolver as revisões comuns dentro do WhatsApp, mantendo uma alternativa confiável para exceções. WhatsApp Flows pode oferecer formulários mais ricos, caso configuração, disponibilidade e custo sejam adequados; botões e menus são suficientes para a primeira versão. [WhatsApp Flows](https://whatsappbusiness.com/products/whatsapp-flows/).
+
+Se houver interpretação de texto livre por IA, ela transforma a mensagem em **uma sugestão estruturada**, sem executar por conta própria. “Troque por algo mais bonito” não vira compra nem alteração de preço automática. O motor valida oferta, custo, estoque e quantidade e a Sophia confirma o resultado. Conteúdo do cliente nunca vira instrução administrativa para o bot.
+
+### Aprovação, segurança e rastreabilidade
+
+- Bot usa a WhatsApp Business Platform oficial, com número empresarial configurado. Não automatizar sessão pessoal/WhatsApp Web. Confirmar número remetente, conta da Sophia destinatária e eventual coexistência com o aplicativo antes da implantação. O número do bot não deve ser presumido como sendo o mesmo destinatário da aprovação.
+- Vincular identidade WhatsApp da operadora a usuário interno convidado e verificado, com permissões. Validar autenticidade dos webhooks e IDs de mensagens. Mensagens de clientes não podem acessar comandos administrativos, mesmo que copiem um botão ou texto.
+- Cada botão/ação vincula operadora, proposta, versão, ação e validade por identificador opaco validado no servidor. Rejeitar aprovação de versão antiga com resumo da versão atual.
+- Atualização atômica: `review_required → approved` para aquela versão e inserção única do envio na outbox. Duplo clique ou webhook repetido não produz dois envios.
+- Separar aprovação da proposta de aceite do cliente e confirmação de pagamento. A aprovação da Sophia não reserva recurso nem prova pagamento.
+- Ações irreversíveis ou de maior risco, como estorno ou mudança de conta financeira, exigem autenticação reforçada no painel. Aprovação comum dentro de limites cadastrados pode ocorrer pelo bot autorizado.
+- Auditoria guarda autoria, mensagem/ação, versão anterior/nova e resumo da alteração. Não reproduzir briefing sensível em logs ou grupos.
+- Se Sophia não responder, manter pendência e lembrete moderado dentro da política do canal. Nunca enviar automaticamente por silêncio. Definir substituto autorizado e prazo de atendimento antes de prometer um prazo ao cliente.
+
+### Regras do canal e entrega
+
+O simples preenchimento do telefone no site não abre a janela de atendimento do WhatsApp. Para iniciar contato ou enviar fora da janela de 24h após mensagem do destinatário, a plataforma exige template aprovado. Isso também precisa ser tratado para os avisos à Sophia. Opt-in, categoria do template, aprovação, custos e possibilidade de recusa/pausa fazem parte da implantação. [Política oficial de mensagens](https://business.whatsapp.com/policy).
+
+Usar e-mail transacional como canal escolhido ou alternativa previamente autorizada. Não enviar pelos dois canais se a pessoa escolheu apenas um. O status diferencia `queued`, `sent`, `delivered` e `failed`; leitura é um sinal opcional, não confirmação de contrato. O link continua sendo a referência única de versão/status. Mensagens não levam preço desatualizado depois de alteração de proposta.
+
+Uma proposta pode ser enviada, revisada e reenviada com histórico, mas uma versão antiga não pode continuar aceitando pagamento. Acesse a proposta atual pelo link e apresente claramente qualquer mudança que exija novo aceite.
+
+### Mudanças na arquitetura e nos testes
+
+Adicionar ao módulo de atendimento: `message_channels`, `operator_channel_bindings`, `proposal_reviews`, `message_deliveries` e comandos de revisão. Reusar `webhook_inbox`, `outbox`, `audit_events` e o mesmo motor de regras. WhatsApp é uma interface do sistema, não um segundo banco nem o lugar onde reside a regra de preço.
+
+Novo endpoint de recebimento do WhatsApp: verificação de configuração e validação da assinatura do POST conforme documentação vigente, deduplicação por mensagem/evento, identificação de remetente e roteamento cliente/operadora. Segredos separados dos webhooks do PSP. Não confiar somente no número enviado em um corpo de requisição sem autenticidade comprovada.
+
+Testar: preferência sem autorização não libera local; contato ausente não promete envio; aprovação duplicada/antiga é rejeitada; cliente não aprova como Sophia; texto do cliente não executa comandos; falha do WhatsApp preserva a proposta; canal não autorizado não é usado; edição após envio invalida aceite antigo; escolha fora das condições aprovadas volta para revisão; lembrete não significa aprovação por ausência de resposta.
+
+Esforço adicional indicativo: **4–6 dias úteis** para integração oficial, revisão estruturada, entrega e testes, além da espera por cadastros/templates. Isso não inclui um agente conversacional irrestrito ou edição de qualquer operação financeira por linguagem natural. O total do plano passa a **32–50 dias úteis**, com primeira entrega parcial de painel antes da conclusão de toda a automação.
+
+Decisões necessárias na implementação: número da empresa e da operadora, canal alternativo, prazo de revisão, substituto da Sophia, limites de desconto, quais campos podem ser ajustados pelo bot e custos/condições da conta WhatsApp. Nada disso foi contratado ou ativado nesta tarefa.
+
 
 ## 4. Agenda de equipe própria e locais
 
@@ -213,7 +301,8 @@ flowchart LR
  WH --> DB
  DB --> Jobs[Tarefas persistidas e processador]
  Jobs --> Email[E-mail transacional]
- Jobs --> WA[WhatsApp oficial em fase posterior]
+ Jobs --> WA[WhatsApp oficial: Sophia e cliente]
+ WA --> App
  Jobs --> Precos[Fontes de preços auxiliares]
  Jobs --> App
 ```
@@ -229,7 +318,7 @@ flowchart LR
 | Outbox e tarefas no Postgres | Pedido e evento de trabalho persistem juntos, sem novo serviço de fila inicial | Fila gerenciada quando houver atraso recorrente ou throughput que prejudique o banco. |
 | Um PSP inicialmente | Simplifica conciliação, suporte e falhas | Segundo meio/provedor após demanda real. |
 | Asaas como candidato inicial | Documentação de cobrança/Pix e webhooks adequada ao fluxo brasileiro | Confirmar cadastro, tarifas, experiência móvel, estorno e emissão fiscal em sandbox antes da escolha contratual. |
-| E-mail transacional primeiro | Confirmação e recuperação sem depender do aplicativo do cliente | WhatsApp oficial depois, com consentimentos e regras/templates vigentes. `wa.me` não é envio automático. |
+| WhatsApp oficial e e-mail transacional | Revisão da Sophia e entrega da proposta nos canais autorizados | Painel móvel como alternativa de edição e recuperação. `wa.me` não é envio automático. |
 | Sem IA no cálculo final | Preço, reserva e cobrança precisam ser reproduzíveis | IA restrita a assistência editorial e extração com validação. |
 
 Não contratar contas, iniciar cobranças, ativar WhatsApp, criar banco ou implantar essas peças nesta etapa de planejamento.
@@ -392,7 +481,7 @@ Preços consultados em 26/09/2026, em dólar, sujeitos a plano, uso, câmbio e i
 | Supabase Pro | A partir de US$ 25/mês no cenário básico consultado | Mais projetos, capacidade, armazenamento e recuperação avançada podem elevar o total. |
 | E-mail transacional | Plano a selecionar conforme volume e domínio | Configurar entrega, SPF/DKIM/DMARC e alertas. Não depender de limite gratuito sem validar condições. |
 | PSP | Tarifas por transação e serviços contratados | Comparar custo total de Pix/cartão, estorno, prazo e emissão fiscal. Sem taxa inventada no orçamento. |
-| WhatsApp oficial | Variável e posterior | Não é coberto pelo link `wa.me`. Validar regras e preços antes de ativar. |
+| WhatsApp oficial | Variável, incluído no fluxo de revisão e envio | Não é coberto pelo link `wa.me`. Validar conta, templates e custos antes de ativar. |
 | Backup, monitoramento e ambiente de homologação | Orçar conforme objetivos de continuidade | Piso de US$ 45 não inclui necessariamente todos esses itens. |
 
 **Piso indicativo:** US$ 45/mês para as duas assinaturas básicas, antes dos demais componentes e consumos. Se a Vercel já for Pro, o incremento pode ser diferente. O maior custo operacional pode ser a equipe, não o software.
@@ -410,12 +499,13 @@ Estimativas preliminares para uma pessoa com experiência, em dias úteis de des
 | 0. Definições | Equipe, catálogo executável, custos, locais, política, formalização e PSP candidato | Lista de regras aprovada. Locais não aprovados continuam bloqueados. | 2–4 dias de trabalho + esperas externas |
 | 1. Fundação e atendimento | Projeto isolado, migrações, Auth/MFA, API de lead, painel, auditoria e CI | Lead tem protocolo, erro é recuperável, acessos cruzados negados e backup restaurado. | 4–6 dias |
 | 2. Catálogo e propostas | Fichas, custos aprovados, versões, geração e link móvel | Mesma entrada produz mesmo preço; aceite referencia versão imutável; falta de custo exige análise. | 5–7 dias |
+| 2A. Revisão no WhatsApp | Bot oficial para Sophia, ajustes estruturados e envio da versão liberada | Testes de identidade, versão, duplicata e canal autorizado passam. | 4–6 dias + espera por conta/templates |
 | 3. Agenda | Recursos, locais, escala, janelas, holds e portal de escolha | Testes concorrentes e de expiração passam, sem sobreposição. | 5–8 dias |
 | 4. Contratos e pagamentos | Aceite, PSP sandbox/produção, sinal/saldo, inbox/outbox e reconciliação | Simular duplicata, timeout, pagamento tardio, falha do PSP e reembolso. | 5–8 dias |
 | 5. Produção e pós-venda | Ordens, checklists, custos reais, pesquisas e relatório | Reserva confirmada cria trabalho uma vez; resultados se reconciliam com recebimentos e despesas. | 4–6 dias |
-| 6. Automação assistida | Ajustar regras após pilotos, fontes de preço e mensagens oficiais se úteis | Liberar automático por oferta, com limites e fila de exceções monitorada. | 3–5 dias + observação dos pilotos |
+| 6. Automação assistida | Ajustar regras após pilotos, fontes de preço e melhorias nas mensagens | Automatizar preparação e notificações, mantendo liberação da Sophia e fila de exceções. | 3–5 dias + observação dos pilotos |
 
-Total indicativo: **28–44 dias úteis de desenvolvimento**, além de esperas e validação em campo. O primeiro painel útil chega na etapa 1. Não é necessário aguardar todo o sistema para realizar pilotos com operação assistida e formalização adequada.
+Total indicativo: **32–50 dias úteis de desenvolvimento**, incluindo revisão estruturada no WhatsApp, além de esperas e validação em campo. O primeiro painel útil chega na etapa 1. Não é necessário aguardar todo o sistema para realizar pilotos com operação assistida e formalização adequada.
 
 ### Migração sem interromper o site
 

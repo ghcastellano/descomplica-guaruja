@@ -102,3 +102,13 @@
  .institutional .ctl,.institutional .dots,.institutional .bar,.institutional .cur,.institutional .notes,.institutional .scroll-cue{display:none!important}
  @page{size:A4 landscape;margin:0}
 }
+/* Quantidades são uma unidade visual: não separar o intervalo em telas estreitas. */
+.institutional .capacity strong,.institutional .pilot-numbers strong{white-space:nowrap;flex-shrink:0}
+.institutional .capacity>div,.institutional .pilot-numbers>div{min-width:0}
+.institutional .capacity span,.institutional .pilot-numbers span{min-width:0}
+@media(max-width:600px){
+ .institutional .capacity{width:100%}
+ .institutional .capacity>div{display:grid;grid-template-columns:7rem minmax(0,1fr);gap:1rem;width:100%}
+ .institutional .capacity strong{font-size:3.8rem;min-width:0}
+ .institutional .places>div{grid-template-columns:1.5rem 1fr}
+}

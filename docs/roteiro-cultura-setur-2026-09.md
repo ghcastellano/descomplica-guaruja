@@ -20,7 +20,7 @@ Adaptação de **SCQA** (situação, complicação, pergunta e resposta) com dec
 | 2. Resultado para a cidade | “Podemos conectar a experiência a relatos autênticos, novos motivos de visita e compras locais. Queremos medir essas contribuições.” | 40s |
 | 3. Exemplo de aniversário | “Uma família de seis pessoas chega com uma ocasião. Nossa equipe prepara a experiência e um detalhe surpresa ligado à história dela.” Exemplo hipotético. | 45s |
 | 4. Entrega própria | “A responsabilidade pelo atendimento e execução é nossa. Começamos pequenos, até oito pessoas, com A Dois exclusivo para o casal.” | 40s |
-| 5. Locais | “Trouxemos candidatos para avaliação técnica, não uma lista de locais já liberados. Um espaço coberto é parte do plano.” | 45s |
+| 5. Locais | “Praias, pontos turísticos e espaços privados entram na avaliação. A lista é aberta. Acesso, operação e autorizações orientam a escolha, com alternativa coberta.” | 45s |
 | 6. Identidade e renda | “A Cultura pode nos orientar sobre referências locais. A equipe própria e as compras na cidade permitem acompanhar parte do valor que fica aqui.” | 45s |
 | 7. Piloto | “Propomos discutir 60 dias e seis experiências. São parâmetros para pactuar, depois de formalização, capacidade, custo e autorizações.” | 45s |
 | 8. Evidências | “Vamos separar visualizações, interessados e experiências realizadas. Perguntaremos sobre o motivo da viagem e apresentaremos resultados agregados.” | 45s |
@@ -55,6 +55,6 @@ Consultas em 26/09/2026:
 - [Competências da Cultura](https://www.guaruja.sp.gov.br/cultura).
 - [Praias de Guarujá](https://www.guaruja.sp.gov.br/praias), apenas para identificação/descritivo dos candidatos.
 
-As três imagens já pertencem ao acervo publicado no site: `casal-por-do-sol-col-1200`, `experiencia-flores-col-1200` e `pedido-casamento-praia-col-1200`. Foram mantidas inteiras, com legenda de referência ilustrativa. Não afirmamos que retratem Guarujá ou eventos já realizados pela empresa. Não houve nova verificação da licença original dessas imagens nesta tarefa. Para uma campanha pública de lançamento, substituir por registros próprios autorizados ou material com licença confirmada.
+As três imagens já pertencem ao acervo publicado no site: `casal-por-do-sol-col-1200`, `experiencia-flores-col-1200` e `pedido-casamento-praia-col-1200`. Foram mantidas inteiras. As legendas sob as fotos foram retiradas a pedido de Gustavo; a identificação como referência ilustrativa permanece nas notas. Não afirmamos que retratem Guarujá ou eventos já realizados pela empresa. Não houve nova verificação da licença original dessas imagens nesta tarefa. Para uma campanha pública de lançamento, substituir por registros próprios autorizados ou material com licença confirmada.
 
 A apresentação não usa estatísticas inventadas de turismo, emprego, reputação, alcance ou retorno. Os números do piloto são propostas, identificadas como tal. O plano da operação e suas dependências estão em `plano-arquitetura-operacao-2026-09.md`.
