@@ -112,3 +112,14 @@
  .institutional .capacity strong{font-size:3.8rem;min-width:0}
  .institutional .places>div{grid-template-columns:1.5rem 1fr}
 }
+@media(max-width:600px) and (max-height:740px){
+ .institutional .wrap{gap:.9rem}
+ .institutional h2{font-size:2.05rem}
+ .institutional .dek{font-size:1rem;line-height:1.45;margin-top:.65rem}
+ .institutional .caption{font-size:.73rem}
+ .institutional .capacity{gap:1rem}
+ .institutional .capacity strong{font-size:3.5rem}
+ .institutional .places>div{padding:.65rem 0}
+ .institutional .places h3{font-size:1.3rem}
+ .institutional .places p{font-size:1rem;line-height:1.4}
+}
