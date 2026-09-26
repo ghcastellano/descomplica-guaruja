@@ -64,7 +64,7 @@ test("envios concorrentes são idempotentes, payload diferente com mesma chave f
 test("rascunho determinístico usa média da faixa e precisa de aprovação", async () => {
   const r = await createRequest(request()),
     p = await getProposal(r.id);
-  assert.equal(p?.snapshot.amountCents, 39900);
+  assert.equal(p?.snapshot.amountCents, (await import("../lib/pricing")).priceWithStripe(39900));
   assert.equal(p?.status, "draft");
   assert.equal(p?.message, null);
 });
@@ -116,7 +116,7 @@ test("liberação concorrente gera um link/outbox; revisão revoga link e exige 
   assert.ok(!JSON.stringify(dto2).includes("SEGREDO_INTERNO"));
   assert.equal(p2.events.length, 4);
   assert.equal(p2.revisions.length, 2);
-  assert.equal(p2.revisions[1].snapshot.amountCents, 39900);
+  assert.equal(p2.revisions[1].snapshot.amountCents, p.snapshot.amountCents);
 });
 test("duas revisões da mesma versão: uma vence, a outra recebe conflito", async () => {
   const r = await createRequest(request()),

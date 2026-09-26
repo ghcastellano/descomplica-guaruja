@@ -1,3 +1,6 @@
+import { Booking } from "@/components/booking";
+import { bookingContext } from "@/lib/booking";
+import { getStripeMode } from "@/lib/stripe";
 import { notFound } from "next/navigation";
 import { clientProposal, money } from "@/lib/domain";
 export default async function Page({
@@ -5,8 +8,10 @@ export default async function Page({
 }: {
   params: Promise<{ token: string }>;
 }) {
-  const p = await clientProposal((await params).token);
+  const token = (await params).token;
+  const p = await clientProposal(token);
   if (!p) notFound();
+  const context = await bookingContext(token);
   return (
     <main className="client-view">
       <span className="eyebrow">
@@ -47,11 +52,6 @@ export default async function Page({
           </div>
         </dl>
         {p.clientNote && <p className="client-note">{p.clientNote}</p>}
-        <div className="notice">
-          Esta é uma proposta de demonstração. Nenhuma data ou local está
-          reservado e nenhum pagamento será solicitado. Agendamento e
-          confirmação serão disponibilizados em uma próxima etapa.
-        </div>
         <p className="muted">
           Versão {p.version} · Link de teste válido até{" "}
           {new Date(p.expiresAt).toLocaleDateString("pt-BR", {
@@ -60,6 +60,11 @@ export default async function Page({
           .
         </p>
       </div>
+      <Booking
+        token={token}
+        context={context}
+        stripeReady={getStripeMode().ready}
+      />
     </main>
   );
 }

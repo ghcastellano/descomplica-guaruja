@@ -1,7 +1,9 @@
 "use client";
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { paymentEstimate } from "@/lib/pricing";
 import catalog from "@/lib/catalog.json";
+import { sources } from "@/lib/sources";
 async function send(url: string, body: unknown, method = "POST") {
   const res = await fetch(url, {
     method,
@@ -77,10 +79,16 @@ export function Logout() {
     </button>
   );
 }
-export function Intake() {
+export function Intake({
+  requestId,
+  initial,
+}: {
+  requestId?: string;
+  initial?: { name: string; contact: string; notes: string; source: string };
+} = {}) {
   const router = useRouter(),
     key = useRef("");
-  const [pkg, setPkg] = useState("adois_ess"),
+  const [pkg, setPkg] = useState(requestId ? "" : "adois_ess"),
     [busy, setBusy] = useState(false),
     [error, setError] = useState("");
   const couple = pkg.startsWith("adois_");
@@ -94,18 +102,22 @@ export function Intake() {
         const f = new FormData(e.currentTarget);
         if (!key.current) key.current = crypto.randomUUID();
         try {
-          const result = await send("/api/requests", {
-            requestKey: key.current,
-            name: f.get("name"),
-            contact: f.get("contact"),
-            packageId: pkg,
-            guests: couple ? 2 : Number(f.get("guests")),
-            location: f.get("location"),
-            place: f.get("place"),
-            period: f.get("period"),
-            budget: Number(f.get("budget")),
-            notes: f.get("notes"),
-          });
+          const result = await send(
+            requestId ? `/api/inquiries/${requestId}` : "/api/requests",
+            {
+              requestKey: key.current,
+              source: initial?.source || f.get("source"),
+              name: f.get("name"),
+              contact: f.get("contact"),
+              packageId: pkg,
+              guests: couple ? 2 : Number(f.get("guests")),
+              location: f.get("location"),
+              place: f.get("place"),
+              period: f.get("period"),
+              budget: Number(f.get("budget")),
+              notes: f.get("notes"),
+            },
+          );
           router.push("/propostas/" + result.id);
         } catch (e) {
           setError((e as Error).message);
@@ -114,6 +126,18 @@ export function Intake() {
         }
       }}
     >
+      {!requestId && (
+        <label>
+          Origem do atendimento
+          <select name="source" defaultValue="outro">
+            {Object.entries(sources).map(([id, label]) => (
+              <option value={id} key={id}>
+                {label}
+              </option>
+            ))}
+          </select>
+        </label>
+      )}
       <div className="section-title">
         <span>01</span>
         <h2>Quem e qual momento?</h2>
@@ -126,7 +150,7 @@ export function Intake() {
             required
             minLength={2}
             maxLength={100}
-            defaultValue="Cliente de demonstração"
+            defaultValue={initial?.name || "Cliente de demonstração"}
           />
         </label>
         <label>
@@ -135,16 +159,22 @@ export function Intake() {
             name="contact"
             required
             maxLength={150}
-            defaultValue="cliente@example.invalid"
+            defaultValue={initial?.contact || "cliente@example.invalid"}
           />
         </label>
         <label>
           Experiência
           <select
             name="packageId"
+            required
             value={pkg}
             onChange={(e) => setPkg(e.target.value)}
           >
+            {requestId && (
+              <option value="" disabled>
+                Escolha a experiência
+              </option>
+            )}
             {Object.entries(catalog.packages).map(([id, p]) => (
               <option value={id} key={id}>
                 {p.col} · {p.tier}
@@ -158,8 +188,14 @@ export function Intake() {
             name="guests"
             key={String(couple)}
             disabled={couple}
-            defaultValue="2"
+            required
+            defaultValue={requestId && !couple ? "" : "2"}
           >
+            {requestId && !couple && (
+              <option value="" disabled>
+                Defina a quantidade
+              </option>
+            )}
             {(couple ? [2] : [2, 3, 4, 5, 6, 7, 8]).map((n) => (
               <option key={n}>{n}</option>
             ))}
@@ -178,7 +214,7 @@ export function Intake() {
       <div className="form-grid">
         <label>
           Preferência de local
-          <select name="location">
+          <select name="location" defaultValue={requestId ? "ajuda" : "praia"}>
             <option value="praia">Na praia</option>
             <option value="casa">Na hospedagem ou em casa</option>
             <option value="ajuda">Quero ajuda para escolher</option>
@@ -194,23 +230,27 @@ export function Intake() {
         </label>
         <label>
           Período
-          <select name="period">
+          <select
+            name="period"
+            defaultValue={requestId ? "flexivel" : "por-do-sol"}
+          >
             <option value="por-do-sol">Pôr do sol</option>
             <option value="manha">Manhã</option>
             <option value="tarde">Tarde</option>
             <option value="noite">Noite</option>
-            <option value="flexivel">Flexível</option>
+            <option value="flexivel">Ainda não definido / flexível</option>
           </select>
         </label>
         <label>
-          Expectativa de orçamento (R$)
+          Expectativa de orçamento (R$){" "}
+          <small>Use 0 se ainda não foi informado.</small>
           <input
             name="budget"
             type="number"
             min="0"
             max="1000000"
             step="1"
-            defaultValue="1000"
+            defaultValue={requestId ? "0" : "1000"}
             required
           />
         </label>
@@ -219,6 +259,7 @@ export function Intake() {
         O que devemos saber? <small>(opcional)</small>
         <textarea
           name="notes"
+          defaultValue={initial?.notes || ""}
           rows={3}
           maxLength={2000}
           placeholder="Conte a intenção e os cuidados especiais. Use somente dados fictícios."
@@ -230,17 +271,22 @@ export function Intake() {
       </div>
       <Feedback message={error} />
       <button className="btn btn-primary" disabled={busy}>
-        {busy ? "Registrando…" : "Criar solicitação de teste →"}
+        {busy
+          ? "Registrando…"
+          : requestId
+            ? "Preparar proposta neste atendimento →"
+            : "Criar solicitação de teste →"}
       </button>
       <p className="muted">
-        O rascunho usa a média da faixa de preços do catálogo. Sophia revisa
-        antes de liberar.
+        O rascunho usa a média do catálogo ajustada para as tarifas de sinal e
+        saldo no Stripe. Sophia revisa antes de liberar.
       </p>
     </form>
   );
 }
 type Revision = {
   amountCents: number;
+  durationMinutes?: number | null;
   items: string[];
   clientNote: string;
   internalNote: string;
@@ -260,7 +306,8 @@ export function Review({
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
     [dirty, setDirty] = useState(false),
-    [checked, setChecked] = useState(false);
+    [checked, setChecked] = useState(false),
+    [amount, setAmount] = useState(revision.amountCents);
   async function release() {
     setBusy(true);
     setError("");
@@ -292,6 +339,9 @@ export function Review({
                 version,
                 revision: {
                   amountCents: Math.round(Number(f.get("amount")) * 100),
+                  durationMinutes: f.get("duration")
+                    ? Number(f.get("duration"))
+                    : null,
                   items: String(f.get("items"))
                     .split("\n")
                     .map((s) => s.trim())
@@ -324,8 +374,50 @@ export function Review({
             max="1000000"
             step="0.01"
             defaultValue={(revision.amountCents / 100).toFixed(2)}
+            onChange={(e) =>
+              setAmount(Math.round(Number(e.target.value) * 100))
+            }
             required
           />
+        </label>
+        {amount >= 100 && Number.isSafeInteger(amount) && (
+          <div className="fee-estimate">
+            <strong>Composição interna · cartão nacional</strong>
+            <p>
+              Sinal e saldo: duas cobranças. Tarifa estimada total de{" "}
+              {(paymentEstimate(amount).feesCents / 100).toLocaleString(
+                "pt-BR",
+                { style: "currency", currency: "BRL" },
+              )}
+              , já dentro do valor informado. Líquido após Stripe:{" "}
+              {(paymentEstimate(amount).netCents / 100).toLocaleString(
+                "pt-BR",
+                { style: "currency", currency: "BRL" },
+              )}
+              , antes dos demais custos.
+            </p>
+            <small>
+              Base: 3,99% + R$ 0,39 por cobrança. Cartão internacional pode
+              custar mais. Alterar o preço não recalcula automaticamente sua
+              margem. Propostas antigas mantêm o valor aprovado.
+            </small>
+          </div>
+        )}
+        <label>
+          Duração da experiência (minutos)
+          <input
+            name="duration"
+            type="number"
+            min="30"
+            max="360"
+            step="15"
+            defaultValue={revision.durationMinutes ?? ""}
+            placeholder="Defina antes de liberar a agenda"
+          />
+          <small>
+            A agenda inclui também preparação e desmontagem. Pedido sob medida
+            precisa de duração revisada.
+          </small>
         </label>
         <label>
           O que está incluído <small>Um item por linha</small>

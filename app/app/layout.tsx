@@ -25,14 +25,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               DESCOMPLICA<small>Guarujá · operação</small>
             </span>
           </a>
-          <span className="stage">Etapa 01 / Propostas</span>
+          <span className="stage">Operação · teste local</span>
         </header>
         {children}
         <footer>
           Você vive o momento. A gente cuida dos detalhes.
           <br />
           <small>
-            Agenda, pagamentos e WhatsApp oficial entram nas próximas etapas.
+            Propostas, agenda e pagamentos de teste. WhatsApp ainda simulado.
           </small>
         </footer>
       </body>

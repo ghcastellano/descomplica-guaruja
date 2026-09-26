@@ -577,3 +577,9 @@ Essa entrega não conclui a etapa de fundação de produção da tabela acima: a
 Próxima entrega: validar o fluxo com Sophia; implementar agenda com equipe, recursos e locais aprovados, mantendo bloqueadas as localidades ainda em avaliação. Antes de atendimento real, configurar identidade individual, infraestrutura e canais de homologação e concluir testes de ponta a ponta.
 
 Design system: fonte única em `design-system/`, consumida por site, apresentações e app. Regras em `docs/design-system.md`.
+
+## Etapa local implementada em 26/09/2026
+
+Em `app/`, entrada manual sem questionário obrigatório, preservando protocolo/origem/conversa; proposta versionada; agenda própria com uma equipe e buffers; aceite; sinal/saldo; Stripe Checkout e webhook somente teste; tarifas previstas antes da aprovação; histórico de pagamentos e mensagens simuladas. Não se adicionou Calendly nem marketplace.
+
+Regras demonstrativas, configuração e lacunas estão em `app/README.md`. Conta Stripe ainda depende de chave de teste acessível e listener próprio para validação externa; testes usam SDK com transporte simulado. Nenhum WhatsApp real enviado, nenhum local público liberado, nenhuma alteração do banco compartilhado. O app segue excluído do deploy estático. Produção, reembolsos/remarcação, conciliação agendada, notificações reais e produção operacional permanecem etapas futuras.

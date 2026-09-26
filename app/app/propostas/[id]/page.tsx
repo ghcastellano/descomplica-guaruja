@@ -7,6 +7,7 @@ import {
   locations,
   periods,
   money,
+  sources,
   type Briefing,
   type Revision,
 } from "@/lib/domain";
@@ -21,6 +22,18 @@ export default async function Page({
   if (!p) notFound();
   const b = p.briefing as Briefing;
   const titles: Record<string, string> = {
+    inquiry_created: "Conversa registrada",
+    qualified: "Conversa completada e proposta preparada",
+    booking_held: "Horário separado temporariamente",
+    booking_accepted: "Proposta aceita pelo cliente",
+    booking_confirmed: "Sinal registrado e reserva confirmada",
+    booking_fully_paid: "Saldo registrado; pagamento concluído",
+    booking_cancelled: "Seleção de horário cancelada",
+    booking_expired: "Pré-reserva vencida",
+    booking_access_extended:
+      "Link mantido para acompanhar a reserva e pagar o saldo",
+    stripe_checkout_started: "Checkout de teste preparado",
+    stripe_payment_review: "Pagamento recebido precisa de conciliação",
     created: "Solicitação recebida e rascunho criado",
     revised: "Proposta revisada; links anteriores cancelados",
     released: "Versão aprovada e mensagem simulada preparada",
@@ -49,6 +62,8 @@ export default async function Page({
               <h2>O pedido</h2>
             </div>
             <dl>
+              <dt>Origem do atendimento</dt>
+              <dd>{sources[b.source] || "Outro canal"}</dd>
               <dt>Contato de teste</dt>
               <dd>{b.contact}</dd>
               <dt>Preferência</dt>
@@ -59,13 +74,17 @@ export default async function Page({
               <dt>Período</dt>
               <dd>{periods[b.period]}</dd>
               <dt>Expectativa de orçamento</dt>
-              <dd>{money(b.budget * 100)}</dd>
+              <dd>{b.budget ? money(b.budget * 100) : "Não informado"}</dd>
               <dt>História e cuidados</dt>
               <dd>{b.notes || "Nenhum detalhe adicional."}</dd>
             </dl>
             <div className="notice">
-              Data e local não estão reservados. A agenda será implementada na
-              próxima etapa.
+              Preferências não reservam um horário. Consulte a agenda para
+              acompanhar o aceite e os pagamentos simulados.
+              <br />
+              <a className="text-link" href={"/agenda?proposal=" + p.id}>
+                Ver agendamento →
+              </a>
             </div>
           </div>
           <section className="history">
@@ -75,7 +94,7 @@ export default async function Page({
                 <li key={i}>
                   <strong>{titles[e.kind] || e.kind}</strong>
                   <small>
-                    Versão {e.details.version} ·{" "}
+                    {e.details.version ? `Versão ${e.details.version} · ` : ""}{" "}
                     {new Date(e.created_at).toLocaleString("pt-BR", {
                       timeZone: "America/Sao_Paulo",
                     })}
