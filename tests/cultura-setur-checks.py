@@ -27,6 +27,20 @@ with sync_playwright() as p:
      assert s.locator('.capacity strong,.pilot-numbers strong').evaluate_all('(els)=>els.every(e=>e.scrollWidth<=e.clientWidth+1)'),(width,i+1,'number wraps')
      assert s.locator('.grid2 .photo img').evaluate_all('(els)=>els.every(e=>getComputedStyle(e).objectFit==="contain")')
      if engine.name=='chromium' and motion=='reduce' and width in [390,768,1440]:page.screenshot(path=str(OUT/f'{width}-{i+1:02}.png'))
+     if i==5:
+      for topic in ['trabalho','economia','cultura']:
+       button=s.locator(f'[data-value="{topic}"]')
+       button.click()
+       assert button.get_attribute('aria-pressed')=='true'
+       assert s.locator('.value-panel:visible').count()==1
+       assert s.locator(f'#value-{topic}').is_visible()
+       assert page.locator('#cnt').inner_text()=='6 / 11', 'benefit control advanced the deck'
+       assert s.evaluate('(e)=>e.scrollWidth<=e.clientWidth+1'),(width,topic,'panel overflow')
+      # Keyboard activation works without triggering the deck's Enter-to-advance.
+      s.locator('[data-value="economia"]').focus();page.keyboard.press('Enter')
+      assert s.locator('#value-economia').is_visible()
+      assert page.locator('#cnt').inner_text()=='6 / 11'
+      s.locator('[data-value="cultura"]').click()
      # All content must remain reachable if a small screen needs vertical scrolling.
      s.evaluate('(e)=>e.scrollTop=e.scrollHeight');page.wait_for_timeout(30)
      last=s.locator('.wrap').evaluate('(e)=>e.getBoundingClientRect().bottom')
@@ -39,5 +53,10 @@ with sync_playwright() as p:
     page.locator('#notesBtn').click();assert page.locator('#notes').is_visible()
     print('OK',engine.name,motion,f'{width}x{height}',flush=True)
     ctx.close()
+  ctx=browser.new_context(java_script_enabled=False,viewport={'width':390,'height':844})
+  page=ctx.new_page();page.goto(BASE+'/cultura-setur.html')
+  assert page.locator('.value-panel:visible').count()==3, 'content lost without JavaScript'
+  assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
+  ctx.close()
   browser.close()
 print('OK: 308 slides, Chrome/Safari, 7 tamanhos e movimento normal/reduzido.')
