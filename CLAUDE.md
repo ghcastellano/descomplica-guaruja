@@ -44,3 +44,11 @@ Arquivos de apoio, documentos privados e áudios não entram no deploy. Nunca fa
 Rodar `node tests/static-checks.cjs`. Testar cards e quiz de 2 a 8 pessoas, limites de A Dois, mudança/reinício de respostas, mensagens de WhatsApp, imagens, FAQ, navegação dos decks, responsividade e movimento reduzido. Antes de testar, interceptar analytics/webhook para não criar leads reais.
 
 Na proposta para pousadas, os campos de espaço, data e formato preenchem WhatsApp e e-mail. O envio é confirmado pelo usuário no aplicativo. sessionStorage mantém o rascunho nesta aba; não há envio automático ao webhook do quiz. Testar com `tests/pilot-form-checks.py` e `tests/deck-scroll-checks.py`, incluindo movimento normal.
+
+## Design system único e aplicação operacional
+
+Decisão explícita de Gustavo (26/09/2026): usar um único design system em tudo. Ler `docs/design-system.md`. Fonte de verdade: `design-system/tokens.css`, `fonts.css` e `components.css`. Site e decks carregam esses arquivos; a aplicação importa a mesma base. Não criar paleta, fonte ou estilo de cartão paralelo. Todos os decks usam `deck.css`/`deck.js`; CSS específico cuida apenas da composição. Títulos sem tracking negativo.
+
+O site na raiz continua estático. A autorização de implementação permite Next.js/TypeScript em `app/`, aplicação separada, inicialmente **apenas testes locais**. Não publicar seu código no deploy estático; `app/` está excluído por `.vercelignore`. Não conectar a clientes reais, WhatsApp real ou banco compartilhado nesta etapa. Validar cada entrega; não confundir testes locais com homologação/produção.
+
+O questionário agora inclui local de preferência: 6 perguntas em A Dois e 7 nas demais. Essa preferência acompanha o resumo e o WhatsApp; não representa autorização nem reserva de local. O backend novo ainda deve passar por corte explícito antes de substituir Apps Script em produção.

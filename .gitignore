@@ -6,3 +6,11 @@
 *.opus
 *.m4a
 *.mp4
+
+# Aplicação operacional isolada
+app/node_modules/
+app/.next/
+app/.env*
+!app/.env.example
+app/.local/
+app/*.tsbuildinfo

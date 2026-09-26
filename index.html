@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<link rel="stylesheet" href="/design-system/tokens.css?v=1">
+<link rel="stylesheet" href="/design-system/fonts.css?v=1">
+<link rel="stylesheet" href="/design-system/components.css?v=1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Experiências no Guarujá: a Dois, Aniversários e Pedidos | Descomplica</title>
@@ -32,14 +35,8 @@
 <link rel="dns-prefetch" href="https://www.googletagmanager.com">
 <link rel="dns-prefetch" href="https://connect.facebook.net">
 <style>/* fontes próprias: chegam com o primeiro paint, sem troca tardia (CLS) */
-@font-face{font-family:'Fraunces';font-style:normal;font-weight:500 700;font-display:swap;src:url(/fonts/fraunces-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-@font-face{font-family:'Jost';font-style:normal;font-weight:400 600;font-display:swap;src:url(/fonts/jost-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 
 /* fallbacks com métricas casadas: o texto provisório ocupa a mesma altura, sem empurrar o layout */
-@font-face{font-family:'Fraunces-fb';src:local('Georgia'),local('Times New Roman');size-adjust:111.32%;ascent-override:87.86%;descent-override:22.91%;line-gap-override:0%}
-@font-face{font-family:'Jost-fb';src:local('Arial'),local('Helvetica Neue');size-adjust:93.76%;ascent-override:114.12%;descent-override:39.99%;line-gap-override:0%}
-@font-face{font-family:'Allura-fb';src:local('Georgia'),local('Times New Roman');size-adjust:86.24%;ascent-override:92.76%;descent-override:52.18%;line-gap-override:0%}
-@font-face{font-family:'Allura';font-style:normal;font-weight:400;font-display:swap;src:url(/fonts/allura-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 </style>
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -438,28 +435,7 @@
    DESCOMPLICA GUARUJÁ — Design System v1
    Minimalismo praiano premium · mobile-first · leve
    ════════════════════════════════════════════════════════ */
-:root{
-  /* paleta */
-  --cream:#F4EDE4; --sand:#E7D8C5; --sand-soft:#EFE5D6;
-  --terracotta:#C8765A; --terracotta-ink:#A35236; --gold:#C9A24B; --gold-soft:#E4CD96;
-  --petrol:#1F4E54; --petrol-deep:#143438;
-  --ink:#2B2B2B; --muted:#6B655E; --white:#FFFFFF;
-  --success:#3F8F5B; --whatsapp:#25D366;
-  /* tipografia */
-  --f-serif:'Fraunces','Fraunces-fb',Georgia,serif;
-  --f-sans:'Jost','Jost-fb',-apple-system,'Segoe UI',sans-serif;
-  --f-script:'Allura','Allura-fb',Georgia,serif;
-  /* espaçamento (escala 8) */
-  --s1:4px; --s2:8px; --s3:16px; --s4:24px; --s5:32px; --s6:48px; --s7:64px; --s8:96px;
-  /* raio · sombra · motion */
-  --r-sm:8px; --r-md:16px; --r-lg:24px; --r-btn:12px;
-  --sh-sm:0 1px 3px rgba(0,0,0,.08);
-  --sh-md:0 4px 16px rgba(0,0,0,.10);
-  --sh-lg:0 8px 32px rgba(20,52,56,.12);
-  --dur-fast:150ms; --dur:250ms; --dur-slow:400ms;
-  --ease:cubic-bezier(.4,0,.2,1); --ease-in:cubic-bezier(.16,1,.3,1);
-  --maxw:1080px;
-}
+:root{--maxw:1080px}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:72px}
 @media(prefers-reduced-motion:reduce){
@@ -476,7 +452,7 @@ a{color:inherit}
 button{font-family:inherit;cursor:pointer}
 :focus-visible{outline:3px solid var(--petrol);outline-offset:3px;border-radius:6px}
 
-h1,h2,h3{font-family:var(--f-serif);color:var(--petrol-deep);line-height:1.15;letter-spacing:-.01em;text-wrap:balance}
+h1,h2,h3{font-family:var(--f-serif);color:var(--petrol-deep);line-height:1.15;letter-spacing:var(--tracking-heading);text-wrap:balance}
 h1{font-size:2rem;font-weight:600}
 h2{font-size:1.5rem;font-weight:600}
 h3{font-size:1.25rem;font-weight:500}
@@ -495,19 +471,6 @@ html.js .rv.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){html.js .rv{opacity:1;transform:none}}
 
 /* ── botões ── */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;text-decoration:none;
-  font-weight:600;font-size:1rem;padding:14px 24px;min-height:48px;border-radius:var(--r-btn);
-  border:0;transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease),background var(--dur)}
-.btn:active{transform:scale(.98)}
-.btn-primary{background:var(--petrol);color:#fff;box-shadow:var(--sh-md)}
-.btn-primary:hover{background:var(--petrol-deep);transform:translateY(-2px);box-shadow:var(--sh-lg)}
-.btn-secondary{background:transparent;color:var(--terracotta-ink);border:1.5px solid var(--terracotta-ink)}
-.btn-secondary:hover{background:rgba(200,118,90,.08);transform:translateY(-2px)}
-.btn-wa{background:var(--whatsapp);color:#fff;box-shadow:var(--sh-md)}
-.btn-wa:hover{background:#1fb959;transform:translateY(-2px);box-shadow:var(--sh-lg)}
-.btn svg{width:1.15em;height:1.15em;flex:none}
-.btn-block{width:100%}
-
 /* ── topbar ── */
 .top{position:sticky;top:0;z-index:60;background:rgba(244,237,228,.9);backdrop-filter:blur(12px);
   -webkit-backdrop-filter:blur(12px);transition:box-shadow var(--dur)}
@@ -757,7 +720,7 @@ window.phErr=function(el){var p=el.parentNode,s=p&&p.tagName==="PICTURE"&&p.quer
         <a class="btn btn-primary" href="#quiz" data-track="cta_hero_quiz">Encontrar minha experiência</a>
         <a class="btn btn-secondary wa-link" href="#" data-src="hero">Falar no WhatsApp</a>
       </div>
-      <p class="hero-note rv" style="--i:4">Até 6 perguntas · sugestão e estimativa na hora</p>
+      <p class="hero-note rv" style="--i:4">Até 7 perguntas · sugestão e estimativa na hora</p>
     </div>
     <figure class="hero-fig rv" style="--i:2">
       <picture><source type="image/webp" srcset="/img/hero-experiencia-por-do-sol-hero-480.webp 480w, /img/hero-experiencia-por-do-sol-hero-800.webp 800w, /img/hero-experiencia-por-do-sol-hero-1400.webp 1400w" sizes="(max-width: 760px) 94vw, 520px"><img class="hero-img" src="/img/hero-experiencia-por-do-sol-hero-1400.jpg" sizes="(max-width: 760px) 94vw, 520px" alt="Experiência personalizada montada ao pôr do sol com almofadas e mesa baixa" fetchpriority="high" onerror="phErr(this)"></picture>
@@ -944,12 +907,12 @@ window.phErr=function(el){var p=el.parentNode,s=p&&p.tagName==="PICTURE"&&p.quer
   <div class="wrap">
     <p class="eyebrow rv">Encontre sua experiência</p>
     <h2 class="rv" style="--i:1">Não sabe por onde começar? A gente descobre com você.</h2>
-    <p class="lead rv" style="--i:2">Conte a ocasião, o número de pessoas e suas preferências. Em até 6 perguntas, veja uma sugestão de experiência e uma estimativa do valor total.</p>
+    <p class="lead rv" style="--i:2">Conte a ocasião, o número de pessoas e suas preferências. Em até 7 perguntas, veja uma sugestão de experiência e uma estimativa do valor total.</p>
 
     <div class="quiz-card rv" style="--i:3" id="quizCard" aria-live="polite">
       <!-- estado inicial -->
       <div class="q-pane" id="qStart">
-        <p class="q-step">Quiz · Até 6 perguntas</p>
+        <p class="q-step">Quiz · Até 7 perguntas</p>
         <p class="q-title">Vamos encontrar uma experiência para o seu momento?</p>
         <p class="price-note">A Dois é exclusivo para o casal. Celebrar, Entre Amigas e Pedido recebem de 2 a 8 pessoas, incluindo o casal em Pedido. O orçamento final é confirmado antes da reserva.</p>
         <button class="btn btn-primary btn-block" id="qBegin">Começar</button>
@@ -1123,7 +1086,7 @@ document.querySelectorAll('.faq-q').forEach(b => b.addEventListener('click', () 
 }));
 
 /* ════════════════════════════════════════════════════════
-   QUIZ — 6 perguntas + slot de horário → recomendação
+   QUIZ — até 7 perguntas (6 em A Dois) → recomendação
    ════════════════════════════════════════════════════════ */
 const QUESTIONS = [
   { id:'ocasiao', title:'Qual é a ocasião?', opts:[
@@ -1154,6 +1117,11 @@ const QUESTIONS = [
     { v:'tarde', l:'Tarde' },
     { v:'por do sol', l:'Pôr do sol', s:'O mais procurado', star:true },
     { v:'noite', l:'Noite', s:'Sob as luzinhas' },
+  ]},
+  { id:'local', title:'Onde você gostaria de viver essa experiência?', opts:[
+    { v:'praia', l:'Na praia', s:'Praia e ponto definidos após avaliar condições e autorizações' },
+    { v:'hospedagem', l:'Na minha hospedagem ou casa', s:'Avaliamos o espaço com você' },
+    { v:'ajuda', l:'Quero ajuda para escolher', s:'Vamos encontrar um cenário para o seu momento' },
   ]},
 ];
 
@@ -1238,6 +1206,7 @@ function recommend(a){
 
 /* labels p/ mensagem do WhatsApp */
 const LBL = {
+  local:{praia:'na praia, sujeita a avaliação e autorização',hospedagem:'na minha hospedagem ou casa',ajuda:'quero ajuda para escolher o local'},
   ocasiao:{adois:'surpresa a dois',pedido:'pedido de casamento ou namoro',celebrar:'aniversário/comemoração',amigas:'entre amigas'},
   clima:{intimista:'intimista e romântico',festivo:'animado e festivo',uau:'sofisticado'},
   fotos:{sim:'fotos essenciais',talvez:'fotos talvez',nao:'sem fotos'},
@@ -1323,7 +1292,7 @@ function showResult(){
   const horarioLabel = answers.horario === 'manha' ? 'manhã (café)' : answers.horario;
   const msg = `Olá! Escolhi minha experiência no site. Minha recomendação: *${p.col} · ${p.tier}* (${p.price}). ${p.note} ` +
     `Ocasião: ${LBL.ocasiao[answers.ocasiao]} · ${answers.pessoas} pessoas · clima ${LBL.clima[answers.clima]} · ` +
-    `${LBL.fotos[answers.fotos]} · investimento ${LBL.budget[answers.budget]} · horário: ${horarioLabel}. ` +
+    `${LBL.fotos[answers.fotos]} · investimento ${LBL.budget[answers.budget]} · horário: ${horarioLabel} · local de preferência: ${LBL.local[answers.local]}. ` +
     `Quero saber a disponibilidade!`;
   /* nomes comerciais para gravar nos dados (planilha, e-mail, dashboard) — em vez das chaves internas */
   const pacoteNome = `${p.col} · ${p.tier}`;
@@ -1332,7 +1301,8 @@ function showResult(){
     clima:   LBL.clima[answers.clima]      || answers.clima,
     fotos:   LBL.fotos[answers.fotos]      || answers.fotos,
     budget:  LBL.budget[answers.budget]    || answers.budget,
-    horario: horarioLabel
+    horario: horarioLabel,
+    local: LBL.local[answers.local]
   });
   const dica = dicaVenda(answers, p);
   track('quiz_complete', { result: pacoteNome, preco: p.price, estimativa_min: p.amount, estimativa_max: p.upperAmount, sob_consulta: p.quote, dica, answers: answersOut });
@@ -1346,6 +1316,7 @@ function showResult(){
       <ul>${p.inc.map(i => `<li>${i}</li>`).join('')}</ul>
       ${answers.fotos === 'sim' && !['celebrar_lux','amigas_lux','pedido_ass','pedido_lux'].includes(key) ? '<p class="budget-note">Esta opção não inclui fotografia profissional. Podemos orçar esse registro separadamente.</p>' : ''}
       ${answers.horario === 'por do sol' ? '<p class="rnote">★ Pôr do sol é o horário mais procurado — sexta a domingo esgota primeiro.</p>' : ''}
+      <p class="rnote">Local de preferência: ${LBL.local[answers.local]}. A escolha será confirmada com a equipe.</p>
       <div class="q-actions">
         <a class="btn btn-wa btn-block" id="qWa" href="${waURL(msg)}" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22c5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2z"/></svg>

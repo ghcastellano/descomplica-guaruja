@@ -89,7 +89,7 @@ A pessoa abre o link em qualquer celular, sem instalar aplicativo. Não precisa 
 
 ## 3A. Questionário mantido e revisão pela Sophia no WhatsApp
 
-**Atualização solicitada por Gustavo em 26/09/2026:** manter o questionário como entrada comercial, acrescentar local de preferência e preparar a proposta automaticamente para revisão da Sophia pelo WhatsApp. Somente depois da liberação dela o cliente recebe o link da proposta e do agendamento. Esta seção substitui a prioridade anterior de deixar WhatsApp para uma etapa tardia. O bot ainda não foi implantado e o questionário de produção ainda não foi alterado por este plano.
+**Atualização solicitada por Gustavo em 26/09/2026:** manter o questionário como entrada comercial, acrescentar local de preferência e preparar a proposta automaticamente para revisão da Sophia pelo WhatsApp. Somente depois da liberação dela o cliente recebe o link da proposta e do agendamento. Esta seção substitui a prioridade anterior de deixar WhatsApp para uma etapa tardia. O bot oficial ainda não foi implantado. A implementação de 26/09 acrescenta a preferência de local ao questionário e inicia a revisão em painel local, com envio simulado; a migração da entrada pública para o novo backend ainda não está ativada.
 
 ### Entrada do cliente
 
@@ -564,3 +564,16 @@ Recomendação para a reunião: buscar interlocutores, visita técnica e critér
 - Preços e limites de serviços são fotografias da consulta, não contratos. Verificar novamente antes da contratação.
 
 Este plano não confirma autorização de praias, equipe contratada, enquadramento tributário, integração fiscal municipal, cobertura suficiente de APIs, retorno turístico ou orçamento aprovado. Define uma implementação verificável, com essas dependências explícitas.
+
+
+## Entrega incremental iniciada em 26/09/2026
+
+Primeiro recorte funcional em `app/`: solicitação fictícia com protocolo, rascunho, revisão por Sophia, liberação explícita, link demonstrativo do cliente e histórico. PostgreSQL isolado no computador; nenhuma alteração no Supabase compartilhado. A interface inicial é um painel responsivo: WhatsApp será um canal do mesmo processo, sem criar outro lugar para armazenar decisões. A mensagem gerada fica simulada, sem envio.
+
+O questionário do site permanece como entrada comercial e passa a perguntar preferência de local; transporta essa resposta no resumo e no texto do WhatsApp. Não aponta para o servidor local e não substitui silenciosamente o Apps Script. O teste de criação no app usa um formulário interno, com dados fictícios.
+
+Essa entrega não conclui a etapa de fundação de produção da tabela acima: autenticação individual/MFA, banco gerenciado isolado, backup/restauração, integração oficial do canal e migração dos leads continuam pendentes. Agenda, reserva e pagamento não estão abertos. Os links de teste duram sete dias, prazo técnico de demonstração, sem definir uma política comercial.
+
+Próxima entrega: validar o fluxo com Sophia; implementar agenda com equipe, recursos e locais aprovados, mantendo bloqueadas as localidades ainda em avaliação. Antes de atendimento real, configurar identidade individual, infraestrutura e canais de homologação e concluir testes de ponta a ponta.
+
+Design system: fonte única em `design-system/`, consumida por site, apresentações e app. Regras em `docs/design-system.md`.

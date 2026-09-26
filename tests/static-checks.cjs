@@ -37,10 +37,26 @@ for (const [key, pkg] of Object.entries(model.packages)) {
 }
 for (const name of ['visao','resumo-executivo','parceria-pousadas','cultura-setur']) {
  assert(read(name+'.html').includes('content="noindex'));
- assert(read(name+'.html').includes('deck.css?v=20260925-2'));
+ assert(read(name+'.html').includes('deck.css?v=20260926-1'));
 }
 assert.equal((read('sitemap.xml').match(/<loc>/g)||[]).length,1);
 assert(!/piquenique/i.test(read('llms.txt')));
 for(const name of ['celebracoes.html','parceiros.html','painel.html','proposta.html','app.css']) assert(!fs.existsSync(path.join(root,name)));
 JSON.parse(read('vercel.json'));
 console.log('OK: scripts, assets, SEO, 11 pacotes/59 estimativas, custos e retirada da expansão.');
+
+// Brand primitives must have one source; every public page consumes it.
+for (const name of ['index','visao','resumo-executivo','parceria-pousadas','cultura-setur','404']) {
+ const source=read(name+'.html');
+ for(const css of ['tokens','fonts','components']) assert(source.includes(`/design-system/${css}.css?v=1`),`${name}: base visual ausente`);
+ assert(!source.includes('@font-face'),`${name}: declaração de fonte duplicada`);
+ assert(!/--(?:cream|petrol|f-serif)\s*:/.test(source),`${name}: token de marca duplicado`);
+}
+assert(!/--(?:cream|petrol|f-serif)\s*:/.test(read('deck.css')));
+const tokens=read('design-system/tokens.css');
+assert(tokens.includes('--tracking-heading:0'));
+assert(/class="[^"]*\blocal-value\b[^"]*\bgrid3\b/.test(read('cultura-setur.html')));
+assert(html.includes("id:'local'"));
+assert(html.includes('local de preferência: ${LBL.local[answers.local]}'));
+assert(html.includes('Até 7 perguntas'));
+console.log('OK: design system compartilhado e preferência de local no quiz.');

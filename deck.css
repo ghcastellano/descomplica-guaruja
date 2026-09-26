@@ -1,32 +1,12 @@
-:root{
-  --cream:#F4EDE4; --sand:#E7D8C5; --sand-soft:#EFE5D6;
-  --terracotta:#C8765A; --terracotta-ink:#A35236; --gold:#C9A24B; --gold-soft:#E4CD96;
-  --petrol:#1F4E54; --petrol-deep:#143438;
-  --ink:#2B2B2B; --muted:#6B655E; --white:#FFFFFF; --whatsapp:#25D366;
-  --f-serif:'Fraunces','Fraunces-fb',Georgia,serif;
-  --f-sans:'Jost','Jost-fb',-apple-system,'Segoe UI',sans-serif;
-  --f-script:'Allura','Allura-fb',Georgia,serif;
-  --r-sm:8px; --r-md:16px; --r-lg:24px; --r-btn:12px;
-  --sh-md:0 4px 16px rgba(0,0,0,.10);
-  --sh-lg:0 8px 32px rgba(20,52,56,.12);
-  --sh-float:0 18px 40px rgba(20,52,56,.14);
-  /* Curvas (skills animate / emil-design-eng): entrada e saída em ease-out forte; movimento em tela em ease-in-out forte.
-     Hover e cor usam `ease` nativo. Nunca ease-in, nunca linear em UI. */
-  --ease-out:cubic-bezier(0.23, 1, 0.32, 1);
-  --ease-in-out:cubic-bezier(0.77, 0, 0.175, 1);
-  --ease-drawer:cubic-bezier(0.32, 0.72, 0, 1);
-  /* Durações: pressão 100–160 ms · hover ~200 ms · UI < 300 ms · troca de slide (explicativa) pode passar de 300 ms */
-  --d-press:140ms; --d-hover:220ms; --d-ui:200ms; --d-slide-in:480ms; --d-slide-out:280ms; --d-reveal:420ms; --stagger:45ms;
-}
 /* Escala tipográfica proporcional à tela: 13px no celular → 22px em TV/projetor */
 html{font-size:clamp(13px, calc(.55vw + .55vh + 6px), 22px);-webkit-text-size-adjust:100%}
 *,*::before,*::after{box-sizing:border-box}
 html,body{margin:0;height:100%}
 body{background:var(--cream);color:var(--ink);font-family:var(--f-sans);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{max-width:100%;display:block}
-/* Tipografia (apple-design): tracking negativo cresce com o tamanho; leading apertado no display, folgado no corpo */
+/* Tipografia da marca; títulos sem tracking negativo para preservar a leitura. */
 h1,h2,h3{font-family:var(--f-serif);font-optical-sizing:auto;color:var(--petrol-deep);line-height:1.1;margin:0;text-wrap:balance;font-weight:600}
-h1{font-size:2.9rem;letter-spacing:-.022em;line-height:1.06} h2{font-size:2.3rem;letter-spacing:-.016em} h3{font-size:1.25rem;letter-spacing:-.006em;line-height:1.2}
+h1{font-size:2.9rem;letter-spacing:var(--tracking-heading);line-height:1.06} h2{font-size:2.3rem;letter-spacing:var(--tracking-heading)} h3{font-size:1.25rem;letter-spacing:var(--tracking-heading);line-height:1.2}
 p{margin:0} ul,ol{margin:0;padding:0;list-style:none}
 .script{font-family:var(--f-script);font-weight:400;color:var(--terracotta-ink);letter-spacing:0}
 a{color:inherit}
@@ -114,8 +94,6 @@ html:not(.js) .slide{border-bottom:1px solid var(--sand)}
 /* Superfícies que flutuam no hover: transição curta com `ease` (hover), só transform/box-shadow/cor */
 .card,.col,.steps li,.stat,.person,.cat span{transition:transform var(--d-hover) ease,box-shadow var(--d-hover) ease,border-color var(--d-hover) ease,background-color var(--d-hover) ease}
 
-.card{position:relative;background:#fff;border:1px solid var(--sand);border-radius:var(--r-md);padding:1.3rem 1.4rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
-.card h3{margin-bottom:.45rem} .card p{font-size:.95rem;color:var(--muted)}
 .slide.dark .card{background:rgba(244,237,228,.06);border-color:rgba(244,237,228,.16);box-shadow:none;backdrop-filter:blur(6px)}
 .slide.dark .card p{color:rgba(244,237,228,.78)}
 .card .n{font-family:var(--f-serif);font-style:italic;font-size:1.6rem;color:var(--gold);line-height:1;margin-bottom:.4rem}

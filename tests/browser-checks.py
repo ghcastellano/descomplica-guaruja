@@ -38,9 +38,11 @@ with sync_playwright() as p:
     page.locator('.q-opt[data-v="sim"]').click()
     page.locator('.q-opt[data-v="500"]').click()
     page.locator('.q-opt[data-v="manha"]').click()
+    page.locator('.q-opt[data-v="praia"]').click()
     assert page.locator('#qWa').is_visible()
     msg=parse_qs(urlparse(page.locator('#qWa').get_attribute('href')).query)['text'][0]
     assert f'{2 if col=="adois" else 8} pessoas' in msg
+    assert 'local de preferência: na praia' in msg
     if col!='adois': assert page.locator('.budget-note').count()>0
     assert page.evaluate('document.documentElement.scrollWidth<=innerWidth'),(engine,w,'quiz overflow')
    page.locator('#qRestart').click();page.locator('.q-opt[data-v="adois"]').click()

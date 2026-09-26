@@ -14,3 +14,7 @@ TAREFAS.md
 *.mp4
 *.docx
 *.pdf
+
+# Backend em projeto próprio; nunca servir código no site estático.
+app
+.github
