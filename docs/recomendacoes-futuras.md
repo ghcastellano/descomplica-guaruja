@@ -24,7 +24,7 @@
 
 ### 2. Google Search Console + Google Business Profile
 - Quando o domínio próprio entrar: cadastrar no Search Console e submeter sitemap.
-- Criar perfil no Google Business Profile ("piquenique guarujá" no Maps) — gratuito, alto impacto em buscas locais.
+- Criar perfil no Google Business Profile ("experiências no Guarujá" no Maps) — gratuito, alto impacto em buscas locais.
 - Me chamar para atualizar canonical/og/sitemap para o domínio novo.
 
 ### 3. Meta Pixel + públicos de remarketing

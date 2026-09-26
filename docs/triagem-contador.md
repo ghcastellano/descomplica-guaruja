@@ -11,7 +11,7 @@ Copie e cole. Peça resposta por escrito.
 
 > Olá. Estamos constituindo uma LTDA com dois sócios em Guarujá/SP, optante
 > pelo Simples Nacional, CNAE principal 8230-0/01, organização de festas e
-> eventos. Montamos piqueniques de luxo e celebrações. Compramos flores,
+> eventos. Organizamos experiências personalizadas. Compramos flores,
 > decoração e alimentos que são **consumidos na montagem do evento**, sem
 > revenda. Contratamos buffet, fotografia, som, bolo e espaço como
 > fornecedores, e vendemos **um serviço único de organização**, sem destacar
@@ -143,7 +143,7 @@ Três pesquisas independentes convergiram na mesma saída: **não tente ser agen
 em tudo.** A norma contábil que trata disso, o CPC 47, autoriza expressamente
 ser principal em alguns serviços e agente em outros dentro do mesmo contrato.
 
-**Produto A, o piquenique próprio.** Kit, equipe e montagem são seus. Você é o
+**Produto A, a experiência própria.** Kit, equipe e montagem são seus. Você é o
 responsável primário, define o preço e tem o kit como estoque de verdade. Isso
 é receita bruta, e está tudo bem: o ticket é pequeno e a alíquota de entrada é
 6%. Código de serviço 17.11, que mantém o ISS em Guarujá.

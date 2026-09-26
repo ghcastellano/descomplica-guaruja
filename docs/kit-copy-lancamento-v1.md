@@ -7,11 +7,11 @@
 ## 1. INSTAGRAM — BIO E ESTRUTURA
 
 **Handle:** @descomplicaguaruja
-**Nome (campo pesquisável):** Descomplica Guarujá | Piqueniques & Experiências
+**Nome (campo pesquisável):** Descomplica Guarujá | Experiências
 
 **Bio (4 linhas):**
 ```
-🌅 Piqueniques de luxo montados pra você no Guarujá
+🌅 Experiências criadas pra você no Guarujá
 💛 A dois · entre amigas · aniversário · pedido
 📍 Guarujá e Baixada — você só chega e vive
 👇 Descubra seu pacote ideal em 30 segundos
@@ -27,7 +27,7 @@
 6. 💛 Clientes (a partir do 1º evento real)
 
 **Cadência:** 3–4 Reels/semana + stories diários simples. Melhores janelas: qui–dom, 18h–20h30.
-**Hashtags (3–5 por post, local primeiro):** #guaruja #baixadasantista #piquenique #picnicdeluxo + 1 da ocasião (#pedidodecasamento #despedidadesolteira #aniversariosurpresa #diadosnamorados)
+**Hashtags (3–5 por post, local primeiro):** #guaruja #baixadasantista #experiencias #momentosespeciais + 1 da ocasião (#pedidodecasamento #despedidadesolteira #aniversariosurpresa #diadosnamorados)
 
 ---
 
@@ -38,13 +38,13 @@
 **R1 · Timelapse "do nada ao uau"** *(o carro-chefe — refaça mensalmente)*
 - Gancho: areia/grama vazia + texto "Em 40 segundos você entende o nosso trabalho"
 - Cenas: timelapse da montagem completa (celular fixo em tripé), corte final em golden hour com o cenário pronto
-- CTA: "Comenta **PICNIC** que eu te mando o quiz de 30s 👇"
+- CTA: "Comenta **EXPERIÊNCIA** que eu te mando o quiz de 30s 👇"
 - Legenda: "Você vive o momento. A gente cuida dos detalhes. 🌅"
 
 **R2 · POV: você só chega**
 - Gancho: câmera na mão andando pela areia — "POV: você reservou e só precisou chegar"
 - Cenas: walk-in em 1ª pessoa até o cenário, sentar, brinde, pôr do sol
-- CTA: "Comenta **PICNIC** 👇"
+- CTA: "Comenta **EXPERIÊNCIA** 👇"
 
 **R3 · O pedido** *(refilmar com cliente real depois, com autorização)*
 - Gancho: "Ele planejou tudo em segredo. Ela não fazia ideia."
@@ -52,7 +52,7 @@
 - CTA: "Vai pedir? Comenta **SIM** que a gente planeja junto 💍"
 
 **R4 · Preço na cara (seu maior diferencial)**
-- Gancho: "Quanto custa um piquenique de luxo no Guarujá? Spoiler: a gente PUBLICA preço."
+- Gancho: "Quanto custa uma experiência personalizada no Guarujá? Spoiler: a gente PUBLICA preço."
 - Cenas: cards com os valores reais (a partir de R$ 249) sobre cenas do cenário
 - CTA: "Comenta **VALORES** que te mando a tabela completa 👇"
 - Por quê: nenhum concorrente publica preço — isso gera salvamentos e confiança
@@ -60,7 +60,7 @@
 **R5 · 3 erros ao planejar surpresa na praia** *(autoridade)*
 - Gancho: "Se você vai fazer surpresa na praia do Guarujá, NÃO cometa esses 3 erros"
 - Beats: 1) horário errado (sol a pino/vento) 2) sem plano B de chuva 3) carregar tudo sozinho e chegar exausto
-- Fecho: "Ou… deixa com a gente." CTA: **PICNIC**
+- Fecho: "Ou… deixa com a gente." CTA: **EXPERIÊNCIA**
 
 **R6 · Entre amigas**
 - Gancho: "A despedida de solteira que ninguém esquece não precisa de balada"
@@ -71,7 +71,7 @@
 - Gancho: "Existe um horário no Guarujá em que tudo fica cinematográfico"
 - Cenas: golden hour pura, cenário em contraluz
 - Copy: "Manhã, tarde ou noite também — mas o pôr do sol esgota primeiro. ⭐"
-- CTA: **PICNIC**
+- CTA: **EXPERIÊNCIA**
 
 **R8 · Quem está por trás (bastidores honestos)**
 - Gancho: "A gente montou um negócio pra cuidar do momento mais importante do seu ano"
@@ -88,7 +88,7 @@
 - Gancho: "— E se chover no dia? — A pergunta que mais recebemos."
 - Cenas: print da previsão → remarcação no calendário → cenário lindo no dia seguinte
 - Copy: "Remarcamos sem custo. Simples assim."
-- CTA: **PICNIC**
+- CTA: **EXPERIÊNCIA**
 
 ---
 
@@ -98,7 +98,7 @@
 
 **Configuração:** Conectar IG profissional → Automation → Keywords. Resposta pública + DM em até 1 min.
 
-**PICNIC** (fluxo geral → quiz)
+**EXPERIÊNCIA** (fluxo geral → quiz)
 - Resposta pública ao comentário: `Te chamei no direct! 💛`
 - DM 1: `Oi! Aqui é do Descomplica Guarujá 🌅 Em 30 segundos você descobre a experiência perfeita pro seu momento — é só responder o quiz: {link do site}#quiz`
 - DM 2 (delay 2 min): `Se preferir falar direto com a gente, é por aqui: {link WhatsApp}. A gente responde rapidinho 😉`

@@ -73,7 +73,7 @@ function enviarAlerta_(data, a, u) {
   const digitos = String(fone).replace(/[^0-9]/g, '');
   /* se já vem com DDI 55 (12-13 dígitos), usa direto; senão prefixa 55 */
   const foneLimpo = (digitos.indexOf('55') === 0 && digitos.length >= 12) ? digitos : '55' + digitos;
-  const msg = encodeURIComponent('Oi! Vi que você montou seu piquenique no site do Descomplica Guarujá. Posso te ajudar a reservar sua data?');
+  const msg = encodeURIComponent('Oi! Vi que você planejou sua experiência no site do Descomplica Guarujá. Posso te ajudar a reservar sua data?');
   const waLink = 'https://wa.me/' + foneLimpo + '?text=' + msg;
   const origem = u.utm_source ? (u.utm_source + (u.utm_medium ? ' / ' + u.utm_medium : '')) : 'direto';
   const assunto = '🔥 Novo lead — ' + fone + ' (' + (a.ocasiao || 'quiz') + ')';

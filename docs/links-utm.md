@@ -60,7 +60,7 @@ https://descomplicaguaruja.com.br/?utm_source=whatsapp&utm_medium=status#quiz
 1. Perfil → **Editar perfil**
 2. Campo **Links** → **Adicionar link externo**
 3. URL: cola o link da bio (acima)
-4. Título: `Monte seu piquenique em 1 min ✨` (emoji aqui pode — é só texto do Instagram, não vai pra URL)
+4. Título: `Planeje sua experiência ✨` (emoji aqui pode — é só texto do Instagram, não vai pra URL)
 5. Salvar
 
 ### 2. Stories com link
