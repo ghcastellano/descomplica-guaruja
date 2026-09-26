@@ -1,0 +1,29 @@
+{
+  "name": "descomplica-operacao",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --hostname 127.0.0.1 --port 3001",
+    "build": "next build",
+    "start": "next start --hostname 127.0.0.1 --port 3001",
+    "local:setup": "node scripts/local-setup.mjs",
+    "db:migrate": "node --env-file=.env.local --import tsx scripts/migrate.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "node --env-file=.env.local --import tsx --test tests/domain.test.ts"
+  },
+  "dependencies": {
+    "next": "16.3.6",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "postgres": "3.4.9",
+    "zod": "4.3.6"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "@types/node": "^25.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "tsx": "^4.21.0"
+  },
+  "type": "module"
+}
