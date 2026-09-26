@@ -1,0 +1,104 @@
+/* Apresentação institucional: composição editorial, isolada dos outros decks. */
+.institutional .wrap{max-width:88rem;padding:0 4rem;gap:1.6rem}
+.institutional .slide{background:var(--cream)}
+.institutional .slide.dark{background:var(--petrol-deep)}
+.institutional h1{font-size:clamp(2.8rem,4.8vw,5rem);line-height:1.04;letter-spacing:-.04em}
+.institutional h2{font-size:clamp(2.4rem,4vw,4.2rem);line-height:1.08;letter-spacing:-.03em}
+.institutional h3{font-size:1.55rem}
+.institutional em{font-style:italic;color:var(--terracotta-ink);font-weight:500}
+.institutional .dark em{color:var(--gold-soft)}
+.institutional .eyebrow{font-size:.72rem;letter-spacing:.17em;text-transform:uppercase;font-weight:600;color:var(--terracotta-ink)}
+.institutional .dark .eyebrow{color:var(--gold-soft)}
+.institutional .dek{font-size:1.13rem;line-height:1.55;margin-top:1.3rem;color:var(--muted)}
+.institutional .dark .dek{color:rgba(244,237,228,.8)}
+.institutional .caption{font-size:.72rem;color:var(--muted);max-width:65rem;line-height:1.5}
+.institutional .dark .caption{color:rgba(244,237,228,.68)}
+.institutional .editorial-split{display:grid;grid-template-columns:1fr 1.15fr;align-items:center;gap:3rem}
+.institutional .editorial-split.reverse{grid-template-columns:1.1fr 1fr}
+.institutional .editorial-photo{margin:0;min-width:0}
+.institutional .editorial-photo picture{display:block}
+.institutional .editorial-photo img{width:100%;height:auto;max-height:52dvh;object-fit:contain;border-radius:2px}
+.institutional figcaption{font-size:.6rem;margin-top:.5rem;line-height:1.4;color:var(--muted)}
+.institutional .dark figcaption{color:rgba(244,237,228,.62)}
+.institutional .brandline{display:flex;align-items:center;gap:.8rem;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase}
+.institutional .brandline img{width:2.6rem;height:2.6rem;object-fit:contain}
+.institutional .outcomes,.institutional .local-value{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2.7rem;margin:1rem 0}
+.institutional .outcomes>div,.institutional .local-value>div{border-top:1px solid var(--terracotta);padding-top:1rem}
+.institutional .ordinal{font-family:var(--f-serif);font-size:3.8rem;line-height:1.2;color:var(--terracotta-ink);display:block;margin-bottom:1rem}
+.institutional .outcomes p,.institutional .local-value p,.institutional .roles p{margin-top:.8rem;font-size:1.03rem;line-height:1.5;color:var(--muted)}
+.institutional .capacity,.institutional .pilot-numbers{display:flex;gap:5rem;align-items:baseline;margin:.4rem 0}
+.institutional .capacity>div,.institutional .pilot-numbers>div{display:flex;align-items:center;gap:1.5rem}
+.institutional .capacity strong,.institutional .pilot-numbers strong{font-family:var(--f-serif);font-weight:500;font-size:6rem;line-height:1.1;color:var(--gold-soft)}
+.institutional .pilot-numbers strong{color:var(--terracotta-ink)}
+.institutional .capacity span,.institutional .pilot-numbers span{font-size:1.05rem;max-width:12rem;line-height:1.45}
+.institutional .places{margin:.3rem 0}
+.institutional .places>div{display:grid;grid-template-columns:3rem 12rem 1fr;align-items:center;gap:1.5rem;padding:1rem 0;border-bottom:1px solid var(--sand)}
+.institutional .places span{color:var(--terracotta-ink);font-size:.85rem}
+.institutional .places p{color:var(--muted);font-size:1.08rem}
+.institutional .pilot-line{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2rem;border-top:1px solid var(--terracotta);padding-top:1rem}
+.institutional .pilot-line p{font-size:1rem;color:var(--muted)}
+.institutional .pilot-line b{font-weight:500;color:var(--petrol-deep);font-size:1.2rem}
+.institutional .measures>div{display:grid;grid-template-columns:12rem 1fr;gap:2rem;padding:.85rem 0;border-bottom:1px solid var(--sand);align-items:baseline}
+.institutional .measures p{font-size:1.05rem;color:var(--muted)}
+.institutional .roles{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin:.7rem 0}
+.institutional .roles>div{border-top:1px solid var(--terracotta);padding-top:1.2rem}
+.institutional .decisions{display:flex;flex-direction:column;gap:1rem;margin:.7rem 0}
+.institutional .decisions p{display:flex;gap:1.6rem;align-items:baseline;font-size:1.15rem}
+.institutional .decisions span{color:var(--gold-soft);font-family:var(--f-serif);font-size:1.6rem}
+.institutional .closing-contact{display:flex;gap:1rem;align-items:center;margin-top:1rem}
+.institutional .closing-contact img{width:3rem;height:3rem;object-fit:contain}
+.institutional .closing-contact p{font-size:.82rem;line-height:1.6}
+.institutional .closing-contact a{text-decoration-thickness:1px;text-underline-offset:4px}
+.institutional .backup-link{font-size:.7rem;color:var(--gold-soft);width:fit-content;padding:.5rem 0}
+@media(min-width:981px) and (max-height:800px){
+ .institutional .wrap{gap:1.05rem;padding:0 3.2rem}
+ .institutional h1{font-size:3.5rem}.institutional h2{font-size:3.05rem}
+ .institutional .capacity strong,.institutional .pilot-numbers strong{font-size:5rem}
+ .institutional .dek{margin-top:.8rem;font-size:1.02rem}
+ .institutional .ordinal{font-size:3rem;margin-bottom:.5rem}
+}
+@media(max-width:980px){
+ .institutional .wrap{padding:0 2rem;gap:1.5rem}
+ .institutional h1{font-size:3.4rem}.institutional h2{font-size:2.8rem}
+ .institutional .editorial-split,.institutional .editorial-split.reverse{grid-template-columns:1fr;gap:1.3rem}
+ .institutional .editorial-photo{width:100%;max-width:35rem}
+ .institutional .editorial-photo img{max-height:30dvh;width:100%;object-fit:contain;object-position:left}
+ .institutional .editorial-split.reverse .editorial-photo{order:2}
+ .institutional .outcomes,.institutional .local-value{gap:1.5rem}
+ .institutional .outcomes p br,.institutional .local-value p br{display:none}
+ .institutional .capacity,.institutional .pilot-numbers{gap:2.5rem;flex-wrap:wrap}
+ .institutional .capacity strong,.institutional .pilot-numbers strong{font-size:5.5rem}
+ .institutional .places>div{grid-template-columns:2rem 10rem 1fr;gap:1rem}
+}
+@media(max-width:600px){
+ .institutional .wrap{padding:0 24px;gap:1.3rem}
+ .institutional h1{font-size:2.9rem}.institutional h2{font-size:2.4rem}
+ .institutional h3{font-size:1.5rem}.institutional .dek{font-size:1.1rem}
+ .institutional .brandline{font-size:.73rem}
+ .institutional .outcomes,.institutional .local-value,.institutional .roles{grid-template-columns:1fr;gap:1.3rem;margin:.4rem 0}
+ .institutional .outcomes>div{display:grid;grid-template-columns:3.5rem 1fr;column-gap:1rem;padding-top:.8rem}
+ .institutional .ordinal{font-size:2.5rem;margin:0;grid-row:span 2}
+ .institutional .outcomes p{margin:.4rem 0 0}
+ .institutional .local-value p,.institutional .roles p{margin-top:.45rem}
+ .institutional .capacity,.institutional .pilot-numbers{gap:1.5rem;flex-direction:column;align-items:flex-start;margin:0}
+ .institutional .capacity strong,.institutional .pilot-numbers strong{font-size:4.5rem;min-width:6rem}
+ .institutional .places>div{grid-template-columns:2rem 1fr;padding:.8rem 0;gap:.3rem .8rem}
+ .institutional .places p{grid-column:2;font-size:1.04rem}
+ .institutional .pilot-line{gap:1rem;grid-template-columns:1fr}
+ .institutional .pilot-line p{display:flex;justify-content:space-between;align-items:baseline;gap:.5rem}
+ .institutional .pilot-line br{display:none}
+ .institutional .measures>div{grid-template-columns:1fr;gap:.4rem}
+ .institutional .decisions p{gap:1rem;font-size:1.15rem}
+ .institutional .caption{font-size:.79rem}
+ .institutional figcaption{font-size:.65rem}
+ .institutional .ctl{padding-left:12px;padding-right:12px;gap:5px}
+ .institutional .ctl .mid{gap:7px}.institutional .ctl .small{padding:0 8px;font-size:9px}
+}
+@media print{
+ html.js,html.js body{height:auto!important;overflow:visible!important}
+ html.js .institutional .deck{height:auto!important;overflow:visible!important}
+ html.js .institutional .slide{position:relative!important;inset:auto!important;visibility:visible!important;opacity:1!important;transform:none!important;height:190mm!important;min-height:0!important;overflow:hidden!important;break-after:page;padding:10mm 0!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+ html.js .institutional .slide .wrap{min-height:170mm!important}
+ .institutional .ctl,.institutional .dots,.institutional .bar,.institutional .cur,.institutional .notes,.institutional .scroll-cue{display:none!important}
+ @page{size:A4 landscape;margin:0}
+}

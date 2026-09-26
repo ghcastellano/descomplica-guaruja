@@ -5,7 +5,7 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const read = name => fs.readFileSync(path.join(root,name),'utf8');
 const html = read('index.html');
-for (const name of ['index.html','visao.html','resumo-executivo.html','parceria-pousadas.html','404.html']) {
+for (const name of ['index.html','visao.html','resumo-executivo.html','parceria-pousadas.html','cultura-setur.html','404.html']) {
   const source = read(name);
   assert(!/piquenique/i.test(source), `${name}: posicionamento antigo`);
   assert(!/(?:href|src)=["']\/(?:celebracoes|parceiros|painel|proposta|app\.css)(?:["'?#/])/i.test(source), `${name}: módulo retirado`);
@@ -35,7 +35,7 @@ for (const [key, pkg] of Object.entries(model.packages)) {
     assert(pkg.rows[6].low<pkg.rows[0].low*4,'estrutura compartilhada deve reduzir custo médio entre 2 e 8');
   }
 }
-for (const name of ['visao','resumo-executivo','parceria-pousadas']) {
+for (const name of ['visao','resumo-executivo','parceria-pousadas','cultura-setur']) {
  assert(read(name+'.html').includes('content="noindex'));
  assert(read(name+'.html').includes('deck.css?v=20260925-2'));
 }

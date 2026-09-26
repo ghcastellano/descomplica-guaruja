@@ -103,7 +103,7 @@
       ]
     },
     {
-      "source": "/(visao|resumo-executivo|parceria-pousadas)(.html)?",
+      "source": "/(visao|resumo-executivo|parceria-pousadas|cultura-setur)(.html)?",
       "headers": [
         {
           "key": "X-Robots-Tag",

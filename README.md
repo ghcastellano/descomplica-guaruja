@@ -5,7 +5,10 @@ Site estático em HTML, CSS e JavaScript nativo, sem framework e sem build. Ofer
 ## Estrutura
 
 - `index.html`: página principal, catálogo, quantidade, quiz, dados estruturados e integração WhatsApp/Apps Script.
-- `deck.css` e `deck.js`: apresentação visual e navegação compartilhadas pelas três apresentações HTML.
+- `deck.css` e `deck.js`: apresentação visual e navegação compartilhadas pelas apresentações HTML.
+- `cultura-setur.html` e `cultura-setur.css`: apresentação executiva para Cultura e SETUR, dez slides principais e um apoio opcional de lançamento.
+- `docs/roteiro-cultura-setur-2026-09.md`: roteiro, fontes e uso das notas.
+- `docs/plano-arquitetura-operacao-2026-09.md`: plano do futuro sistema com equipe própria; não representa backend implantado.
 - `visao.html`: visão futura, com operação própria e experiências até 50 pessoas; não é oferta atual.
 - `resumo-executivo.html`: apresentação institucional, alinhada à oferta e à visão.
 - `parceria-pousadas.html`: proposta de parceria com hospedagens.
