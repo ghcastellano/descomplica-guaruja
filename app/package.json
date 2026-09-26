@@ -9,7 +9,8 @@
     "local:setup": "node scripts/local-setup.mjs",
     "db:migrate": "node --env-file=.env.local --import tsx scripts/migrate.ts",
     "typecheck": "tsc --noEmit",
-    "test": "node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/*.test.ts"
+    "test": "node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/*.test.ts",
+    "stripe:listen": "node scripts/stripe-listen.mjs"
   },
   "dependencies": {
     "next": "16.3.6",

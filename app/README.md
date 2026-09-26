@@ -42,7 +42,7 @@ Pré-reserva dura 15min; ao criar Checkout do sinal, prazo passa a 31min para re
 
 ## Stripe de teste
 
-SDK oficial; somente `sk_test_` e eventos `livemode=false`. Preencha em `.env.local`, sem enviar ao Git/chat:
+SDK oficial; somente credenciais de teste (`sk_test_`, `rk_test_` ou `rkcs_test_` de sandbox temporário) e eventos `livemode=false`. Preencha em `.env.local`, sem enviar ao Git/chat:
 
 ```dotenv
 STRIPE_SECRET_KEY=
@@ -64,7 +64,19 @@ Copie o signing secret do listener para `STRIPE_WEBHOOK_SECRET` e reinicie o ser
 - Recebimentos tardios ou incompatíveis com a reserva vão à conciliação, com alerta registrado. Não há estorno automático nem job de reconciliação ainda.
 - Simulação manual não pode misturar recebimentos com Checkout ativo ou pagamentos Stripe do mesmo agendamento.
 
-A suíte verifica assinatura com SDK real e transporte Stripe simulado, sem chamadas à conta. A validação ponta a ponta com o provedor exige credenciais e listener reais de teste.
+A suíte verifica assinatura com SDK real e transporte Stripe simulado, sem chamadas à conta. Em 26/09/2026, a validação externa também passou no sandbox dedicado: Checkout hospedado, cartão fictício, sinal e saldo pagos, dois webhooks assinados recebidos com HTTP 200 e estados confirmada/paga atualizados no PostgreSQL local. Nenhum pagamento real.
+
+### Sandbox local dedicado
+
+Em 26/09/2026 foi criado um sandbox temporário exclusivo para este app pela CLI oficial, sem usar credenciais do AtGangway. Expira em **03/10/2026** se não for vinculado à conta pelo fluxo de claim. O link de claim e as credenciais ficam no perfil privado `.local/stripe.toml`; nunca no Git. Este sandbox não é uma conta de produção nem configuração da Vercel.
+
+Para iniciar o encaminhamento local com esse perfil:
+
+```sh
+npm run stripe:listen
+```
+
+O script salva o segredo de assinatura em `.env.local` sem imprimi-lo. Mantenha o listener ativo e reinicie o app após mudança de configuração. Se o sandbox expirar, vincule-o ou configure novas credenciais de teste. Em homologação futura, o webhook será um endpoint HTTPS persistente e os segredos ficarão como sensitive no projeto Vercel **da aplicação**, separado do site estático. CI permanece com transporte simulado e banco efêmero.
 
 ## Preço e tarifas
 

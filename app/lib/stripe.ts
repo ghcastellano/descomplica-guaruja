@@ -10,13 +10,14 @@ import { bookingInternals as core } from "./booking";
 export function getStripeMode() {
   const key = process.env.STRIPE_SECRET_KEY || "",
     secret = process.env.STRIPE_WEBHOOK_SECRET || "";
-  const ready = key.startsWith("sk_test_") && secret.startsWith("whsec_");
+  const ready =
+    /^(sk|rk|rkcs)_test_[A-Za-z0-9]+$/.test(key) && secret.startsWith("whsec_");
   return {
     ready,
     mode: "test" as const,
     reason: ready
       ? "Stripe em modo de teste. Nenhum pagamento real."
-      : key.startsWith("sk_live_")
+      : /^(sk|rk|rkcs)_live_/.test(key)
         ? "Chaves de produção são bloqueadas neste ambiente."
         : "Configure STRIPE_SECRET_KEY de teste e STRIPE_WEBHOOK_SECRET para usar o Checkout.",
   };

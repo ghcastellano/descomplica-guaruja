@@ -8,13 +8,12 @@ if (
 )
   throw Error("Banco de teste isolado obrigatório.");
 process.env.DATABASE_URL = process.env.TEST_DATABASE_URL;
-process.env.STRIPE_SECRET_KEY = "sk_test_unit_fixture_only";
+process.env.STRIPE_SECRET_KEY = "sk_test_unitfixtureonly";
 process.env.STRIPE_WEBHOOK_SECRET = "whsec_unit_fixture_only";
 const { db } = await import("../lib/db");
 const { migrate } = await import("../scripts/migrate");
-const { createRequest, releaseProposal, getProposal } = await import(
-  "../lib/domain"
-);
+const { createRequest, releaseProposal, getProposal } =
+  await import("../lib/domain");
 const {
   getAvailability,
   holdBooking,
@@ -29,7 +28,7 @@ const {
   verifyStripeEvent,
   processStripeEvent,
 } = await import("../lib/stripe");
-const signing = new Stripe("sk_test_unit_fixture_only");
+const signing = new Stripe("sk_test_unitfixtureonly");
 before(async () => {
   await migrate();
   await db`UPDATE bookings SET status='expired' WHERE status IN ('held','awaiting_deposit','confirmed','fully_paid')`;
@@ -144,6 +143,14 @@ test("configuração bloqueia chaves live e exige webhook; assinatura SDK rejeit
     ),
     { status: 503 },
   );
+  for (const key of ["rk_test_fixture", "rkcs_test_fixture"]) {
+    process.env.STRIPE_SECRET_KEY = key;
+    assert.equal(getStripeMode().ready, true);
+  }
+  for (const key of ["rk_live_fixture", "rkcs_live_fixture", "notastripekey"]) {
+    process.env.STRIPE_SECRET_KEY = key;
+    assert.equal(getStripeMode().ready, false);
+  }
   process.env.STRIPE_SECRET_KEY = previous;
   assert.throws(() => verifyStripeEvent("{}", "invalid"), { status: 400 });
   assert.throws(
