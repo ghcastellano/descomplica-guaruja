@@ -12,12 +12,18 @@ export function CityIntake({
   initialType,
   initialCategory = "",
   initialGuests = 2,
+  initialNeighborhood = "",
+  initialDate = "",
+  initialPeriod = "flexivel",
 }: {
   embedded?: boolean;
   intent?: string;
   initialType?: Vertical;
   initialCategory?: string;
   initialGuests?: number;
+  initialNeighborhood?: string;
+  initialDate?: string;
+  initialPeriod?: string;
 }) {
   const key = useRef(""),
     heading = useRef<HTMLHeadingElement>(null);
@@ -44,9 +50,9 @@ export function CityIntake({
           ? initialGuests
           : 2,
     );
-  const [neighborhood, setNeighborhood] = useState(""),
-    [date, setDate] = useState(""),
-    [period, setPeriod] = useState("flexivel"),
+  const [neighborhood, setNeighborhood] = useState(initialNeighborhood),
+    [date, setDate] = useState(initialDate),
+    [period, setPeriod] = useState(initialPeriod),
     [name, setName] = useState(""),
     [contact, setContact] = useState(""),
     [consent, setConsent] = useState(false);
@@ -93,7 +99,18 @@ export function CityIntake({
     e.preventDefault();
     setError("");
     if (step < 4) {
-      setStep(step + 1);
+      // Preferences extracted from the prompt stay visible and editable. Ask only what is missing.
+      setStep(
+        step === 0
+          ? !date
+            ? 1
+            : !neighborhood
+              ? 2
+              : 3
+          : step === 1 && neighborhood
+            ? 3
+            : step + 1,
+      );
       return;
     }
     if (busy) return;
@@ -179,7 +196,7 @@ export function CityIntake({
             DESCOMPLICA <small>Um cuidado de cada vez</small>
           </span>
         </div>
-        {step > 0 && (
+        {(step > 0 || date || neighborhood || period !== "flexivel") && (
           <div className="concierge-context" aria-label="Seu pedido até aqui">
             <button type="button" disabled={busy} onClick={() => setStep(0)}>
               {category}
@@ -188,13 +205,15 @@ export function CityIntake({
                 : ""}{" "}
               <span aria-hidden>✎</span>
             </button>
-            {step > 1 && (
+            {(step > 1 || date || period !== "flexivel") && (
               <button type="button" disabled={busy} onClick={() => setStep(1)}>
                 {date ? date.split("-").reverse().join("/") : "Data flexível"}{" "}
+                {period !== "flexivel" &&
+                  ` · ${{ manha: "Manhã", tarde: "Tarde", "por-do-sol": "Pôr do sol", noite: "Noite" }[period] || ""}`}
                 <span aria-hidden>✎</span>
               </button>
             )}
-            {step > 2 && (
+            {(step > 2 || neighborhood) && (
               <button type="button" disabled={busy} onClick={() => setStep(2)}>
                 {neighborhood} <span aria-hidden>✎</span>
               </button>

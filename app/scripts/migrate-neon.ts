@@ -35,7 +35,7 @@ try {
     });
   }
   await sql.begin(async (tx) => {
-    await tx`GRANT SELECT,INSERT,UPDATE ON city_requests TO descomplica_app`;
+    await tx`GRANT SELECT,INSERT,UPDATE ON city_requests,ai_interpretations TO descomplica_app`;
     await tx`GRANT SELECT,INSERT ON city_request_events TO descomplica_app`;
     await tx`GRANT USAGE,SELECT ON SEQUENCE city_requests_number_seq,city_request_events_id_seq TO descomplica_app`;
   });

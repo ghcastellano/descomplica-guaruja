@@ -22,6 +22,8 @@ const result = spawnSync(
     stdio: "inherit",
     env: {
       ...process.env,
+      OPENAI_API_KEY: "",
+      AI_ENABLED: "false",
       APP_MODE: "local-test",
       DATABASE_URL: process.env.TEST_DATABASE_URL,
     },

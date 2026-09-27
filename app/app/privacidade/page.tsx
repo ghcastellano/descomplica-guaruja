@@ -2,13 +2,29 @@ import Link from "next/link";
 export default function Page() {
   return (
     <main className="narrow">
-      <span className="eyebrow">PRÉVIA LOCAL · 26/09/2026</span>
+      <span className="eyebrow">HOMOLOGAÇÃO · 27/09/2026</span>
       <h1>Seus dados, com cuidado.</h1>
       <p>
         Esta versão de avaliação salva os dados do pedido no banco dedicado do
         Descomplica Guarujá, hospedado no Neon. Nome, contato, preferências e
         descrição são usados pela equipe para avaliar e acompanhar o
         atendimento.
+      </p>
+      <h2>Assistente para entender seu pedido</h2>
+      <p>
+        Ao enviar uma descrição no campo inicial, usamos a OpenAI para sugerir
+        categoria e preferências. Não inclua dados sensíveis nesse campo. Nome e
+        contato solicitados depois não são enviados ao modelo. Removemos padrões
+        comuns de telefone e e-mail da descrição antes do envio, mas essa
+        remoção não identifica todos os dados pessoais possíveis. Você revisa as
+        sugestões antes de registrar o pedido.
+      </p>
+      <p>
+        Não salvamos o texto em um histórico de IA no nosso banco. Registramos
+        contagem de uso, tokens e um identificador derivado do IP para limitar
+        abuso e custos. Solicitamos que a resposta não seja armazenada pela API;
+        isso não elimina as políticas próprias de retenção do provedor. Também é
+        possível começar pelos atalhos e preencher as opções sem IA.
       </p>
       <h2>Quem acessa</h2>
       <p>

@@ -14,6 +14,8 @@ with sync_playwright() as p:
     sent.append(route.request.post_data_json)
     route.fulfill(status=503 if len(sent)==1 else 201,content_type='application/json',body=json.dumps({'error':'Teste de falha. Tente novamente.'} if len(sent)==1 else {'url':'/pedidos/'+'a'*43,'protocol':'GU-TESTE'}))
    page.route('**/api/city/requests',receive)
+   # Deterministic fallback tests never call a paid provider.
+   page.route('**/api/city/interpret',lambda route:route.fulfill(status=503,body='{}'))
    page.goto(BASE);page.get_by_label('Conte pra gente').fill('Uma experiência para 4 amigas na praia')
    page.get_by_role('button',name='Descomplicar',exact=True).click()
    expect(page.locator('.concierge-match h3')).to_have_text('Entre Amigas');expect(page.get_by_role('button',name='4 pessoas',exact=True)).to_have_attribute('aria-pressed','true')
