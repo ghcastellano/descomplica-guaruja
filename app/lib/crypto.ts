@@ -32,13 +32,13 @@ export function decrypt(value: string) {
   cipher.setAuthTag(tag);
   return Buffer.concat([cipher.update(body), cipher.final()]).toString("utf8");
 }
-export function session() {
+export function session(purpose = "staff") {
   const payload = String(Date.now() + 8 * 60 * 60 * 1000);
   return `${payload}.${createHmac("sha256", config().secret)
-    .update("session:" + payload)
+    .update("session:" + purpose + ":" + payload)
     .digest("hex")}`;
 }
-export function validSession(value: string) {
+export function validSession(value: string, purpose = "staff") {
   const [expiry, signature] = value.split(".");
   if (
     !/^\d{13}$/.test(expiry || "") ||
@@ -47,7 +47,7 @@ export function validSession(value: string) {
   )
     return false;
   const expected = createHmac("sha256", config().secret)
-    .update("session:" + expiry)
+    .update("session:" + purpose + ":" + expiry)
     .digest("hex");
   return equal(signature || "", expected);
 }

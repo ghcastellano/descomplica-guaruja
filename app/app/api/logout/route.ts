@@ -4,7 +4,7 @@ export async function POST(request: Request) {
   const denied = checkMutation(request);
   if (denied) return denied;
   const res = NextResponse.json({ ok: true });
-  res.cookies.set("dg_session", "", {
+  res.cookies.set("dg_v2_session", "", {
     httpOnly: true,
     sameSite: "strict",
     path: "/",

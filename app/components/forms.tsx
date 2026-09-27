@@ -35,8 +35,7 @@ export function Login() {
           await send("/api/login", {
             code: new FormData(e.currentTarget).get("code"),
           });
-          router.push("/");
-          router.refresh();
+          window.location.assign("/operacao");
         } catch (e) {
           setError((e as Error).message);
         } finally {
@@ -45,7 +44,7 @@ export function Login() {
       }}
     >
       <label>
-        Código de acesso local
+        Código de acesso da equipe
         <input
           name="code"
           type="password"
@@ -59,7 +58,7 @@ export function Login() {
         {busy ? "Entrando…" : "Entrar na operação →"}
       </button>
       <p className="muted">
-        O código foi gerado durante a configuração local. A sessão dura 8 horas.
+        Use o código da equipe compartilhado por Gustavo. A sessão dura 8 horas.
       </p>
     </form>
   );

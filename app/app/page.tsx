@@ -1,137 +1,134 @@
-import { requirePageAuth } from "@/lib/auth";
-import { listRequests, packages, protocol, sources } from "@/lib/domain";
-import { Logout } from "@/components/forms";
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: Promise<{ q?: string }>;
-}) {
-  await requirePageAuth();
-  const q = (await searchParams).q || "";
-  const rows = await listRequests(q);
+import Link from "next/link";
+import { IntentSearch } from "@/components/intent-search";
+import { CityIcon } from "@/components/city-shell";
+import { ExperienceCards } from "@/components/experience-cards";
+export default function Home() {
   return (
-    <main>
-      <div className="page-top">
+    <main className="city-home unified-home">
+      <section className="unified-entry" aria-labelledby="home-question">
+        <span className="eyebrow">SUA VIDA NO GUARUJÁ, MAIS SIMPLES</span>
+        <h1 id="home-question">
+          O que você precisa
+          <br />
+          no Guarujá?
+        </h1>
+        <p>Conte pra gente. Ou encontre uma ideia para o seu dia.</p>
+        <IntentSearch />
+        <nav className="world-shortcuts" aria-label="Escolha como começar">
+          {[
+            ["resolver", "Resolver", "resolver"],
+            ["casa", "Casa", "casa"],
+            ["experiencias", "Experiências", "experiencias"],
+            ["descobrir", "Descobrir", "descobrir"],
+          ].map(([id, label, icon]) => (
+            <Link prefetch={false} href={"/" + id} key={id}>
+              <CityIcon name={icon} />
+              <span>{label}</span>
+            </Link>
+          ))}
+        </nav>
+      </section>
+      <section className="city-section">
+        <div className="section-heading">
+          <div>
+            <span className="eyebrow">MENOS CORRERIA. MAIS MOMENTOS.</span>
+            <h2>Encontre tempo para viver.</h2>
+          </div>
+          <Link prefetch={false} href="/experiencias" className="text-link">
+            Explorar experiências ↗
+          </Link>
+        </div>
+        <ExperienceCards />
+      </section>
+      <section className="city-section">
+        <div className="section-heading">
+          <div>
+            <span className="eyebrow">UM CUIDADO COM O SEU DIA</span>
+            <h2>O que você quer resolver?</h2>
+          </div>
+          <Link prefetch={false} href="/resolver" className="text-link">
+            Ver opções ↗
+          </Link>
+        </div>
+        <div className="quick-services">
+          {[
+            ["Elétrica", "resolver"],
+            ["Limpeza", "spark"],
+            ["Ar-condicionado", "casa"],
+            ["Hidráulica", "resolver"],
+          ].map(([label, icon]) => (
+            <Link prefetch={false}
+              key={label}
+              href={
+                "/descomplicar?tipo=resolver&categoria=" +
+                encodeURIComponent(label)
+              }
+            >
+              <CityIcon name={icon} />
+              <span>{label}</span>
+              <span aria-hidden>↗</span>
+            </Link>
+          ))}
+        </div>
+        <p className="field-note">
+          Conte sua necessidade. A equipe avalia o atendimento antes de
+          confirmar profissional, valor ou prazo.
+        </p>
+      </section>
+      <section className="unified-house">
         <div>
-          <span className="eyebrow">SEU ATELIÊ DE EXPERIÊNCIAS</span>
-          <h1>Olá, Sophia.</h1>
-          <p className="intro">
-            Cada conversa tem uma história.
+          <span className="eyebrow">DESCOMPLICA CASA</span>
+          <h2>
+            Chegue com a cabeça
             <br />
-            Todas continuam por aqui.
+            no fim de semana.
+          </h2>
+          <p>
+            Limpeza, preparação e cuidados entre uma visita e outra. O primeiro
+            passo é contar o que sua casa precisa.
+          </p>
+          <Link prefetch={false} href="/casa" className="text-link">
+            Cuidar da minha casa →
+          </Link>
+        </div>
+        <div className="house-checklist">
+          <span className="house-checklist-heading">
+            <CityIcon name="casa" /> UMA CHEGADA MAIS TRANQUILA
+          </span>
+          {[
+            "Preparar antes de chegar",
+            "Cuidar enquanto você está longe",
+            "Reunir os detalhes em um pedido",
+          ].map((x, i) => (
+            <div key={x}>
+              <span>0{i + 1}</span>
+              <p>{x}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+      <section className="city-section explore-callout">
+        <div>
+          <span className="eyebrow">A CIDADE TAMBÉM É PARTE DA HISTÓRIA</span>
+          <h2>Por onde vamos começar?</h2>
+          <p>
+            Praias, paisagens e novas formas de aproveitar o que está perto.
           </p>
         </div>
-        <div className="actions">
-          <a className="btn btn-primary" href="/conversa">
-            + Registrar conversa
-          </a>
-          <a className="btn btn-secondary" href="/solicitar">
-            + Solicitação de teste
-          </a>
-          <Logout />
-        </div>
-      </div>
-      <nav className="workspace-tabs" aria-label="Operação">
-        <a href="/" aria-current="page">
-          Atendimentos
-        </a>
-        <a href="/agenda">Agenda e pagamentos →</a>
-      </nav>
-      <div className="summary">
+        <Link prefetch={false} href="/descobrir" className="text-link">
+          Descobrir Guarujá ↗
+        </Link>
+      </section>
+      <section className="partner-invite">
+        <span className="eyebrow">GENTE DAQUI. POSSIBILIDADES PARA TODOS.</span>
+        <h2>O talento local faz parte dessa história.</h2>
         <p>
-          <strong>{rows.filter((r) => r.status === "new").length}</strong> para
-          completar
+          Presta serviços no Guarujá? Estamos conhecendo profissionais e
+          negócios para formar nossa rede.
         </p>
-        <p>
-          <strong>{rows.filter((r) => r.status === "draft").length}</strong>{" "}
-          para revisar
-        </p>
-        <p>
-          <strong>{rows.filter((r) => r.status === "released").length}</strong>{" "}
-          com link liberado
-        </p>
-      </div>
-      <form className="contact-search" action="/">
-        <label>
-          Busque um contato antes de abrir outro atendimento
-          <input
-            type="search"
-            name="q"
-            defaultValue={q}
-            maxLength={150}
-            placeholder="Nome, telefone ou e-mail"
-          />
-        </label>
-        <button className="btn btn-secondary">Buscar</button>
-        {q && (
-          <a href="/" className="text-link">
-            Limpar
-          </a>
-        )}
-      </form>
-      <section>
-        <div className="section-heading">
-          <h2>Seus atendimentos</h2>
-          <span>
-            {rows.length} {q ? "encontrados" : "no total"}
-          </span>
-        </div>
-        {rows.length ? (
-          <div className="inbox">
-            {rows.map((r) => (
-              <a
-                className="inbox-row"
-                href={
-                  (r.status === "new" ? "/atendimentos/" : "/propostas/") + r.id
-                }
-                key={r.id}
-              >
-                <div>
-                  <span className="eyebrow">
-                    {protocol(r.number)} ·{" "}
-                    {sources[r.briefing.source as keyof typeof sources] ||
-                      "Outro canal"}
-                  </span>
-                  <h3>{r.briefing.name}</h3>
-                  <p>
-                    {r.status === "new"
-                      ? "Conversa registrada · experiência a definir"
-                      : `${packages[r.briefing.packageId as keyof typeof packages].col} · ${r.briefing.guests} pessoas`}
-                  </p>
-                </div>
-                <div>
-                  <span className={"badge " + r.status}>
-                    {r.status === "new"
-                      ? "Completar pedido"
-                      : r.status === "draft"
-                        ? "Revisar proposta"
-                        : "Link liberado"}
-                  </span>
-                  <p>
-                    {r.version ? `Versão ${r.version}` : "Sem proposta"}{" "}
-                    <span aria-hidden>↗</span>
-                  </p>
-                </div>
-              </a>
-            ))}
-          </div>
-        ) : (
-          <div className="empty">
-            <span className="empty-number">01</span>
-            <h2>
-              {q
-                ? "Nenhum atendimento encontrado."
-                : "O pedido pode começar em qualquer canal."}
-            </h2>
-            <p>
-              Registre uma conversa fictícia ou uma solicitação completa. Não é
-              necessário responder ao questionário para ser atendido.
-            </p>
-            <a href="/conversa" className="text-link">
-              Registrar conversa →
-            </a>
-          </div>
-        )}
+        <Link prefetch={false} href="/parceiros" className="btn btn-secondary">
+          Quero fazer parte ↗
+        </Link>
       </section>
     </main>
   );

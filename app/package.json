@@ -3,14 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --hostname 127.0.0.1 --port 3001",
+    "dev": "next dev --hostname 127.0.0.1 --port 3002",
     "build": "next build",
-    "start": "next start --hostname 127.0.0.1 --port 3001",
+    "start": "next start --hostname 127.0.0.1 --port 3002",
     "local:setup": "node scripts/local-setup.mjs",
     "db:migrate": "node --env-file=.env.local --import tsx scripts/migrate.ts",
     "typecheck": "tsc --noEmit",
-    "test": "node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/*.test.ts",
-    "stripe:listen": "node scripts/stripe-listen.mjs"
+    "test": "node --env-file=.env.local scripts/test.mjs",
+    "stripe:listen": "node scripts/stripe-listen.mjs",
+    "db:migrate:neon": "node --env-file=.env.migration.local --import tsx scripts/migrate-neon.ts",
+    "deploy:staging": "node scripts/deploy-staging.mjs"
   },
   "dependencies": {
     "next": "16.3.6",

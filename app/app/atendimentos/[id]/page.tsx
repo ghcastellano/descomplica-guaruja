@@ -13,7 +13,7 @@ export default async function Page({
   if (r.proposal_id) redirect("/propostas/" + r.id);
   return (
     <main className="narrow">
-      <a className="back" href="/">
+      <a className="back" href="/operacao">
         ← Atendimentos
       </a>
       <span className="eyebrow">

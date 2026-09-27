@@ -10,11 +10,12 @@ if (!existsSync(profile))
     "Crie o sandbox e salve o perfil em .local/stripe.toml primeiro.",
   );
 const env = readFileSync(envPath, "utf8");
+const origin = env.match(/^APP_ORIGIN=(.+)$/m)?.[1];
 if (
-  !env.includes("APP_MODE=local-test") ||
-  !env.includes("APP_ORIGIN=http://127.0.0.1:3001")
+  !env.match(/^APP_MODE=local-(test|neon)$/m) ||
+  !["http://127.0.0.1:3001", "http://127.0.0.1:3002"].includes(origin)
 )
-  throw Error("Somente ambiente local de teste.");
+  throw Error("Somente prévia local.");
 const child = spawn(
   "npm",
   [
@@ -31,7 +32,7 @@ const child = spawn(
     "--events",
     "checkout.session.completed,checkout.session.async_payment_succeeded,checkout.session.expired",
     "--forward-to",
-    "http://127.0.0.1:3001/api/stripe/webhook",
+    origin + "/api/stripe/webhook",
   ],
   { cwd: root, stdio: ["ignore", "pipe", "pipe"] },
 );

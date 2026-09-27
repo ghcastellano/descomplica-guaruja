@@ -4,7 +4,7 @@ export default async function Page() {
   await requirePageAuth();
   return (
     <main className="narrow">
-      <a className="back" href="/">
+      <a className="back" href="/operacao">
         ← Atendimentos
       </a>
       <span className="eyebrow">SEM QUESTIONÁRIO OBRIGATÓRIO</span>

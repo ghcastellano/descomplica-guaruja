@@ -1,0 +1,30 @@
+import { spawnSync } from "node:child_process";
+import { readdirSync } from "node:fs";
+const u = new URL(process.env.TEST_DATABASE_URL || "invalid");
+if (
+  u.hostname !== "127.0.0.1" ||
+  u.port !== "54339" ||
+  u.pathname !== "/descomplica_test"
+)
+  throw Error("Testes exigem banco local isolado.");
+const result = spawnSync(
+  process.execPath,
+  [
+    "--import",
+    "tsx",
+    "--test",
+    "--test-concurrency=1",
+    ...readdirSync("tests")
+      .filter((f) => f.endsWith(".test.ts"))
+      .map((f) => "tests/" + f),
+  ],
+  {
+    stdio: "inherit",
+    env: {
+      ...process.env,
+      APP_MODE: "local-test",
+      DATABASE_URL: process.env.TEST_DATABASE_URL,
+    },
+  },
+);
+process.exit(result.status ?? 1);

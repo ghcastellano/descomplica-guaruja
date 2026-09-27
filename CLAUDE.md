@@ -52,3 +52,15 @@ Decisão explícita de Gustavo (26/09/2026): usar um único design system em tud
 O site na raiz continua estático. A autorização de implementação permite Next.js/TypeScript em `app/`, aplicação separada, inicialmente **apenas testes locais**. Não publicar seu código no deploy estático; `app/` está excluído por `.vercelignore`. Não conectar a clientes reais, WhatsApp real ou banco compartilhado nesta etapa. Validar cada entrega; não confundir testes locais com homologação/produção.
 
 O questionário agora inclui local de preferência: 6 perguntas em A Dois e 7 nas demais. Essa preferência acompanha o resumo e o WhatsApp; não representa autorização nem reserva de local. O backend novo ainda deve passar por corte explícito antes de substituir Apps Script em produção.
+
+## Prévia V2 autorizada em 26/09/2026 (branch separada)
+
+Nesta branch `feat/descomplica-v2-aprovacao`, a decisão mais recente do Gustavo amplia o produto para uma home única: Resolver, Casa, Experiências e Descobrir. Esta instrução substitui a antiga vedação à expansão **somente na prévia**. A raiz estática e a produção não foram substituídas. Toda implementação nova fica em `app/`.
+
+- Preview em `127.0.0.1:3002`; versão anterior continua em `3001`.
+- Gustavo confirmou uso do Neon dedicado recém-criado, `descomplica_staging`. Não chamar esse ambiente de produção operacional.
+- Home começa pela intenção. Não criar sites ou identidades visuais independentes por vertical.
+- A entrada de experiência integra o fluxo existente. Serviços/casa captam pedidos para avaliação; parceiros captam interesse. Sem inventar profissionais, preços de serviço, notas, verificação, garantias, contratos ou disponibilidade.
+- Runtime Neon usa papel restrito, TLS e pool. Credencial de migração fica em arquivo separado, fora do processo web e do Git. Testes destrutivos somente no Postgres local de teste.
+- WhatsApp segue simulado. Stripe somente sandbox, listener da V2 na porta 3002. Nenhuma cobrança real ou divisão de pagamento a parceiros.
+- Consulte `docs/v2-aprovacao.md` para implementação, limites e próximos módulos.

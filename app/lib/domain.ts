@@ -89,7 +89,7 @@ export const periods = {
   noite: "Noite",
   flexivel: "Flexível",
 };
-const actor = "Sophia · sessão local de teste";
+const actor = "Equipe · acesso de teste";
 function draftFor(b: Briefing): Revision {
   const prices = (catalog.prices as Record<string, Record<string, number[]>>)[
     b.packageId
@@ -276,7 +276,7 @@ export async function releaseProposal(id: string, version: number) {
     const [r] = await tx`SELECT number FROM requests WHERE id=${id}`;
     const message = {
       url,
-      text: `[SIMULAÇÃO — NÃO ENVIADO] Sua proposta ${protocol(r.number)} está pronta para conhecer: ${url}\nEste link é um teste local; não confirma reserva nem pagamento.`,
+      text: `[SIMULAÇÃO — NÃO ENVIADO] Sua proposta ${protocol(r.number)} está pronta para conhecer: ${url}\nEste link é de homologação; não confirma reserva nem pagamento.`,
     };
     await tx`INSERT INTO proposal_links(token_hash,proposal_id,version,expires_at) VALUES(${hash(token)},${id},${version},now()+interval '7 days')`;
     await tx`INSERT INTO outbox(id,proposal_id,version,payload_ciphertext) VALUES(${randomUUID()},${id},${version},${encrypt(JSON.stringify(message))})`;

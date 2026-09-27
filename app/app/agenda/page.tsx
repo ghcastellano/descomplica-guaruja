@@ -13,7 +13,7 @@ export default async function Page({
   const bookings = filter ? all.filter((b) => b.proposalId === filter) : all;
   return (
     <main>
-      <a className="back" href="/">
+      <a className="back" href="/operacao">
         ← Voltar aos atendimentos
       </a>
       <span className="eyebrow">AGENDA DA NOSSA EQUIPE</span>

@@ -53,7 +53,7 @@ for (const name of ["descomplica_local", "descomplica_test"])
 if (!existsSync(path.join(root, ".env.local")))
   writeFileSync(
     path.join(root, ".env.local"),
-    `APP_MODE=local-test\nAPP_ORIGIN=http://127.0.0.1:3001\nDATABASE_URL=postgres://descomplica_local@127.0.0.1:54339/descomplica_local\nTEST_DATABASE_URL=postgres://descomplica_local@127.0.0.1:54339/descomplica_test\nLOCAL_ACCESS_CODE=${randomBytes(12).toString("hex")}\nLOCAL_SECRET=${randomBytes(32).toString("hex")}\n`,
+    `APP_MODE=local-test\nAPP_ORIGIN=http://127.0.0.1:3002\nDATABASE_URL=postgres://descomplica_local@127.0.0.1:54339/descomplica_local\nTEST_DATABASE_URL=postgres://descomplica_local@127.0.0.1:54339/descomplica_test\nLOCAL_ACCESS_CODE=${randomBytes(12).toString("hex")}\nLOCAL_SECRET=${randomBytes(32).toString("hex")}\n`,
     { mode: 0o600 },
   );
 console.log(

@@ -5,5 +5,11 @@ const globalDB = globalThis as unknown as {
 };
 export const db =
   globalDB.descomplicaDB ??
-  postgres(config().database, { max: 5, connect_timeout: 5 });
+  postgres(config().database, {
+    max: 5,
+    connect_timeout: 20,
+    ...(config().remote
+      ? { ssl: { rejectUnauthorized: true }, prepare: false }
+      : {}),
+  });
 globalDB.descomplicaDB = db;

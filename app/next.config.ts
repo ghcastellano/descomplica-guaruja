@@ -2,6 +2,9 @@ import type { NextConfig } from "next";
 import path from "node:path";
 const config: NextConfig = {
   poweredByHeader: false,
+  // Assets already have WebP variants. Serve them directly: local-only host
+  // validation intentionally rejects the optimizer's synthetic internal request.
+  images: { unoptimized: true },
   turbopack: { root: path.resolve(import.meta.dirname, "..") },
   outputFileTracingRoot: path.resolve(import.meta.dirname, ".."),
   async headers() {

@@ -40,7 +40,7 @@ export default async function Page({
   };
   return (
     <main>
-      <a className="back" href="/">
+      <a className="back" href="/operacao">
         ← Solicitações
       </a>
       <span className="eyebrow">
@@ -154,7 +154,7 @@ export default async function Page({
                 <CopyMessage text={p.message.text} />
               </div>
               <small>
-                Link local válido por 7 dias. Editar a proposta cancela este
+                Link de teste válido por 7 dias. Editar a proposta cancela este
                 link.
               </small>
             </section>

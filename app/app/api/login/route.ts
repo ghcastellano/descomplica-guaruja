@@ -23,12 +23,21 @@ export async function POST(request: Request) {
       return Response.json({ error: "Código incorreto." }, { status: 401 });
     attempts = 0;
     const res = NextResponse.json({ ok: true });
-    res.cookies.set("dg_session", session(), {
+    res.cookies.set("dg_v2_session", session(), {
       httpOnly: true,
+      secure: config().hosted,
       sameSite: "strict",
       path: "/",
       maxAge: 28800,
     });
+    if (config().hosted)
+      res.cookies.set("dg_preview", session("preview"), {
+        httpOnly: true,
+        secure: true,
+        sameSite: "lax",
+        path: "/",
+        maxAge: 28800,
+      });
     return res;
   } catch (e) {
     return failure(e);

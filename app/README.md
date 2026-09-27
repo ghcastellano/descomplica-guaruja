@@ -1,3 +1,5 @@
+> **Branch V2:** a prévia unificada usa `http://127.0.0.1:3002`, Neon dedicado e login em `/login`. Leia [o guia da V2](../docs/v2-aprovacao.md). O guia abaixo documenta a etapa local original; não execute `local:setup` sobre a configuração Neon já instalada.
+
 # Operação Descomplica · propostas, agenda e pagamentos de teste
 
 Aplicação funcional **somente local, com dados fictícios**. Entrada manual ou briefing completo → proposta revisada pela Sophia → link do cliente → local e horário → aceite → sinal de 50% → saldo até 72h antes. PostgreSQL próprio, separado do Supabase existente. Mensagens WhatsApp/e-mail ainda são simuladas; não há atendimento real nem cobrança de produção.
