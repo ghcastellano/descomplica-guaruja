@@ -83,7 +83,8 @@ export function Intake({
   initial,
 }: {
   requestId?: string;
-  initial?: { name: string; contact: string; notes: string; source: string };
+  initial?: { name: string; contact: string; notes: string; source: string;
+    guests?: number; place?: string; period?: string; collection?: string; preferredDate?: string };
 } = {}) {
   const router = useRouter(),
     key = useRef("");
@@ -125,6 +126,13 @@ export function Intake({
         }
       }}
     >
+      {initial?.collection && (
+        <div className="soft-note">
+          <strong>Preferência do cliente: {initial.collection} · {initial.guests} pessoas</strong>
+          <p>{initial.preferredDate ? `Data desejada: ${initial.preferredDate.split("-").reverse().join("/")}. ` : "Data flexível. "}
+            Escolha o nível da experiência após revisar os detalhes. A data ainda não está reservada.</p>
+        </div>
+      )}
       {!requestId && (
         <label>
           Origem do atendimento
@@ -188,7 +196,7 @@ export function Intake({
             key={String(couple)}
             disabled={couple}
             required
-            defaultValue={requestId && !couple ? "" : "2"}
+            defaultValue={couple ? "2" : initial?.guests ?? (requestId ? "" : "2")}
           >
             {requestId && !couple && (
               <option value="" disabled>
@@ -223,6 +231,7 @@ export function Intake({
           Local em mente <small>(opcional)</small>
           <input
             name="place"
+            defaultValue={initial?.place || ""}
             maxLength={150}
             placeholder="Uma praia, casa ou hospedagem"
           />
@@ -231,7 +240,7 @@ export function Intake({
           Período
           <select
             name="period"
-            defaultValue={requestId ? "flexivel" : "por-do-sol"}
+            defaultValue={initial?.period || (requestId ? "flexivel" : "por-do-sol")}
           >
             <option value="por-do-sol">Pôr do sol</option>
             <option value="manha">Manhã</option>
@@ -260,7 +269,7 @@ export function Intake({
           name="notes"
           defaultValue={initial?.notes || ""}
           rows={3}
-          maxLength={2000}
+          maxLength={3000}
           placeholder="Conte a intenção e os cuidados especiais. Use somente dados fictícios."
         />
       </label>

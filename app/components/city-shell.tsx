@@ -89,7 +89,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
         </nav>
         <small>
           Versão em avaliação. Serviços e parcerias sujeitos à análise da
-          equipe. Não há reserva ou pagamento automático nesta nova entrada.
+          equipe. Reservas e pagamentos disponíveis apenas em simulação.
         </small>
       </footer>
       <nav className="mobile-nav" aria-label="Navegação móvel">

@@ -77,7 +77,7 @@ test("liberação concorrente gera um link/outbox; revisão revoga link e exige 
   assert.equal(results.filter((x) => !x.duplicate).length, 1);
   const p = await getProposal(r.id);
   assert.ok(p);
-  const token = new URL(p.message.url).pathname.split("/").pop()!;
+  const token = new URL(p.message!.url).pathname.split("/").pop()!;
   const dto = await clientProposal(token);
   assert.ok(dto);
   assert.equal(dto.guests, 2);
@@ -107,9 +107,9 @@ test("liberação concorrente gera um link/outbox; revisão revoga link e exige 
   await releaseProposal(r.id, 2);
   const p2 = await getProposal(r.id);
   assert.ok(p2);
-  assert.notEqual(p2.message.url, p.message.url);
+  assert.notEqual(p2.message!.url, p.message!.url);
   const dto2 = await clientProposal(
-    new URL(p2.message.url).pathname.split("/").pop()!,
+    new URL(p2.message!.url).pathname.split("/").pop()!,
   );
   assert.ok(dto2);
   assert.equal(dto2.amountCents, 42000);
@@ -149,7 +149,7 @@ test("links expirados e tokens inválidos não expõem dados", async () => {
   assert.ok(p);
   await db`UPDATE proposal_links SET expires_at=now()-interval '1 second' WHERE proposal_id=${r.id}`;
   assert.equal(
-    await clientProposal(new URL(p.message.url).pathname.split("/").pop()!),
+    await clientProposal(new URL(p.message!.url).pathname.split("/").pop()!),
     null,
   );
 });

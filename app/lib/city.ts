@@ -4,6 +4,7 @@ import { db } from "./db";
 import { config } from "./config";
 import { hash, decrypt } from "./crypto";
 import { DomainError, clientProposal } from "./domain";
+import { bookingContext, type PublicBooking } from "./booking";
 import { worlds, transitions, type CityStatus } from "./city-catalog";
 
 export const citySchema = z
@@ -17,7 +18,7 @@ export const citySchema = z
       .min(10, "Conte um pouco mais sobre o pedido.")
       .max(2000),
     neighborhood: z.string().trim().min(2).max(100),
-    period: z.enum(["manha", "tarde", "noite", "flexivel"]),
+    period: z.enum(["manha", "tarde", "por-do-sol", "noite", "flexivel"]),
     preferredDate: z.union([z.literal(""), z.iso.date()]),
     name: z.string().trim().min(2).max(100),
     contact: z
@@ -94,6 +95,7 @@ export async function getPublicCityRequest(token: string) {
   const events =
     await db`SELECT kind,public_note,created_at FROM city_request_events WHERE request_id=${r.id} ORDER BY id`;
   let proposalPath: string | null = null;
+  let booking: Pick<PublicBooking, "status" | "paymentReview"> | null = null;
   if (r.experience_request_id) {
     const [delivery] =
       await db`SELECT o.payload_ciphertext FROM outbox o JOIN proposals p ON p.id=o.proposal_id AND p.version=o.version WHERE p.id=${r.experience_request_id} AND p.status='released'`;
@@ -103,11 +105,14 @@ export async function getPublicCityRequest(token: string) {
         /^\/p\/([A-Za-z0-9_-]{43})$/,
       )?.[1];
       if (
-        url.origin === config().origin &&
         proposalToken &&
         (await clientProposal(proposalToken))
-      )
+      ) {
+        // Only return a verified relative path. Local and hosted previews share this database.
         proposalPath = url.pathname;
+        const current = (await bookingContext(proposalToken)).booking;
+        if (current) booking = { status: current.status, paymentReview: current.paymentReview };
+      }
     }
   }
   return {
@@ -116,10 +121,21 @@ export async function getPublicCityRequest(token: string) {
     status: r.status as CityStatus,
     events,
     proposalPath,
+    booking,
   };
 }
-export async function listCityRequests() {
-  return db`SELECT id,number,vertical,category,briefing,status,version,updated_at,experience_request_id FROM city_requests ORDER BY updated_at DESC LIMIT 200`;
+export async function listCityRequests(query = "", status = "") {
+  const search = "%" + query.trim().slice(0, 150).replace(/[\\%_]/g, "\\$&") + "%";
+  return db`SELECT id,number,vertical,category,briefing,status,version,updated_at,experience_request_id
+    FROM city_requests WHERE (${status}='' OR status=${status}) AND
+    (briefing->>'name' ILIKE ${search} OR briefing->>'contact' ILIKE ${search} OR category ILIKE ${search}
+    OR ('GU-' || lpad(number::text,5,'0')) ILIKE ${search}) ORDER BY updated_at DESC LIMIT 200`;
+}
+export async function experiencePreferences(requestId: string) {
+  const [r] = await db`SELECT briefing FROM city_requests WHERE experience_request_id=${requestId}`;
+  if (!r) return undefined;
+  const b = r.briefing as z.infer<typeof citySchema>;
+  return { guests: b.guests, place: b.neighborhood, period: b.period, collection: b.category, preferredDate: b.preferredDate };
 }
 type CityRow = {
   id: string;
@@ -192,7 +208,7 @@ export async function prepareExperience(id: string) {
     };
     await tx`INSERT INTO requests(id,request_key,fingerprint,briefing) VALUES(${requestId},${randomUUID()},${hash(JSON.stringify(briefing))},${tx.json(briefing)})`;
     await tx`INSERT INTO audit_events(proposal_id,kind,actor,details) VALUES(${requestId},'inquiry_created','Equipe · acesso de teste',${tx.json({ cityRequestId: id })})`;
-    await tx`UPDATE city_requests SET experience_request_id=${requestId},version=version+1,updated_at=now() WHERE id=${id}`;
+    await tx`UPDATE city_requests SET experience_request_id=${requestId},status='reviewing',version=version+1,updated_at=now() WHERE id=${id}`;
     await tx`INSERT INTO city_request_events(request_id,actor,kind,public_note) VALUES(${id},'Equipe · acesso de teste','experience_planning','Sua experiência entrou em planejamento. A proposta será revisada pela equipe antes de ser enviada.')`;
     return { id: requestId };
   });

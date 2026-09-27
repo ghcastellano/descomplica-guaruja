@@ -1,6 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import { requirePageAuth } from "@/lib/auth";
 import { getInquiry, protocol, sources } from "@/lib/domain";
+import { experiencePreferences } from "@/lib/city";
 import { Intake } from "@/components/forms";
 export default async function Page({
   params,
@@ -11,6 +12,7 @@ export default async function Page({
   const r = await getInquiry((await params).id);
   if (!r) notFound();
   if (r.proposal_id) redirect("/propostas/" + r.id);
+  const preferences = await experiencePreferences(r.id);
   return (
     <main className="narrow">
       <a className="back" href="/operacao">
@@ -32,6 +34,7 @@ export default async function Page({
       <Intake
         requestId={r.id}
         initial={{
+          ...preferences,
           name: r.briefing.name,
           contact: r.briefing.contact,
           notes: r.briefing.notes,

@@ -52,7 +52,7 @@ async function prepared(days: number) {
   await releaseProposal(r.id, 1);
   const p = await getProposal(r.id);
   assert.ok(p);
-  const token = new URL(p.message.url).pathname.split("/").pop()!;
+  const token = new URL(p.message!.url).pathname.split("/").pop()!;
   const date = new Intl.DateTimeFormat("en-CA", {
       timeZone: "America/Sao_Paulo",
       year: "numeric",

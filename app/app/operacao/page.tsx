@@ -11,21 +11,16 @@ import { Logout } from "@/components/forms";
 export default async function Page({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<{ q?: string; status?: string }>;
 }) {
   await requirePageAuth();
-  const q = (await searchParams).q || "";
-  const [rows, cityRows] = await Promise.all([
+  const params = await searchParams;
+  const q = (params.q || "").trim().slice(0, 150);
+  const selectedStatus = Object.hasOwn(statuses, params.status || "") ? params.status! : "";
+  const [rows, cityFiltered] = await Promise.all([
     listRequests(q),
-    listCityRequests(),
+    listCityRequests(q, selectedStatus),
   ]);
-  const cityFiltered = cityRows.filter(
-    (r) =>
-      !q ||
-      [r.briefing.name, r.briefing.contact, r.category].some((v) =>
-        String(v).toLowerCase().includes(q.toLowerCase()),
-      ),
-  );
   return (
     <main>
       <div className="page-top">
@@ -54,10 +49,26 @@ export default async function Page({
         </a>
         <a href="/agenda">Agenda e pagamentos →</a>
       </nav>
+      <form className="contact-search" action="/operacao">
+        <label>
+          Buscar pedido ou atendimento
+          <input type="search" name="q" defaultValue={q} maxLength={150}
+            placeholder="Nome, contato ou protocolo GU / DG" />
+        </label>
+        <label>
+          Etapa dos pedidos da nova entrada
+          <select name="status" defaultValue={selectedStatus}>
+            <option value="">Todas as etapas</option>
+            {Object.entries(statuses).map(([key, title]) => <option key={key} value={key}>{title}</option>)}
+          </select>
+        </label>
+        <button className="btn btn-secondary">Filtrar</button>
+        {(q || selectedStatus) && <a href="/operacao" className="text-link">Limpar filtros</a>}
+      </form>
       <section className="city-inbox">
         <div className="section-heading">
           <h2>Pedidos da nova entrada</h2>
-          <span>{cityFiltered.length} recebidos</span>
+          <span>{cityFiltered.length} nesta seleção</span>
         </div>
         {cityFiltered.length ? (
           <div className="inbox">
@@ -85,8 +96,7 @@ export default async function Page({
           </div>
         ) : (
           <p>
-            Nenhum pedido nesta seleção. Serviços, casa, experiências e
-            interessados em parceria chegam aqui.
+            Nenhum pedido nesta seleção. Experimente outro termo ou limpe os filtros.
           </p>
         )}
       </section>
@@ -104,24 +114,7 @@ export default async function Page({
           com link liberado
         </p>
       </div>
-      <form className="contact-search" action="/operacao">
-        <label>
-          Busque um contato antes de abrir outro atendimento
-          <input
-            type="search"
-            name="q"
-            defaultValue={q}
-            maxLength={150}
-            placeholder="Nome, telefone ou e-mail"
-          />
-        </label>
-        <button className="btn btn-secondary">Buscar</button>
-        {q && (
-          <a href="/operacao" className="text-link">
-            Limpar
-          </a>
-        )}
-      </form>
+
       <section>
         <div className="section-heading">
           <h2>Seus atendimentos</h2>

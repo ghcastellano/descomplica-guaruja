@@ -50,7 +50,7 @@ async function proposal(period = "flexivel", packageId = "adois_ess") {
   await releaseProposal(r.id, 1);
   const p = await getProposal(r.id);
   assert.ok(p);
-  return { id: r.id, token: new URL(p.message.url).pathname.split("/").pop()! };
+  return { id: r.id, token: new URL(p.message!.url).pathname.split("/").pop()! };
 }
 async function hold(
   p: { token: string },
@@ -334,7 +334,7 @@ test("centavos ímpares são divididos no servidor e chave de sinal não pode pa
   await releaseProposal(p.id, 2);
   const updated = await getProposal(p.id);
   assert.ok(updated);
-  p.token = new URL(updated.message.url).pathname.split("/").pop()!;
+  p.token = new URL(updated.message!.url).pathname.split("/").pop()!;
   const h = await hold(p, 15);
   assert.equal(h.booking.depositCents, 19951);
   assert.equal(h.booking.balanceCents, 19950);
@@ -369,7 +369,7 @@ test("duração explicitamente removida bloqueia agenda; só revisões antigas s
   await releaseProposal(p.id, 2);
   const cleared = await getProposal(p.id);
   assert.ok(cleared);
-  p.token = new URL(cleared.message.url).pathname.split("/").pop()!;
+  p.token = new URL(cleared.message!.url).pathname.split("/").pop()!;
   assert.equal((await bookingContext(p.token)).durationMinutes, null);
   await assert.rejects(
     getAvailability(p.token, { date: date(16), locationId: "jardim-demo" }),
@@ -388,7 +388,7 @@ test("duração explicitamente removida bloqueia agenda; só revisões antigas s
   await releaseProposal(p.id, 3);
   const restored = await getProposal(p.id);
   assert.ok(restored);
-  p.token = new URL(restored.message.url).pathname.split("/").pop()!;
+  p.token = new URL(restored.message!.url).pathname.split("/").pop()!;
   assert.equal((await bookingContext(p.token)).durationMinutes, 90);
   assert.ok(
     (

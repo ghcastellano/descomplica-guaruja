@@ -218,3 +218,58 @@ test('acesso convidado não concede sessão da equipe',async()=>{
  const invited=session('preview');assert.equal(validSession(invited),false);assert.equal(validSession(invited,'preview'),true);
  assert.throws(()=>citySchema.parse({...input(),preferredDate:'2026-02-31'}));
 });
+
+test("preferências chegam à qualificação e a ponte avança a etapa uma única vez", async () => {
+  const { experiencePreferences, listCityRequests } = await import("../lib/city");
+  const b = { ...input(), vertical: "experiencias", category: "Entre Amigas", guests: 8, period: "por-do-sol", preferredDate: "2027-01-12" };
+  const created = await createCityRequest(b);
+  const id = await getId(b.requestKey);
+  const linked = await prepareExperience(id);
+  assert.deepEqual(await experiencePreferences(linked.id), {
+    guests: 8, place: b.neighborhood, period: "por-do-sol", collection: b.category, preferredDate: b.preferredDate,
+  });
+  const row = await getCityRequest(id);
+  assert.equal(row!.status, "reviewing");
+  assert.equal(row!.version, 2);
+  await prepareExperience(id);
+  assert.equal((await getCityRequest(id))!.version, 2);
+  assert.equal((await listCityRequests(created.protocol, "reviewing"))[0].id, id);
+  assert.equal((await listCityRequests(created.protocol, "received")).length, 0);
+  assert.equal((await listCityRequests("%")).length, 0);
+});
+
+test("link entre ambientes e acompanhamento da reserva refletem pagamentos sem expor dados internos", async () => {
+  const { qualifyInquiry, releaseProposal, getProposal } = await import("../lib/domain");
+  const { holdBooking, acceptBooking, getAvailability, recordSimulatedPayment } = await import("../lib/booking");
+  const b = { ...input(), vertical: "experiencias", category: "A Dois", guests: 2 };
+  const created = await createCityRequest(b), id = await getId(b.requestKey), linked = await prepareExperience(id);
+  const token = created.url.split("/").pop()!;
+  await qualifyInquiry(linked.id, { requestKey: randomUUID(), source: "questionario", name: b.name, contact: b.contact,
+    packageId: "adois_ess", guests: 2, location: "ajuda", place: "", period: "flexivel", budget: 500, notes: "Teste interno" });
+  const origin = process.env.APP_ORIGIN;
+  try {
+    process.env.APP_ORIGIN = origin === "http://127.0.0.1:3001" ? "http://127.0.0.1:3002" : "http://127.0.0.1:3001";
+    await releaseProposal(linked.id, 1);
+  } finally { process.env.APP_ORIGIN = origin; }
+  const proposal = (await getProposal(linked.id))!;
+  assert.equal(new URL(proposal.message!.url).origin, origin);
+  assert.ok(proposal.message!.text.includes(proposal.message!.url));
+  const publicView = (await getPublicCityRequest(token))!;
+  assert.ok(publicView.proposalPath);
+  const proposalToken = publicView.proposalPath!.split("/").pop()!;
+  let available, selectedDate = "";
+  for (let days = 20; days < 40; days++) {
+    const date = new Date(Date.now() + days * 86400000).toISOString().slice(0,10);
+    const result = await getAvailability(proposalToken, { locationId: "jardim-demo", date });
+    if (result.slots.length) { available = result.slots[0]; selectedDate = date; break; }
+  }
+  assert.ok(available);
+  const held = await holdBooking(proposalToken, { locationId: "jardim-demo", date: selectedDate, startAt: available.startAt });
+  await acceptBooking(proposalToken, { bookingId: held.booking.id, termsAccepted: true });
+  assert.equal((await getPublicCityRequest(token))!.booking!.status, "awaiting_deposit");
+  await recordSimulatedPayment({ bookingId: held.booking.id, kind: "deposit", eventKey: randomUUID() });
+  const paid = (await getPublicCityRequest(token))!;
+  assert.equal(paid.booking!.status, "confirmed");
+  assert.deepEqual(Object.keys(paid.booking!).sort(), ["paymentReview", "status"]);
+  assert.ok(!JSON.stringify(paid).includes(b.contact));
+});

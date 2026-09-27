@@ -41,7 +41,7 @@ export const briefingSchema = z
     place: z.string().trim().max(150).default(""),
     period: z.enum(["manha", "tarde", "por-do-sol", "noite", "flexivel"]),
     budget: z.number().int().min(0).max(1000000),
-    notes: z.string().trim().max(2000).default(""),
+    notes: z.string().trim().max(3000).default(""),
   })
   .strict()
   .superRefine((v, ctx) => {
@@ -129,8 +129,8 @@ export async function createRequest(input: unknown) {
   });
 }
 export async function listRequests(query = "") {
-  const search = "%" + query.slice(0, 150) + "%";
-  return db`SELECT r.id,coalesce(p.status,'new') AS status,p.version,r.number,r.briefing,coalesce(p.updated_at,r.created_at) AS updated_at FROM requests r LEFT JOIN proposals p ON p.id=r.id WHERE r.briefing->>'name' ILIKE ${search} OR r.briefing->>'contact' ILIKE ${search} ORDER BY coalesce(p.updated_at,r.created_at) DESC`;
+  const search = "%" + query.trim().slice(0, 150).replace(/[\\%_]/g, "\\$&") + "%";
+  return db`SELECT r.id,coalesce(p.status,'new') AS status,p.version,r.number,r.briefing,coalesce(p.updated_at,r.created_at) AS updated_at FROM requests r LEFT JOIN proposals p ON p.id=r.id WHERE r.briefing->>'name' ILIKE ${search} OR r.briefing->>'contact' ILIKE ${search} OR ('DG-' || lpad(r.number::text,5,'0')) ILIKE ${search} ORDER BY coalesce(p.updated_at,r.created_at) DESC`;
 }
 export const inquirySchema = z
   .object({
@@ -203,6 +203,15 @@ export async function getProposal(id: string) {
     await db`SELECT payload_ciphertext,created_at FROM outbox WHERE proposal_id=${id} AND version=${p.version}`;
   const revisions =
     await db`SELECT version,snapshot,created_at FROM proposal_revisions WHERE proposal_id=${id} ORDER BY version DESC`;
+  let message: { url: string; text: string } | null = null;
+  if (p.status === "released" && out) {
+    const stored = JSON.parse(decrypt(out.payload_ciphertext));
+    const path = new URL(stored.url).pathname;
+    if (/^\/p\/[A-Za-z0-9_-]{43}$/.test(path)) {
+      const url = config().origin + path;
+      message = { url, text: String(stored.text).replaceAll(stored.url, url) };
+    }
+  }
   return {
     revisions: revisions.map((r) => ({
       version: Number(r.version),
@@ -222,10 +231,7 @@ export async function getProposal(id: string) {
           : p.snapshot.durationMinutes,
     } as Revision,
     events,
-    message:
-      p.status === "released" && out
-        ? JSON.parse(decrypt(out.payload_ciphertext))
-        : null,
+    message,
   };
 }
 export async function reviseProposal(

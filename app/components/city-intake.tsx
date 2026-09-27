@@ -275,7 +275,8 @@ export function CityIntake({
                 >
                   <option value="flexivel">Sou flexível</option>
                   <option value="manha">Manhã</option>
-                  <option value="tarde">Tarde / pôr do sol</option>
+                  <option value="tarde">Tarde</option>
+                  {type === "experiencias" && <option value="por-do-sol">Pôr do sol</option>}
                   <option value="noite">Noite</option>
                 </select>
               </label>
