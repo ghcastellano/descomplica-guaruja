@@ -1233,3 +1233,34 @@
 @keyframes concierge-breathe { 50% { transform: scale(.9); opacity: .5; } }
 @media(max-width:600px) { .intent-search textarea { min-height: 112px; font-size: 16px; } .concierge-loading { align-items: flex-start; gap: 14px; } .concierge-orbit { width: 38px; height: 38px; flex-basis: 38px; } }
 @media(prefers-reduced-motion:reduce) { .concierge-orbit { animation: none; } }
+
+/* Partner network: same shared brand and controls as the customer concierge. */
+.network-page { max-width: 880px; margin: auto; padding: 36px 24px 100px; }
+.network-intro { margin: 24px 0 36px; }
+.network-intro h1 { font-size: clamp(36px,5vw,62px); line-height: 1.12; letter-spacing: -.015em; margin: 18px 0; overflow-wrap: anywhere; }
+.network-promises { display: flex; flex-wrap: wrap; gap: 16px 28px; margin: 26px 0; }
+.network-promises span { display: flex; gap: 8px; align-items: center; font-size: 14px; }
+.network-promises svg { color: var(--terracotta-ink); width: 18px; }
+.partner-form label, .network-admin-grid form label { display: block; margin: 18px 0; }
+.partner-form fieldset { border: 0; padding: 0; margin: 24px 0; min-width: 0; }
+.partner-form legend { font-weight: 600; margin-bottom: 14px; }
+.partner-service-options { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 18px; }
+.partner-check { display: flex !important; gap: 12px; align-items: flex-start; font-size: 15px; line-height: 1.6; padding: 10px 0; min-height: 44px; }
+.partner-check input { flex: 0 0 18px; width: 18px; height: 18px; padding: 0; margin: 4px 0 0; accent-color: var(--petrol-deep); }
+.partner-terms { margin: 24px 0; border: 1px solid var(--sand); border-radius: 16px; padding: 20px; }
+.partner-terms summary { font-weight: 600; cursor: pointer; min-height: 44px; }
+.partner-terms p { font-size: 14px; line-height: 1.7; }
+.partner-permissions { border-top: 1px solid var(--sand); padding-top: 20px; margin-top: 24px; }
+.partner-permissions .text-button { display: block; margin-top: 18px; }
+.partner-timeline { list-style: none; padding: 0; }
+.partner-timeline li { border-left: 2px solid var(--gold-soft); padding: 0 0 24px 20px; overflow-wrap: anywhere; }
+.partner-timeline span, .partner-timeline small { display: block; margin-top: 8px; color: var(--muted); font-size: 13px; }
+.network-page > .concierge-response { margin-bottom: 24px; }
+.network-admin-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 32px; align-items: start; }
+.network-admin-grid > * { min-width: 0; }
+@media(max-width:760px) { .network-admin-grid, .partner-service-options { grid-template-columns: 1fr; } .network-page { padding: 24px 16px 100px; } }
+.service-questions { margin: 24px 0; padding: 22px; background: var(--cream); border-radius: 16px; }
+.service-questions label { display: block; margin: 16px 0; }
+.service-catalog { margin: 36px 0; }
+.service-catalog details, .partner-service-group { border-bottom: 1px solid var(--sand); padding: 12px 0; }
+.service-catalog summary, .partner-service-group summary { cursor: pointer; min-height: 44px; padding: 10px 0; font-weight: 600; }

@@ -1,6 +1,11 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
+import {
+  services,
+  serviceById,
+  serviceAvailability,
+} from "@/lib/service-catalog";
 import catalog from "@/lib/catalog.json";
 import { priceWithStripe } from "@/lib/pricing";
 import { CityIcon } from "./city-shell";
@@ -12,6 +17,7 @@ export function CityIntake({
   initialType,
   initialCategory = "",
   initialGuests = 2,
+  initialServiceId = "",
   initialNeighborhood = "",
   initialDate = "",
   initialPeriod = "flexivel",
@@ -21,6 +27,7 @@ export function CityIntake({
   initialType?: Vertical;
   initialCategory?: string;
   initialGuests?: number;
+  initialServiceId?: string;
   initialNeighborhood?: string;
   initialDate?: string;
   initialPeriod?: string;
@@ -50,6 +57,13 @@ export function CityIntake({
           ? initialGuests
           : 2,
     );
+  const [serviceId, setServiceId] = useState(initialServiceId),
+    [serviceAnswers, setServiceAnswers] = useState(["", ""]);
+  const selectedService = serviceById(serviceId);
+  const service =
+    selectedService?.category === category && selectedService.vertical === type
+      ? selectedService
+      : undefined;
   const [neighborhood, setNeighborhood] = useState(initialNeighborhood),
     [date, setDate] = useState(initialDate),
     [period, setPeriod] = useState(initialPeriod),
@@ -134,6 +148,7 @@ export function CityIntake({
             ? { guests: category === "A Dois" ? 2 : guests }
             : {}),
           consent,
+          ...(service ? { serviceId: service.id, serviceAnswers } : {}),
         }),
       });
       const data = await res.json();
@@ -158,6 +173,19 @@ export function CityIntake({
       setBusy(false);
     }
   }
+  if (type === "parceiros")
+    return (
+      <section className="concierge-response">
+        <h2>Faça parte da nossa rede local.</h2>
+        <p>
+          Apresente seu trabalho e escolha suas autorizações no cadastro de
+          profissionais.
+        </p>
+        <Link href="/parceiros" className="btn btn-primary">
+          Iniciar meu cadastro →
+        </Link>
+      </section>
+    );
   if (result)
     return (
       <section className="concierge-response" aria-label="Pedido recebido">
@@ -320,6 +348,52 @@ export function CityIntake({
                 </div>
               </div>
             )}
+            {(type === "resolver" || type === "casa") && category && (
+              <section className="service-questions">
+                <label>
+                  Qual serviço combina com seu pedido?
+                  <select
+                    value={service?.id || ""}
+                    onChange={(e) => {
+                      setServiceId(e.target.value);
+                      setServiceAnswers(["", ""]);
+                    }}
+                  >
+                    <option value="">Quero ajuda para identificar</option>
+                    {services
+                      .filter(
+                        (s) => s.vertical === type && s.category === category,
+                      )
+                      .map((s) => (
+                        <option key={s.id} value={s.id}>
+                          {s.name}
+                        </option>
+                      ))}
+                  </select>
+                </label>
+                <p className="field-note">
+                  {serviceAvailability} · a equipe confirma atendimento e
+                  orçamento antes de qualquer contratação.
+                </p>
+                {service?.questions.map((q, i) => (
+                  <label key={service.id + i}>
+                    {q}
+                    <input
+                      required
+                      minLength={2}
+                      maxLength={500}
+                      value={serviceAnswers[i]}
+                      onChange={(e) =>
+                        setServiceAnswers((old) =>
+                          old.map((v, n) => (n === i ? e.target.value : v)),
+                        )
+                      }
+                      placeholder="Se não souber, pode informar isso."
+                    />
+                  </label>
+                ))}
+              </section>
+            )}
             {type === "experiencias" && category && (
               <fieldset className="concierge-count">
                 <legend>Quantas pessoas vão viver esse momento?</legend>
@@ -357,9 +431,7 @@ export function CityIntake({
                   : "Conte um pouco sobre a sua ideia"}
               </summary>
               <label>
-                {type === "parceiros"
-                  ? "Conte sobre seu trabalho"
-                  : "Conte um pouco mais"}
+                Conte um pouco mais
                 <textarea
                   required
                   minLength={10}
@@ -367,11 +439,7 @@ export function CityIntake({
                   rows={4}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder={
-                    type === "parceiros"
-                      ? "Quais serviços oferece? Como atende seus clientes?"
-                      : "O que você gostaria que a gente soubesse?"
-                  }
+                  placeholder="O que você gostaria que a gente soubesse?"
                 />
               </label>
             </details>
@@ -462,9 +530,7 @@ export function CityIntake({
               ))}
             </div>
             <label>
-              {type === "parceiros"
-                ? "Bairros onde atende"
-                : "Bairro ou local de preferência"}
+              Bairro ou local de preferência
               <input
                 required
                 minLength={2}
@@ -564,6 +630,21 @@ export function CityIntake({
                   }
                 </dd>
               </div>
+              {service && (
+                <div>
+                  <dt>Serviço e detalhes</dt>
+                  <dd>
+                    {service.name}
+                    {service.questions.map((q, i) => (
+                      <p key={q}>
+                        {q}
+                        <br />
+                        {serviceAnswers[i]}
+                      </p>
+                    ))}
+                  </dd>
+                </div>
+              )}
               <div>
                 <dt>Contato</dt>
                 <dd>
@@ -574,9 +655,8 @@ export function CityIntake({
               </div>
             </dl>
             <div className="soft-note">
-              {type === "parceiros"
-                ? "Este envio registra seu interesse. Não cria contrato, aprovação ou anúncio."
-                : "Você não será cobrado ao enviar. O atendimento e os valores serão combinados antes de qualquer contratação."}
+              Você não será cobrado ao enviar. O atendimento e os valores serão
+              combinados antes de qualquer contratação.
             </div>
           </>
         )}

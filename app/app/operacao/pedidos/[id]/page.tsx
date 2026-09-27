@@ -1,3 +1,4 @@
+import { serviceById } from "@/lib/service-catalog";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { requirePageAuth } from "@/lib/auth";
@@ -50,6 +51,18 @@ export default async function Page({
               </dd>
             </div>
           </dl>
+          {b.serviceId && (
+            <section>
+              <h2>{serviceById(b.serviceId)?.name}</h2>
+              {serviceById(b.serviceId)?.questions.map((q, i) => (
+                <p key={q}>
+                  <strong>{q}</strong>
+                  <br />
+                  {b.serviceAnswers?.[i]}
+                </p>
+              ))}
+            </section>
+          )}
           <h2>Histórico do atendimento</h2>
           <ol className="request-timeline">
             {r.events.map((e) => (

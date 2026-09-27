@@ -20,6 +20,10 @@ Editar uma ideia mantém o texto original no compositor. Cancelar a edição pre
 - Sem chamada ao abrir a página, digitar, clicar nos atalhos, escolher quantidade/data/local ou avançar. Os atalhos funcionam por regras, sem custo de IA.
 - Timeout de 10 segundos para a OpenAI. Sem retry pago ou troca automática para um modelo mais caro. O navegador oferece o fluxo por regras se a requisição demorar ou falhar.
 
+## Evolução do catálogo
+
+A etapa de rede local passou a enviar 23 serviços específicos no contexto. O campo `serviceId` direciona duas perguntas de qualificação; o servidor valida a combinação serviço/categoria/vertical. A amostra de oito cenários acima precede essa ampliação. Um teste do catálogo ampliado usou 1.230 tokens de entrada e 51 de saída (~US$ 0,000369 conservadores), mantendo a mesma reserva e limites. Consulte `rede-profissionais.md`.
+
 ## Controle durável de custo
 
 Migração `007_intent_ai.sql`, tabela `ai_interpretations` no Neon dedicado. Antes de chamar o provedor, uma transação curta reserva US$ 0,004 e registra UUID, hash derivado do IP, modelo e horário. Um advisory lock coordena as instâncias; a chamada OpenAI acontece fora da transação. Repetir o UUID não faz uma segunda chamada. Não são armazenados texto, resposta, telefone, e-mail ou IP bruto nessa tabela.

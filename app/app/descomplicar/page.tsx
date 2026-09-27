@@ -1,3 +1,5 @@
+import { serviceById } from "@/lib/service-catalog";
+import { redirect } from "next/navigation";
 import { CityIntake } from "@/components/city-intake";
 import {
   worlds,
@@ -13,23 +15,28 @@ export default async function Page({
     tipo?: string;
     categoria?: string;
     pessoas?: string;
+    servico?: string;
   }>;
 }) {
   const p = await searchParams;
-  const type =
-    p.tipo && Object.hasOwn(worlds, p.tipo)
+  const service = serviceById(p.servico || "");
+  const type: Vertical =
+    service?.vertical ||
+    (p.tipo && Object.hasOwn(worlds, p.tipo)
       ? (p.tipo as Vertical)
-      : suggestVertical(p.pedido || "");
+      : suggestVertical(p.pedido || ""));
+  if (type === "parceiros") redirect("/parceiros");
   const category =
-    type &&
-    (worlds[type].categories as readonly string[]).includes(p.categoria || "")
+    service?.category ||
+    ((worlds[type].categories as readonly string[]).includes(p.categoria || "")
       ? p.categoria
-      : suggestCategory(p.pedido || "", type);
+      : suggestCategory(p.pedido || "", type));
   return (
     <main>
       <CityIntake
         intent={(p.pedido || "").slice(0, 300)}
         initialType={type}
+        initialServiceId={service?.id}
         initialCategory={category}
         initialGuests={Number(p.pessoas)}
       />

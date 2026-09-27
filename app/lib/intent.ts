@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { serviceById } from "./service-catalog";
 import {
   worlds,
   suggestVertical,
@@ -11,6 +12,7 @@ export const interpretationSchema = z
     discovery: z.boolean(),
     vertical: z.enum(["resolver", "casa", "experiencias", "parceiros"]),
     category: z.string().max(60),
+    serviceId: z.string().max(60).default(""),
     guests: z.number().int().min(1).max(1000).nullable(),
     neighborhood: z.enum([
       "",
@@ -51,6 +53,7 @@ export function fallbackIntent(text: string): Interpretation {
       suggestCategory(text, vertical) === "A Dois" && count && Number(count) > 2
         ? ""
         : suggestCategory(text, vertical),
+    serviceId: "",
     guests: count ? Math.min(1000, Number(count)) || null : null,
     neighborhood: "",
     date: "",
@@ -67,6 +70,10 @@ export function normalizeInterpretation(
   if (parsed.category === "A Dois" && parsed.guests && parsed.guests > 2)
     parsed.category = "";
   if (parsed.vertical !== "experiencias") parsed.guests = null;
+  const service = serviceById(parsed.serviceId);
+  if (service && service.vertical === parsed.vertical)
+    parsed.category = service.category;
+  else parsed.serviceId = "";
   const date = parsed.date;
   if (
     !/^\d{4}-\d{2}-\d{2}$/.test(date) ||

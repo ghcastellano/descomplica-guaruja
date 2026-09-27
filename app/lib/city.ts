@@ -1,5 +1,6 @@
 import { createHmac, randomUUID } from "node:crypto";
 import { z } from "zod";
+import { serviceById } from "./service-catalog";
 import { db } from "./db";
 import { config } from "./config";
 import { hash, decrypt } from "./crypto";
@@ -33,9 +34,31 @@ export const citySchema = z
       ),
     guests: z.number().int().min(2).max(8).optional(),
     consent: z.literal(true),
+    serviceId: z.string().max(60).optional(),
+    serviceAnswers: z
+      .array(z.string().trim().min(2).max(500))
+      .length(2)
+      .optional(),
   })
   .strict()
   .superRefine((v, ctx) => {
+    if (v.serviceId) {
+      const service = serviceById(v.serviceId);
+      if (
+        !service ||
+        service.vertical !== v.vertical ||
+        service.category !== v.category ||
+        !v.serviceAnswers
+      )
+        ctx.addIssue({
+          code: "custom",
+          message: "Confira o serviço e responda as perguntas para avaliação.",
+        });
+    } else if (v.serviceAnswers)
+      ctx.addIssue({
+        code: "custom",
+        message: "Escolha o serviço para enviar as respostas.",
+      });
     if (
       !(worlds[v.vertical].categories as readonly string[]).includes(v.category)
     )
@@ -104,14 +127,15 @@ export async function getPublicCityRequest(token: string) {
       const proposalToken = url.pathname.match(
         /^\/p\/([A-Za-z0-9_-]{43})$/,
       )?.[1];
-      if (
-        proposalToken &&
-        (await clientProposal(proposalToken))
-      ) {
+      if (proposalToken && (await clientProposal(proposalToken))) {
         // Only return a verified relative path. Local and hosted previews share this database.
         proposalPath = url.pathname;
         const current = (await bookingContext(proposalToken)).booking;
-        if (current) booking = { status: current.status, paymentReview: current.paymentReview };
+        if (current)
+          booking = {
+            status: current.status,
+            paymentReview: current.paymentReview,
+          };
       }
     }
   }
@@ -125,17 +149,30 @@ export async function getPublicCityRequest(token: string) {
   };
 }
 export async function listCityRequests(query = "", status = "") {
-  const search = "%" + query.trim().slice(0, 150).replace(/[\\%_]/g, "\\$&") + "%";
+  const search =
+    "%" +
+    query
+      .trim()
+      .slice(0, 150)
+      .replace(/[\\%_]/g, "\\$&") +
+    "%";
   return db`SELECT id,number,vertical,category,briefing,status,version,updated_at,experience_request_id
     FROM city_requests WHERE (${status}='' OR status=${status}) AND
     (briefing->>'name' ILIKE ${search} OR briefing->>'contact' ILIKE ${search} OR category ILIKE ${search}
     OR ('GU-' || lpad(number::text,5,'0')) ILIKE ${search}) ORDER BY updated_at DESC LIMIT 200`;
 }
 export async function experiencePreferences(requestId: string) {
-  const [r] = await db`SELECT briefing FROM city_requests WHERE experience_request_id=${requestId}`;
+  const [r] =
+    await db`SELECT briefing FROM city_requests WHERE experience_request_id=${requestId}`;
   if (!r) return undefined;
   const b = r.briefing as z.infer<typeof citySchema>;
-  return { guests: b.guests, place: b.neighborhood, period: b.period, collection: b.category, preferredDate: b.preferredDate };
+  return {
+    guests: b.guests,
+    place: b.neighborhood,
+    period: b.period,
+    collection: b.category,
+    preferredDate: b.preferredDate,
+  };
 }
 type CityRow = {
   id: string;

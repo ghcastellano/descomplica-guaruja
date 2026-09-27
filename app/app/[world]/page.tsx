@@ -1,3 +1,4 @@
+import { services, serviceAvailability } from "@/lib/service-catalog";
 import { ExperienceEstimator } from "@/components/experience-estimator";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -37,7 +38,8 @@ export default async function Page({
       ) : (
         <div className="service-grid">
           {w.categories.map((category, i) => (
-            <Link prefetch={false}
+            <Link
+              prefetch={false}
               href={
                 "/descomplicar?tipo=" +
                 world +
@@ -59,6 +61,37 @@ export default async function Page({
             </Link>
           ))}
         </div>
+      )}
+      {(world === "casa" || world === "resolver") && (
+        <section className="service-catalog">
+          <h2>Encontre o cuidado que precisa.</h2>
+          <p>
+            Estas são possibilidades para avaliação. A disponibilidade depende
+            da confirmação da equipe.
+          </p>
+          {w.categories.map((category) => (
+            <details key={category}>
+              <summary>{category}</summary>
+              <div className="service-grid">
+                {services
+                  .filter(
+                    (s) => s.vertical === world && s.category === category,
+                  )
+                  .map((s) => (
+                    <Link
+                      key={s.id}
+                      className="service-card"
+                      href={"/descomplicar?servico=" + s.id}
+                    >
+                      <span className="eyebrow">{serviceAvailability}</span>
+                      <h3>{s.name}</h3>
+                      <p>Detalhar meu pedido →</p>
+                    </Link>
+                  ))}
+              </div>
+            </details>
+          ))}
+        </section>
       )}
       {world === "experiencias" && <ExperienceEstimator />}
       <section className="process-strip">

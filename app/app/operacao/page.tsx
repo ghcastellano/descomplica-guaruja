@@ -48,6 +48,7 @@ export default async function Page({
           Atendimentos
         </a>
         <a href="/agenda">Agenda e pagamentos →</a>
+        <a href="/operacao/rede">Rede local →</a>
       </nav>
       <form className="contact-search" action="/operacao">
         <label>

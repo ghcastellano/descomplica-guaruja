@@ -26,6 +26,23 @@ export default function Page() {
         isso não elimina as políticas próprias de retenção do provedor. Também é
         possível começar pelos atalhos e preencher as opções sem IA.
       </p>
+      <h2>Cadastro de profissionais</h2>
+      <p>
+        Na rede local, guardamos a apresentação profissional, contato, serviços,
+        regiões e disponibilidade para avaliar o cadastro. Também registramos a
+        versão dos termos, suas autorizações e o histórico de alterações.
+        Indicações obtidas pela equipe ficam em uma base interna, com a origem
+        registrada; não são perfis publicados.
+      </p>
+      <p>
+        A autorização para divulgação e a permissão para WhatsApp são opcionais
+        e independentes. O link privado permite retirá-las ou encerrar a
+        participação. Ele vale por 90 dias; depois, fale com a equipe usando o
+        protocolo. Quem tem esse link pode gerenciar as autorizações: guarde-o
+        com cuidado. Encerrar a participação não apaga automaticamente os
+        registros de aceite; solicitações de remoção são tratadas pelo contato
+        abaixo.
+      </p>
       <h2>Quem acessa</h2>
       <p>
         A operação é protegida por acesso da equipe. O link privado do pedido

@@ -229,12 +229,25 @@ export function IntentSearch() {
                 </button>
               </div>
             </section>
+          ) : result.vertical === "parceiros" ? (
+            <section className="concierge-response">
+              <span className="eyebrow">REDE LOCAL</span>
+              <h2>Seu trabalho pode fazer parte dessa história.</h2>
+              <p>
+                Apresente seus serviços e escolha suas autorizações. Nossa
+                equipe avalia cada cadastro antes de qualquer ativação.
+              </p>
+              <Link href="/parceiros" className="btn btn-primary">
+                Conhecer e iniciar meu cadastro →
+              </Link>
+            </section>
           ) : (
             <CityIntake
               key={submitted}
               embedded
               intent={submitted || ""}
               initialType={result.vertical}
+              initialServiceId={result.serviceId}
               initialCategory={result.category}
               initialGuests={result.guests || undefined}
               initialNeighborhood={result.neighborhood}
