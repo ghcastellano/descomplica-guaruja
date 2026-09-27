@@ -616,6 +616,7 @@ picture{display:contents}picture>source{display:none}
 .q-capture-send{width:100%;padding:11px;background:var(--petrol);color:#fff;border:0;border-radius:var(--r-btn);font-family:var(--f-sans);font-size:.95rem;font-weight:600;cursor:pointer;min-height:48px;transition:opacity var(--dur) var(--ease)}
 .q-capture-send:hover{opacity:.88}
 .q-capture-ok{font-size:.88rem;color:var(--success);font-weight:500;padding:var(--s1) 0}
+#qCaptureFallback[hidden]{display:none}
 .q-capture-lgpd{font-size:.76rem;color:var(--muted);margin-top:var(--s2);line-height:1.5}
 
 /* ── galeria ── */
@@ -1252,7 +1253,7 @@ function render(){
   qPane.innerHTML = `
     <div class="q-pane">
       <p class="q-step">Pergunta ${current+1} de ${total}</p>
-      <p class="q-title">${q.title}</p>
+      <h3 class="q-title" tabindex="-1">${q.title}</h3>
       <div class="q-opts" role="group" aria-label="${q.title}">
         ${q.opts.map(o => `
           <button class="q-opt" data-v="${o.v}" tabindex="-1">
@@ -1265,10 +1266,9 @@ function render(){
   /* Bug 4: restaura tabindex e limpa foco visual depois de um frame */
   requestAnimationFrame(() => {
     qPane.querySelectorAll('.q-opt').forEach(b => { b.tabIndex = 0; });
-    if (document.activeElement && document.activeElement.classList.contains('q-opt'))
-      document.activeElement.blur();
+    qPane.querySelector('.q-title').focus({preventScroll:true});
     /* traz o card do quiz pro topo da tela (abaixo do header) — opções sempre visíveis */
-    quizCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    quizCard.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
   });
   qPane.querySelectorAll('.q-opt').forEach(btn => btn.addEventListener('click', () => {
     answers[q.id] = btn.dataset.v;
@@ -1309,13 +1309,13 @@ function showResult(){
   qPane.innerHTML = `
     <div class="q-pane q-result">
       <p class="ribbon">Uma sugestão para o seu momento</p>
-      <h3>${p.col} · ${p.tier}</h3>
+      <h3 tabindex="-1">${p.col} · ${p.tier}</h3>
       <p class="rprice">${p.price}</p><p class="price-note">${p.note}</p>
       ${answers.budget !== '2500+' && p.upperAmount > Number(answers.budget) ? '<p class="budget-note">A faixa estimada pode superar o investimento que você indicou. Vamos conversar sobre ajustes para o seu orçamento.</p>' : ''}
       <picture><source type="image/webp" srcset="${p.img}.webp"><img src="${p.img}.jpg" alt="${p.col} ${p.tier}" loading="lazy" onerror="phErr(this)"></picture>
       <ul>${p.inc.map(i => `<li>${i}</li>`).join('')}</ul>
       ${answers.fotos === 'sim' && !['celebrar_lux','amigas_lux','pedido_ass','pedido_lux'].includes(key) ? '<p class="budget-note">Esta opção não inclui fotografia profissional. Podemos orçar esse registro separadamente.</p>' : ''}
-      ${answers.horario === 'por do sol' ? '<p class="rnote">★ Pôr do sol é o horário mais procurado — sexta a domingo esgota primeiro.</p>' : ''}
+      ${answers.horario === 'por do sol' ? '<p class="rnote">Para o pôr do sol, confirmamos horário, clima e condições do local com você.</p>' : ''}
       <p class="rnote">Local de preferência: ${LBL.local[answers.local]}. A escolha será confirmada com a equipe.</p>
       <div class="q-actions">
         <a class="btn btn-wa btn-block" id="qWa" href="${waURL(msg)}" target="_blank" rel="noopener">
@@ -1325,10 +1325,12 @@ function showResult(){
         <a class="btn btn-secondary btn-block" href="#colecoes">Ver todas as experiências</a>
         <button class="q-restart" id="qRestart">Refazer o quiz</button>
       </div>
-      <div class="q-capture" id="qCapture">
+      <form class="q-capture" id="qCapture">
         <p>Prefere que a gente te chame? Deixa seu WhatsApp — opcional.</p>
         <div class="q-capture-row">
-          <input type="tel" id="qCapturePhone" placeholder="(11) 99999-9999" inputmode="tel" autocomplete="tel" maxlength="20">
+          <label for="qCapturePhone">Seu WhatsApp com DDD</label>
+          <input type="tel" id="qCapturePhone" placeholder="(13) 99999-9999" inputmode="tel" autocomplete="tel" maxlength="20" required aria-describedby="qCaptureStatus">
+          <label for="qCaptureTime">Melhor horário para conversar (opcional)</label>
           <select id="qCaptureTime">
             <option value="" disabled selected>Melhor horário para te chamar</option>
             <option value="manha">Manhã (8h–12h)</option>
@@ -1336,11 +1338,14 @@ function showResult(){
             <option value="noite">Noite (18h–22h)</option>
             <option value="qualquer">Qualquer horário</option>
           </select>
-          <button class="q-capture-send" id="qCaptureSend">Quero ser chamada(o)</button>
+          <button type="submit" class="q-capture-send" id="qCaptureSend">Quero ser chamada(o)</button>
         </div>
-        <p class="q-capture-lgpd">Seus dados são usados apenas para entrarmos em contato sobre sua reserva. Responda SAIR a qualquer momento para parar.</p>
-      </div>
+        <p id="qCaptureStatus" role="status" aria-live="polite"></p>
+        <a id="qCaptureFallback" class="btn btn-secondary btn-block" href="${waURL(msg)}" target="_blank" rel="noopener" hidden>Continuar pelo WhatsApp</a>
+        <p class="q-capture-lgpd">Seus dados são usados apenas para entrarmos em contato sobre sua experiência. Responda SAIR a qualquer momento para parar.</p>
+      </form>
     </div>`;
+  qPane.querySelector('.q-result h3').focus({preventScroll:true});
   document.getElementById('qWa').addEventListener('click', () =>
     track('whatsapp_click', { source: 'quiz_result', pkg: `${p.col} · ${p.tier}` }));
   document.getElementById('qRestart').addEventListener('click', () => {
@@ -1351,30 +1356,55 @@ function showResult(){
   const captureTime  = document.getElementById('qCaptureTime');
   const captureSend  = document.getElementById('qCaptureSend');
   const captureBox   = document.getElementById('qCapture');
-  captureTime.addEventListener('change', () => captureTime.classList.add('filled'));
-  captureSend.addEventListener('click', () => {
+  const captureStatus = document.getElementById('qCaptureStatus');
+  const fallback = document.getElementById('qCaptureFallback');
+  function updateContactLinks() {
     const phone = capturePhone.value.trim();
+    const timeLabel = captureTime.value ? captureTime.options[captureTime.selectedIndex].text : 'a combinar';
+    const url = waURL(msg + (phone ? ` Meu contato: ${phone}. Melhor horário para conversar: ${timeLabel}.` : ''));
+    fallback.href = url;
+    document.getElementById('qWa').href = url;
+  }
+  captureTime.addEventListener('change', () => { captureTime.classList.add('filled'); updateContactLinks(); });
+  capturePhone.addEventListener('input', () => { capturePhone.setCustomValidity(''); updateContactLinks(); });
+  captureBox.addEventListener('submit', async event => {
+    event.preventDefault();
+    if (captureSend.disabled) return;
+    const phone = capturePhone.value.trim();
+    const digits = phone.replace(/\D/g, '').replace(/^55(?=\d{10,11}$)/, '');
+    if (!/^[1-9]\d{9,10}$/.test(digits)) {
+      capturePhone.setCustomValidity('Informe seu telefone com DDD, com 10 ou 11 dígitos.');
+      capturePhone.reportValidity();
+      return;
+    }
     const horario = captureTime.value;
-    if (!phone) { capturePhone.focus(); return; }
+    updateContactLinks();
+    fallback.hidden = false;
     captureSend.disabled = true;
     captureSend.textContent = 'Enviando…';
+    captureStatus.textContent = '';
     const payload = {
-      event: 'lead_capture',
-      ts: new Date().toISOString(),
-      result: pacoteNome,
-      preco: p.price,
-      dica,
-      phone,
-      best_time: horario,
-      answers: answersOut,
-      utm: UTM
+      event: 'lead_capture', ts: new Date().toISOString(), result: pacoteNome,
+      preco: p.price, dica, phone, best_time: horario, answers: answersOut, utm: UTM
     };
-    track('lead_capture', { result: pacoteNome, best_time: horario });
-    if (WEBHOOK_URL) {
-      try { fetch(WEBHOOK_URL, { method:'POST', mode:'no-cors',
-        headers:{'Content-Type':'text/plain'}, body: JSON.stringify(payload) }); } catch(e){}
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000);
+    try {
+      if (!WEBHOOK_URL) throw Error('Atendimento direto');
+      const response = await fetch(WEBHOOK_URL, { method:'POST', mode:'no-cors',
+        headers:{'Content-Type':'text/plain'}, body:JSON.stringify(payload), signal:controller.signal });
+      if (response.type !== 'opaque' && !response.ok) throw Error('Falha no envio');
+      // An opaque Apps Script response cannot prove receipt. Offer a direct confirmation.
+      captureStatus.textContent = 'Tentativa de envio concluída. Para confirmar o recebimento com a equipe, continue pelo WhatsApp abaixo.';
+      captureSend.textContent = 'Solicitação enviada';
+      track('lead_capture', { result: pacoteNome, best_time: horario });
+    } catch {
+      captureStatus.textContent = 'Não foi possível confirmar o envio. Tente novamente ou continue pelo WhatsApp com suas respostas.';
+      captureSend.disabled = false;
+      captureSend.textContent = 'Tentar novamente';
+    } finally {
+      clearTimeout(timeout);
     }
-    captureBox.innerHTML = '<p class="q-capture-ok">✓ Anotado! Te chamamos no WhatsApp em breve.</p>';
   });
 }
 </script>
