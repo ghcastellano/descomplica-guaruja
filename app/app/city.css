@@ -1167,3 +1167,55 @@
     font-size: 13px;
   }
 }
+
+/* Intent response: one continuous workspace, shared brand and native controls. */
+.concierge-widget { max-width: 880px; margin: auto; text-align: left; }
+.concierge-intro { margin: 24px 0 32px; }
+.concierge-intro h1 { font-size: clamp(32px, 4vw, 48px); }
+.prompt-echo { position: relative; margin: 0 0 18px; padding: 18px 22px; border-left: 3px solid var(--gold); background: var(--sand-soft); border-radius: 0 var(--r-md) var(--r-md) 0; text-align: left; overflow-wrap: anywhere; }
+.prompt-echo p { margin: 8px 0; font-size: 18px; color: var(--petrol-deep); }
+.prompt-echo .text-button { font-size: 13px; padding: 8px 0; min-height: 44px; }
+.concierge-response { min-width: 0; padding: clamp(20px, 4vw, 38px); background: var(--white); border: 1px solid var(--sand); border-radius: var(--r-lg); box-shadow: var(--sh-sm); text-align: left; animation: concierge-enter .28s var(--ease); }
+.concierge-response > h2 { font-size: clamp(28px, 3.4vw, 40px); line-height: 1.17; margin: 26px 0; letter-spacing: var(--tracking-heading); font-weight: 500; }
+.concierge-signature { display: flex; gap: 12px; align-items: center; color: var(--petrol); font-size: 12px; letter-spacing: .12em; }
+.concierge-signature > svg { width: 38px; height: 38px; padding: 8px; background: var(--cream); border-radius: 50%; flex: 0 0 38px; }
+.concierge-signature small { display: block; margin-top: 2px; font-size: 12px; letter-spacing: 0; color: var(--muted); }
+.concierge-match { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 24px; padding: 0 0 20px; border-bottom: 1px solid var(--sand); }
+.concierge-match > img { width: 100%; height: auto; aspect-ratio: 8/5; object-fit: contain; align-self: start; border-radius: var(--r-md); }
+.concierge-match h3 { font-size: 30px; margin: 8px 0 12px; font-weight: 500; }
+.concierge-match p { margin: 8px 0; font-size: 15px; line-height: 1.6; color: var(--muted); }
+.concierge-match small { display: block; font-size: 12px; line-height: 1.6; color: var(--muted); }
+.concierge-match .text-link { background: none; border: 0; cursor: pointer; padding: 12px 0; min-height: 44px; margin-top: 4px; font-size: 14px; }
+.concierge-match-symbol { background: var(--cream); border-radius: var(--r-md); min-height: 160px; display: grid; place-items: center; color: var(--petrol); }
+.concierge-match-symbol svg { width: 64px; height: 64px; }
+.concierge-price { display: block; margin: 18px 0 4px; font-size: clamp(18px, 2.4vw, 23px); color: var(--petrol); }
+.concierge-count { min-width: 0; border: 0; padding: 0; margin: 26px 0; }
+.concierge-count legend { font-size: 16px; font-weight: 500; margin-bottom: 14px; }
+.concierge-pills, .concierge-context { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+.concierge-pills button, .concierge-context button { font: inherit; font-size: 14px; color: var(--petrol-deep); background: var(--white); border: 1px solid var(--sand); border-radius: 28px; min-height: 44px; padding: 10px 16px; cursor: pointer; max-width: 100%; overflow-wrap: anywhere; }
+.concierge-pills button[aria-pressed="true"], .concierge-pills button.selected { background: var(--petrol-deep); color: var(--cream); border-color: var(--petrol-deep); }
+.concierge-context { margin-top: 22px; }
+.concierge-context button { background: var(--cream); border-color: transparent; font-size: 12px; }
+.concierge-context button span { margin-left: 8px; }
+.concierge-details { margin: 24px 0; border-bottom: 1px solid var(--sand); padding-bottom: 16px; }
+.concierge-details summary { cursor: pointer; padding: 10px 0; min-height: 44px; font-size: 14px; color: var(--terracotta-ink); }
+.concierge-details label { margin-top: 16px; }
+.concierge-choices { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; margin: 24px 0; }
+.choice-tile { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; min-width: 0; min-height: 100px; border: 1px solid var(--sand); background: var(--cream); border-radius: var(--r-md); padding: 20px; font: inherit; text-align: left; cursor: pointer; color: var(--petrol-deep); }
+.choice-tile strong { font-family: var(--f-serif); font-size: 24px; font-weight: 500; }
+.choice-tile span { font-size: 13px; color: var(--muted); }
+.choice-tile svg { width: 28px; height: 28px; }
+.choice-tile:hover, .choice-tile[aria-pressed="true"] { border-color: var(--petrol); background: var(--sand-soft); }
+.concierge-response .form-actions { border-top: 1px solid var(--sand); padding-top: 22px; margin-top: 26px; }
+.concierge-response .soft-note { font-size: 13px; }
+@keyframes concierge-enter { from { opacity: .5; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width:600px) {
+  .concierge-match { grid-template-columns: 1fr; gap: 18px; }
+  .concierge-response { padding: 20px 16px; }
+  .concierge-response .form-actions > .btn { width: 100%; }
+  .concierge-choices { grid-template-columns: 1fr; }
+  .concierge-match-symbol { min-height: 90px; }
+  .concierge-match-symbol svg { width: 42px; height: 42px; }
+  .concierge-pills button { font-size: 13px; padding-inline: 12px; }
+}
+@media (prefers-reduced-motion:reduce) { .concierge-response { animation: none; } }

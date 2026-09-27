@@ -1,22 +1,31 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
+import catalog from "@/lib/catalog.json";
+import { priceWithStripe } from "@/lib/pricing";
+import { CityIcon } from "./city-shell";
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import { worlds, suggestVertical, type Vertical } from "@/lib/city-catalog";
 export function CityIntake({
+  embedded = false,
   intent = "",
   initialType,
   initialCategory = "",
   initialGuests = 2,
 }: {
+  embedded?: boolean;
   intent?: string;
   initialType?: Vertical;
   initialCategory?: string;
   initialGuests?: number;
 }) {
-  const router = useRouter(),
-    key = useRef(""),
+  const key = useRef(""),
     heading = useRef<HTMLHeadingElement>(null);
+  const [detailsOpen, setDetailsOpen] = useState(intent.trim().length < 10);
+  const [result, setResult] = useState<{
+    url: string;
+    protocol: string;
+  } | null>(null);
   const [step, setStep] = useState(0),
     [busy, setBusy] = useState(false),
     [error, setError] = useState(""),
@@ -43,14 +52,43 @@ export function CityIntake({
     [consent, setConsent] = useState(false);
   useEffect(() => {
     heading.current?.focus();
-  }, [step]);
+  }, [step, result]);
   const titles = [
-    "O que vamos descomplicar?",
-    "Quando você precisa?",
-    "E onde seria?",
-    "Como podemos falar com você?",
-    "Tudo certo para começar?",
+    category
+      ? type === "experiencias"
+        ? "Um momento com a cara de vocês."
+        : "Vamos cuidar disso com você."
+      : "Por onde podemos começar?",
+    "Que momento combina com você?",
+    "Qual cenário você tem em mente?",
+    "Para quem preparamos esse cuidado?",
+    "Seu pedido, do seu jeito.",
   ];
+  const selectedGuests = category === "A Dois" ? 2 : guests;
+  const firstPackage = Object.entries(catalog.packages).find(
+    ([, p]) => p.col === category,
+  );
+  const price = firstPackage
+    ? (catalog.prices as Record<string, Record<string, number[]>>)[
+        firstPackage[0]
+      ][String(selectedGuests)]
+    : undefined;
+  const estimated = price
+    ?.map((n) =>
+      Math.ceil(priceWithStripe(n * 100) / 100).toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+        maximumFractionDigits: 0,
+      }),
+    )
+    .join(" – ");
+  const photos: Record<string, string> = {
+    "A Dois": "casal-por-do-sol-col-800.webp",
+    Celebrar: "experiencia-flores-col-800.webp",
+    "Entre Amigas": "experiencia-boho-praia-col-800.webp",
+    Pedido: "pedido-casamento-praia-col-800.webp",
+  };
+  const sufficientDescription = description.trim().length >= 10;
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError("");
@@ -97,137 +135,227 @@ export function CityIntake({
           ),
         );
       } catch {}
-      router.push(data.url);
+      setResult(data);
     } catch (e) {
       setError((e as Error).message);
       setBusy(false);
     }
   }
-  return (
-    <div className="intake-layout">
-      <aside className="intake-aside">
-        <span className="eyebrow">VAMOS DESCOMPLICAR</span>
-        <h1>
-          Um começo simples.
-          <br />
-          Um cuidado de verdade.
-        </h1>
+  if (result)
+    return (
+      <section className="concierge-response" aria-label="Pedido recebido">
+        <span className="eyebrow">{result.protocol} · PEDIDO RECEBIDO</span>
+        <h2 ref={heading} tabIndex={-1}>
+          Sua ideia já tem um próximo passo.
+        </h2>
         <p>
-          Você conta o que precisa. A equipe avalia os detalhes antes de
-          confirmar preço, profissional ou disponibilidade.
+          A equipe vai avaliar os detalhes e preparar o próximo contato. Nenhuma
+          reserva ou cobrança foi feita.
         </p>
-        <ol className="step-list">
-          {["Pedido", "Quando", "Onde", "Contato", "Revisão"].map((t, i) => (
-            <li key={t} aria-current={step === i ? "step" : undefined}>
-              <span>{i < step ? "✓" : i + 1}</span>
-              {t}
-            </li>
-          ))}
-        </ol>
-        <Link prefetch={false} href="/" className="text-link">
-          ← Voltar ao início
+        <p className="soft-note">
+          Guarde o link de acompanhamento. É por ele que você verá as
+          atualizações e a proposta quando estiver pronta.
+        </p>
+        <Link prefetch={false} className="btn btn-primary" href={result.url}>
+          Acompanhar meu pedido →
         </Link>
-      </aside>
-      <form className="city-form card" onSubmit={submit}>
-        <span className="eyebrow">PASSO {step + 1} DE 5</span>
+      </section>
+    );
+  return (
+    <div className={"concierge-widget" + (embedded ? " embedded" : "")}>
+      {!embedded && (
+        <header className="concierge-intro">
+          <Link prefetch={false} href="/" className="text-link">
+            ← Voltar ao início
+          </Link>
+          <h1>Vamos dar forma à sua ideia.</h1>
+          {intent && <p className="prompt-echo">{intent}</p>}
+        </header>
+      )}
+      <form className="concierge-response" onSubmit={submit}>
+        <div className="concierge-signature">
+          <CityIcon name="spark" />
+          <span>
+            DESCOMPLICA <small>Um cuidado de cada vez</small>
+          </span>
+        </div>
+        {step > 0 && (
+          <div className="concierge-context" aria-label="Seu pedido até aqui">
+            <button type="button" disabled={busy} onClick={() => setStep(0)}>
+              {category}
+              {type === "experiencias"
+                ? ` · ${selectedGuests} pessoas`
+                : ""}{" "}
+              <span aria-hidden>✎</span>
+            </button>
+            {step > 1 && (
+              <button type="button" disabled={busy} onClick={() => setStep(1)}>
+                {date ? date.split("-").reverse().join("/") : "Data flexível"}{" "}
+                <span aria-hidden>✎</span>
+              </button>
+            )}
+            {step > 2 && (
+              <button type="button" disabled={busy} onClick={() => setStep(2)}>
+                {neighborhood} <span aria-hidden>✎</span>
+              </button>
+            )}
+          </div>
+        )}
         <h2 ref={heading} tabIndex={-1}>
           {titles[step]}
         </h2>
         {step === 0 && (
           <>
             {!adjusting && (
-              <div className="intent-summary">
-                <span>
-                  <strong>{category}</strong>
-                  <small>{worlds[type].title}</small>
-                </span>
-                <button
-                  type="button"
-                  className="text-link"
-                  onClick={() => setAdjusting(true)}
-                >
-                  Ajustar
-                </button>
-              </div>
-            )}
-            {adjusting && (
               <>
-                <label>
-                  Como podemos ajudar?
-                  <select
-                    value={type}
-                    onChange={(e) => {
-                      setType(e.target.value as Vertical);
-                      setCategory("");
-                      setGuests(2);
-                    }}
-                  >
-                    {Object.entries(worlds).map(([v, w]) => (
-                      <option key={v} value={v}>
-                        {w.title}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                <label>
-                  {type === "parceiros"
-                    ? "Sua área de atuação"
-                    : "O que você procura?"}
-                  <select
-                    required
-                    value={category}
-                    onChange={(e) => {
-                      setCategory(e.target.value);
-                      if (e.target.value === "A Dois") setGuests(2);
-                    }}
-                  >
-                    <option value="">Selecione uma opção</option>
-                    {worlds[type].categories.map((c) => (
-                      <option key={c}>{c}</option>
-                    ))}
-                  </select>
-                </label>
+                <div className="concierge-match">
+                  {photos[category] ? (
+                    <Image
+                      src={"/img/" + photos[category]}
+                      alt={"Cenário da coleção " + category}
+                      width={800}
+                      height={500}
+                      sizes="(max-width:600px) 90vw, 300px"
+                    />
+                  ) : (
+                    <div className="concierge-match-symbol">
+                      <CityIcon name={type} />
+                    </div>
+                  )}
+                  <div>
+                    <span className="eyebrow">
+                      {type === "experiencias"
+                        ? "DO NOSSO CATÁLOGO"
+                        : "ATENDIMENTO SOB AVALIAÇÃO"}
+                    </span>
+                    <h3>{category}</h3>
+                    <p>{worlds[type].description}</p>
+                    {estimated && (
+                      <>
+                        <strong className="concierge-price">{estimated}</strong>
+                        <small>
+                          {firstPackage![1].tier} · estimativa para{" "}
+                          {selectedGuests} pessoas. Valor final na proposta.
+                        </small>
+                      </>
+                    )}
+                    <button
+                      type="button"
+                      className="text-link"
+                      onClick={() => setAdjusting(true)}
+                    >
+                      Escolher outra opção →
+                    </button>
+                  </div>
+                </div>
+                {estimated && (
+                  <p className="field-note">
+                    Montagem, desmontagem e transporte urbano incluídos.
+                    Locação, acessos especiais e extras à parte.
+                  </p>
+                )}
               </>
             )}
-            {type === "experiencias" && (
-              <label>
-                Total de pessoas
+            {adjusting && (
+              <div className="concierge-options">
+                <p>Escolha o caminho que faz sentido para o seu pedido.</p>
+                <div
+                  className="concierge-pills"
+                  aria-label="Como podemos ajudar?"
+                >
+                  {Object.entries(worlds).map(([v, w]) => (
+                    <button
+                      type="button"
+                      key={v}
+                      aria-pressed={type === v}
+                      onClick={() => {
+                        setType(v as Vertical);
+                        setCategory("");
+                        setGuests(2);
+                      }}
+                    >
+                      {w.title}
+                    </button>
+                  ))}
+                </div>
+                <div
+                  className="concierge-choices"
+                  aria-label="O que você procura?"
+                >
+                  {worlds[type].categories.map((c) => (
+                    <button
+                      className="choice-tile"
+                      type="button"
+                      key={c}
+                      aria-pressed={category === c}
+                      onClick={() => {
+                        setCategory(c);
+                        if (c === "A Dois") setGuests(2);
+                        setAdjusting(false);
+                      }}
+                    >
+                      <strong>{c}</strong>
+                      <span>Explorar esta opção →</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+            {type === "experiencias" && category && (
+              <fieldset className="concierge-count">
+                <legend>Quantas pessoas vão viver esse momento?</legend>
                 {category === "A Dois" ? (
                   <p className="field-note">
                     2 pessoas · exclusivo para o casal
                   </p>
                 ) : (
-                  <select
-                    value={guests}
-                    onChange={(e) => setGuests(Number(e.target.value))}
+                  <div
+                    className="concierge-pills"
+                    aria-label="Total de pessoas"
                   >
                     {[2, 3, 4, 5, 6, 7, 8].map((n) => (
-                      <option key={n} value={n}>
+                      <button
+                        type="button"
+                        key={n}
+                        aria-pressed={guests === n}
+                        onClick={() => setGuests(n)}
+                      >
                         {n} pessoas
-                      </option>
+                      </button>
                     ))}
-                  </select>
+                  </div>
                 )}
-              </label>
+              </fieldset>
             )}
-            <label>
-              {type === "parceiros"
-                ? "Conte sobre seu trabalho"
-                : "Conte um pouco mais"}
-              <textarea
-                required
-                minLength={10}
-                maxLength={2000}
-                rows={4}
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder={
-                  type === "parceiros"
-                    ? "Quais serviços oferece? Como atende seus clientes?"
-                    : "O que você gostaria que a gente soubesse?"
-                }
-              />
-            </label>
+            <details
+              className="concierge-details"
+              open={detailsOpen}
+              onToggle={(e) => setDetailsOpen(e.currentTarget.open)}
+            >
+              <summary>
+                {sufficientDescription
+                  ? "Acrescentar ou ajustar detalhes"
+                  : "Conte um pouco sobre a sua ideia"}
+              </summary>
+              <label>
+                {type === "parceiros"
+                  ? "Conte sobre seu trabalho"
+                  : "Conte um pouco mais"}
+                <textarea
+                  required
+                  minLength={10}
+                  maxLength={2000}
+                  rows={4}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder={
+                    type === "parceiros"
+                      ? "Quais serviços oferece? Como atende seus clientes?"
+                      : "O que você gostaria que a gente soubesse?"
+                  }
+                />
+              </label>
+            </details>
           </>
         )}
         {step === 1 && (
@@ -236,7 +364,7 @@ export function CityIntake({
               Escolha uma preferência. A confirmação vem depois da avaliação da
               equipe.
             </p>
-            <div className="timing-options">
+            <div className="concierge-pills">
               {[
                 ["", "Sou flexível"],
                 [new Date().toLocaleDateString("en-CA"), "Hoje"],
@@ -265,22 +393,29 @@ export function CityIntake({
                 onChange={(e) => setDate(e.target.value)}
               />
             </label>
-            <details className="optional-details">
-              <summary>Tenho preferência de período</summary>
-              <label>
-                Melhor período
-                <select
-                  value={period}
-                  onChange={(e) => setPeriod(e.target.value)}
-                >
-                  <option value="flexivel">Sou flexível</option>
-                  <option value="manha">Manhã</option>
-                  <option value="tarde">Tarde</option>
-                  {type === "experiencias" && <option value="por-do-sol">Pôr do sol</option>}
-                  <option value="noite">Noite</option>
-                </select>
-              </label>
-            </details>
+            <fieldset className="concierge-count">
+              <legend>Tem um período favorito?</legend>
+              <div className="concierge-pills">
+                {[
+                  ["flexivel", "Sou flexível"],
+                  ["manha", "Manhã"],
+                  ["tarde", "Tarde"],
+                  ...(type === "experiencias"
+                    ? [["por-do-sol", "Pôr do sol"]]
+                    : []),
+                  ["noite", "Noite"],
+                ].map(([v, l]) => (
+                  <button
+                    type="button"
+                    key={v}
+                    aria-pressed={period === v}
+                    onClick={() => setPeriod(v)}
+                  >
+                    {l}
+                  </button>
+                ))}
+              </div>
+            </fieldset>
             <div className="soft-note">
               Ainda não é uma reserva de horário. Se houver urgência, não
               aguarde este pedido como atendimento emergencial.
@@ -289,6 +424,24 @@ export function CityIntake({
         )}
         {step === 2 && (
           <>
+            <div className="concierge-pills" aria-label="Sugestões de local">
+              {[
+                "Astúrias",
+                "Tombo",
+                "Pitangueiras",
+                "Enseada",
+                "Quero ajuda para escolher",
+              ].map((place) => (
+                <button
+                  type="button"
+                  key={place}
+                  aria-pressed={neighborhood === place}
+                  onClick={() => setNeighborhood(place)}
+                >
+                  {place}
+                </button>
+              ))}
+            </div>
             <label>
               {type === "parceiros"
                 ? "Bairros onde atende"
@@ -384,6 +537,7 @@ export function CityIntake({
                       {
                         manha: "Manhã",
                         tarde: "Tarde",
+                        "por-do-sol": "Pôr do sol",
                         noite: "Noite",
                         flexivel: "Período flexível",
                       } as Record<string, string>
@@ -426,12 +580,19 @@ export function CityIntake({
               Voltar
             </button>
           )}
-          <button className="btn btn-primary" disabled={busy}>
+          <button
+            className="btn btn-primary"
+            disabled={
+              busy || (step === 0 && (!category || !sufficientDescription))
+            }
+          >
             {busy
               ? "Salvando seu pedido…"
               : step === 4
                 ? "Enviar para avaliação →"
-                : "Continuar →"}
+                : step === 0
+                  ? "Continuar com a ideia →"
+                  : "Continuar →"}
           </button>
         </div>
       </form>
