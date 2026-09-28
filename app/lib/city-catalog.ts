@@ -109,10 +109,12 @@ export function suggestCategory(text: string, vertical: Vertical): string {
           ]
         : vertical === "resolver"
           ? [
-              [/limp|faxin/, "Limpeza"],
+              [/ar[ -]?condicionado/, "Ar-condicionado"],
+              [/limp|faxin|estofad|sofa/, "Limpeza"],
               [/eletric|tomada|disjuntor/, "Elétrica"],
-              [/torneira|vazamento|encanad/, "Hidráulica"],
-              [/ar.condicionado/, "Ar-condicionado"],
+              [/torneira|vazamento|encanad|descarga|entupid/, "Hidráulica"],
+              [/chuveiro|luminaria/, "Elétrica"],
+              [/pintura|prateleira|moveis|fechadura/, "Pequenos reparos"],
             ]
           : [];
   return rules.find(([regex]) => regex.test(q))?.[1] || "";

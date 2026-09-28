@@ -79,10 +79,10 @@ export function CityIntake({
         ? "Um momento com a cara de vocês."
         : "Vamos cuidar disso com você."
       : "Por onde podemos começar?",
-    "Que momento combina com você?",
-    "Qual cenário você tem em mente?",
-    "Para quem preparamos esse cuidado?",
-    "Seu pedido, do seu jeito.",
+    type === "experiencias" ? "Que momento combina com você?" : "Quando você precisa do serviço?",
+    type === "experiencias" ? "Qual cenário você tem em mente?" : "Em qual bairro será o atendimento?",
+    "Como podemos falar com você?",
+    "Confira antes de enviar.",
   ];
   const selectedGuests = category === "A Dois" ? 2 : guests;
   const firstPackage = Object.entries(catalog.packages).find(
@@ -221,7 +221,7 @@ export function CityIntake({
         <div className="concierge-signature">
           <CityIcon name="spark" />
           <span>
-            DESCOMPLICA <small>Um cuidado de cada vez</small>
+            SEU PEDIDO <small>{["1 · O que você precisa", "2 · Quando", "3 · Onde", "4 · Seu contato", "5 · Revisar e enviar"][step]}</small>
           </span>
         </div>
         {(step > 0 || date || neighborhood || period !== "flexivel") && (
@@ -275,8 +275,8 @@ export function CityIntake({
                         ? "DO NOSSO CATÁLOGO"
                         : "ATENDIMENTO SOB AVALIAÇÃO"}
                     </span>
-                    <h3>{category}</h3>
-                    <p>{worlds[type].description}</p>
+                    <h3>{service?.name || category}</h3>
+                    <p>{service ? "Vamos reunir os detalhes para a equipe avaliar seu atendimento." : worlds[type].description}</p>
                     {estimated && (
                       <>
                         <strong className="concierge-price">{estimated}</strong>
@@ -318,6 +318,8 @@ export function CityIntake({
                       onClick={() => {
                         setType(v as Vertical);
                         setCategory("");
+                        setServiceId("");
+                        setServiceAnswers(["", ""]);
                         setGuests(2);
                       }}
                     >
@@ -337,6 +339,8 @@ export function CityIntake({
                       aria-pressed={category === c}
                       onClick={() => {
                         setCategory(c);
+                        setServiceId("");
+                        setServiceAnswers(["", ""]);
                         if (c === "A Dois") setGuests(2);
                         setAdjusting(false);
                       }}

@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { serviceById } from "./service-catalog";
+import { inferredService } from "./intent-matches";
 import {
   worlds,
   suggestVertical,
@@ -43,6 +44,31 @@ export type IntentResponse = {
 
 export function fallbackIntent(text: string): Interpretation {
   const vertical = suggestVertical(text);
+  const category = suggestCategory(text, vertical);
+  const normalized = text
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+  const neighborhood =
+    (
+      [
+        "Astúrias",
+        "Tombo",
+        "Pitangueiras",
+        "Enseada",
+        "Pernambuco",
+        "Guaiúba",
+        "Perequê",
+        "Centro",
+      ] as const
+    ).find((name) =>
+      new RegExp(
+        `\\b${name
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .toLowerCase()}\\b`,
+      ).test(normalized),
+    ) || "";
   const count = text.match(
     /\b(\d{1,4})\s*(?:pessoas|amigas|amigos|convidad)/i,
   )?.[1];
@@ -53,11 +79,19 @@ export function fallbackIntent(text: string): Interpretation {
       suggestCategory(text, vertical) === "A Dois" && count && Number(count) > 2
         ? ""
         : suggestCategory(text, vertical),
-    serviceId: "",
+    serviceId: inferredService(text, vertical, category),
     guests: count ? Math.min(1000, Number(count)) || null : null,
-    neighborhood: "",
+    neighborhood,
     date: "",
-    period: "flexivel",
+    period: /por do sol/.test(normalized)
+      ? "por-do-sol"
+      : /\bmanha\b/.test(normalized)
+        ? "manha"
+        : /\btarde\b/.test(normalized)
+          ? "tarde"
+          : /\bnoite\b/.test(normalized)
+            ? "noite"
+            : "flexivel",
   };
 }
 

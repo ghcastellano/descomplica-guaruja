@@ -8,6 +8,8 @@ import {
 } from "@/lib/intent";
 import { CityIcon } from "./city-shell";
 import { CityIntake } from "./city-intake";
+import { IntentOptions } from "./intent-options";
+import type { Service } from "@/lib/service-catalog";
 
 export function IntentSearch() {
   const [intent, setIntent] = useState("");
@@ -16,12 +18,19 @@ export function IntentSearch() {
   const [busy, setBusy] = useState(false);
   const [editing, setEditing] = useState(false);
   const [error, setError] = useState("");
+  const [selection, setSelection] = useState<Service | null | undefined>(
+    undefined,
+  );
+  const resultRegion = useRef<HTMLDivElement>(null);
   const controller = useRef<AbortController | null>(null);
   const cache = useRef(new Map<string, IntentResponse>());
   useEffect(() => () => controller.current?.abort(), []);
   useEffect(() => {
     if (editing) document.getElementById("intencao")?.focus();
   }, [editing]);
+  useEffect(() => {
+    if (response && !editing) resultRegion.current?.focus();
+  }, [response, editing]);
 
   async function interpret(text: string, withAI = true) {
     const value = text.trim();
@@ -37,6 +46,7 @@ export function IntentSearch() {
     setEditing(false);
     setError("");
     setResponse(null);
+    setSelection(undefined);
     if (!withAI) {
       setBusy(false);
       setResponse({ interpretation: fallbackIntent(value), source: "rules" });
@@ -98,19 +108,32 @@ export function IntentSearch() {
           id="intencao"
           value={intent}
           onChange={(e) => setIntent(e.target.value)}
+          onKeyDown={(e) => {
+            if (
+              e.key === "Enter" &&
+              !e.shiftKey &&
+              !e.nativeEvent.isComposing
+            ) {
+              e.preventDefault();
+              if (!busy) e.currentTarget.form?.requestSubmit();
+            }
+          }}
           maxLength={600}
           rows={2}
           required
           minLength={3}
-          placeholder="Ex.: meu aniversário com mais 3 pessoas no Tombo, amanhã ao pôr do sol"
-          aria-describedby="intent-privacy"
+          placeholder="Ex.: preciso limpar o ar-condicionado no Tombo"
+          aria-describedby="intent-keyboard intent-privacy"
         />
         <button className="btn btn-primary" type="submit" disabled={busy}>
-          {submitted ? "Atualizar ideia" : "Descomplicar"}{" "}
+          {submitted ? "Atualizar busca" : "Descomplicar"}{" "}
           <span aria-hidden>→</span>
         </button>
       </div>
       {error && <p role="alert">{error}</p>}
+      <small className="intent-keyboard" id="intent-keyboard">
+        Enter para buscar · Shift+Enter para uma nova linha
+      </small>
     </form>
   );
   return (
@@ -143,8 +166,7 @@ export function IntentSearch() {
       )}
       {(!submitted || editing) && (
         <p className="intent-privacy" id="intent-privacy">
-          A IA ajuda a organizar sua ideia. Você revisa antes de enviar. Deixe
-          seu contato para depois.{" "}
+          Encontre opções e monte seu pedido. Seu contato fica para depois.{" "}
           <Link href="/privacidade" prefetch={false}>
             Saiba mais
           </Link>
@@ -177,11 +199,17 @@ export function IntentSearch() {
         </section>
       )}
       {!busy && result && (
-        <div hidden={editing}>
+        <div
+          hidden={editing}
+          ref={resultRegion}
+          tabIndex={-1}
+          className="intent-result-region"
+          aria-label="Resultado da busca"
+        >
           <p className="intent-response-note" role="status">
             {response?.source === "ai"
-              ? "Organizamos sua ideia com IA. Confira os detalhes e ajuste o que quiser."
-              : "Vamos montar juntos. Confira a sugestão e escolha os próximos detalhes."}
+              ? "Sugestões do catálogo a partir da sua ideia, com ajuda de IA."
+              : "Sugestões do catálogo. Confira e ajuste os detalhes."}
           </p>
           {capacity ? (
             <section className="concierge-response">
@@ -241,19 +269,38 @@ export function IntentSearch() {
                 Conhecer e iniciar meu cadastro →
               </Link>
             </section>
-          ) : (
-            <CityIntake
-              key={submitted}
-              embedded
-              intent={submitted || ""}
-              initialType={result.vertical}
-              initialServiceId={result.serviceId}
-              initialCategory={result.category}
-              initialGuests={result.guests || undefined}
-              initialNeighborhood={result.neighborhood}
-              initialDate={result.date}
-              initialPeriod={result.period}
+          ) : (result.vertical === "resolver" || result.vertical === "casa") &&
+            selection === undefined ? (
+            <IntentOptions
+              text={submitted || ""}
+              result={result}
+              onChoose={setSelection}
             />
+          ) : (
+            <>
+              {selection !== undefined && (
+                <button
+                  className="text-button"
+                  onClick={() => setSelection(undefined)}
+                >
+                  ← Voltar às opções
+                </button>
+              )}
+              <CityIntake
+                key={submitted + (selection?.id || "")}
+                embedded
+                intent={submitted || ""}
+                initialType={result.vertical}
+                initialServiceId={
+                  selection?.id || (selection === null ? "" : result.serviceId)
+                }
+                initialCategory={result.category}
+                initialGuests={result.guests || undefined}
+                initialNeighborhood={result.neighborhood}
+                initialDate={result.date}
+                initialPeriod={result.period}
+              />
+            </>
           )}
         </div>
       )}

@@ -3,7 +3,7 @@ import { useState } from "react";
 export function CopyLink() {
   const [status, setStatus] = useState("");
   return (
-    <>
+    <div className="action-control">
       <button
         className="btn btn-secondary"
         onClick={async () => {
@@ -17,7 +17,7 @@ export function CopyLink() {
       >
         Copiar link privado
       </button>
-      <p role="status">{status}</p>
-    </>
+      <p className="action-feedback" role="status">{status}</p>
+    </div>
   );
 }

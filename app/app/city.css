@@ -370,14 +370,16 @@
   min-width: 0;
   width: 100%;
 }
-.city-form .consent-field {
+.consent-field {
   display: flex;
   gap: 12px;
   align-items: flex-start;
   font-size: 14px;
   font-weight: 400;
 }
-.city-form .consent-field input {
+.consent-field input {
+  padding: 0;
+  accent-color: var(--petrol-deep);
   width: 20px;
   height: 20px;
   margin-top: 4px;
@@ -1237,7 +1239,7 @@
 /* Partner network: same shared brand and controls as the customer concierge. */
 .network-page { max-width: 880px; margin: auto; padding: 36px 24px 100px; }
 .network-intro { margin: 24px 0 36px; }
-.network-intro h1 { font-size: clamp(36px,5vw,62px); line-height: 1.12; letter-spacing: -.015em; margin: 18px 0; overflow-wrap: anywhere; }
+.network-intro h1 { font-size: clamp(36px,5vw,62px); line-height: 1.12; letter-spacing: var(--tracking-heading); margin: 18px 0; overflow-wrap: anywhere; }
 .network-promises { display: flex; flex-wrap: wrap; gap: 16px 28px; margin: 26px 0; }
 .network-promises span { display: flex; gap: 8px; align-items: center; font-size: 14px; }
 .network-promises svg { color: var(--terracotta-ink); width: 18px; }
@@ -1264,3 +1266,43 @@
 .service-catalog { margin: 36px 0; }
 .service-catalog details, .partner-service-group { border-bottom: 1px solid var(--sand); padding: 12px 0; }
 .service-catalog summary, .partner-service-group summary { cursor: pointer; min-height: 44px; padding: 10px 0; font-weight: 600; }
+
+/* Shared controls stay aligned across concierge, network and tracking. */
+.form-actions.tracking-actions { align-items: flex-start; }
+.intent-keyboard { display: block; margin-top: 10px; color: var(--muted); font-size: 12px; }
+.intent-result-list { display: grid; gap: 12px; margin: 24px 0; }
+.intent-result { display: flex; align-items: center; gap: 16px; width: 100%; padding: 20px; border: 1px solid var(--sand); border-radius: var(--r-md); background: var(--cream); color: var(--petrol-deep); text-align: left; cursor: pointer; }
+.intent-result:hover { border-color: var(--petrol); background: var(--sand-soft); }
+.intent-result > svg { flex: 0 0 24px; }
+.intent-result > span:nth-child(2) { flex: 1; min-width: 0; }
+.intent-result strong, .intent-result small, .intent-result > span > span { display: block; }
+.intent-result strong { font-family: var(--f-serif); font-size: 24px; font-weight: 500; line-height: 1.25; margin: 6px 0; }
+.intent-result small { font-size: 10px; letter-spacing: .08em; color: var(--terracotta-ink); }
+.intent-result > span > span { font-size: 14px; color: var(--muted); }
+.unified-entry { padding-top: 44px; }
+.unified-entry .intent-chips button { border-color: var(--sand); color: var(--petrol-deep); font-size: 14px; padding: 10px 14px; }
+.network-admin-grid .inbox-row { flex-wrap: wrap; align-items: center; }
+.network-admin-grid .badge { white-space: normal; }
+@media (max-width: 900px) and (min-width: 761px) {
+  .city-header { flex-wrap: wrap; gap: 12px; }
+  .desktop-nav { order: 3; width: 100%; justify-content: center; }
+}
+@media (max-width: 760px) {
+  .unified-entry { padding-top: 28px; }
+  .unified-entry .intent-chips { gap: 8px; }
+  .unified-entry .intent-chips button:last-child { display: inline-block; }
+  .mobile-nav { padding-bottom: max(8px, env(safe-area-inset-bottom)); }
+  .city-footer { padding-bottom: calc(100px + env(safe-area-inset-bottom)); }
+}
+@media (max-width: 600px) {
+  .form-actions.tracking-actions { align-items: stretch; }
+  .intent-result { padding: 16px 12px; gap: 12px; }
+  .intent-result strong { font-size: 21px; }
+  .intent-keyboard { font-size: 11px; }
+}
+.prospect-research { margin: 32px 0; padding: 28px; background: var(--sand-soft); border-radius: var(--r-lg); }
+.prospect-research h2 { margin-top: 12px; }
+.prospect-research .form-grid { max-width: 760px; }
+#novo-negocio { scroll-margin-top: 24px; }
+@media (max-width: 600px) { .prospect-research { padding: 20px; } .network-admin-grid .form-grid { grid-template-columns: 1fr; } }
+.invite-draft { margin: 20px 0; padding: 16px 20px; border-left: 3px solid var(--gold); background: var(--white); font-size: 16px; line-height: 1.6; }

@@ -221,3 +221,14 @@ test("AI disabled costs nothing; errors and exhausted budgets keep fallback; led
     delete process.env.AI_DAILY_CALL_LIMIT;
   }
 });
+
+test("fallback distinguishes appliance cleaning and retains useful preferences", () => {
+  const result = fallbackIntent("Preciso limpar o ar-condicionado no Tombo de manhã");
+  assert.equal(result.category, "Ar-condicionado");
+  assert.equal(result.serviceId, "ar-limpeza");
+  assert.equal(result.neighborhood, "Tombo");
+  assert.equal(result.period, "manha");
+  assert.equal(fallbackIntent("limpeza após obra").serviceId, "limpeza-pos-obra");
+  assert.equal(fallbackIntent("minha torneira está pingando").serviceId, "torneira");
+  assert.equal(fallbackIntent("algo que não está no catálogo").serviceId, "");
+});

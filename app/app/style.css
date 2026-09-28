@@ -282,7 +282,7 @@ label > small {
 }
 .form-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0 var(--s4);
 }
 .section-title {
@@ -376,6 +376,7 @@ dd {
   font-weight: 400;
 }
 .check input {
+  padding: 0;
   width: 20px;
   height: 20px;
   flex: 0 0 20px;
@@ -690,10 +691,25 @@ p,
 
 .workspace-tabs {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--s4);
   margin: var(--s4) 0;
   border-bottom: 1px solid var(--sand);
   padding-bottom: var(--s3);
+}
+.workspace-tabs a { display: inline-flex; align-items: center; min-height: 44px; }
+.text-button { cursor: pointer; min-height: 44px; }
+.btn { max-width: 100%; text-align: center; overflow-wrap: anywhere; }
+.action-control { min-width: 0; }
+.action-feedback { font-size: 13px; color: var(--muted); margin: 8px 0 0; max-width: 260px; }
+.action-feedback:empty { margin: 0; }
+.tracking-actions { align-items: flex-start; }
+.tracking-actions > .text-link { display: inline-flex; align-items: center; min-height: 54px; border: 0; text-decoration: underline; text-underline-offset: 6px; }
+h2[tabindex="-1"]:focus, .intent-result-region:focus { outline: none; }
+@media (max-width: 600px) {
+  .tracking-actions { flex-direction: column; align-items: stretch; }
+  .tracking-actions .action-control, .tracking-actions .btn { width: 100%; }
+  .tracking-actions > .text-link { justify-content: center; }
 }
 .workspace-tabs a[aria-current] {
   color: var(--terracotta-ink);

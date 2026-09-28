@@ -34,6 +34,6 @@ with sync_playwright() as p:
    expect(page.get_by_role('link',name='Acompanhar meu pedido')).to_have_attribute('href','/pedidos/'+'a'*43)
    assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+1');assert not errors,errors
    page.goto(BASE);page.get_by_label('Conte pra gente').fill('O que fazer no Guarujá?');page.get_by_role('button',name='Descomplicar',exact=True).click();expect(page.get_by_role('link',name='Conhecer a cidade')).to_be_visible();assert page.url==BASE+'/'
-   page.goto(BASE);page.get_by_role('button',name='Limpeza da casa').click();expect(page.locator('.concierge-match h3')).to_have_text('Limpeza');assert page.locator('.concierge-price').count()==0
+   page.goto(BASE);page.get_by_role('button',name='Limpeza da casa').click();page.locator('.intent-result').first.click();expect(page.locator('.concierge-match h3')).to_have_text('Limpeza residencial');assert page.locator('.concierge-price').count()==0
    context.close()
   browser.close();print(engine.name+': widget inline, catálogo, confirmação, retry e 4 larguras OK',flush=True)

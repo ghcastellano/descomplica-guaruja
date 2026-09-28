@@ -41,8 +41,8 @@ with sync_playwright() as p:
    page.goto(BASE);page.get_by_label('Conte pra gente').fill('Aniversário para 50 pessoas');page.get_by_role('button',name='Descomplicar',exact=True).click()
    expect(page.get_by_role('heading',name='Hoje, nossas experiências recebem de 2 a 8 pessoas.')).to_be_visible()
    assert page.locator('.concierge-price').count()==0
-   page.get_by_role('button',name='Ajustar minha ideia').click();page.get_by_label('Ajuste sua ideia').fill('Aniversário para 4 pessoas');page.get_by_role('button',name='Atualizar ideia').click();expect(page.locator('.concierge-match h3')).to_have_text('Celebrar')
-   before=len(calls);page.get_by_role('button',name='Editar pedido',exact=True).click();page.get_by_role('button',name='Atualizar ideia').click();expect(page.locator('.concierge-match h3')).to_have_text('Celebrar');assert len(calls)==before # same prompt uses memory cache
+   page.get_by_role('button',name='Ajustar minha ideia').click();page.get_by_label('Ajuste sua ideia').fill('Aniversário para 4 pessoas');page.get_by_role('button',name='Atualizar busca').click();expect(page.locator('.concierge-match h3')).to_have_text('Celebrar')
+   before=len(calls);page.get_by_role('button',name='Editar pedido',exact=True).click();page.get_by_role('button',name='Atualizar busca').click();expect(page.locator('.concierge-match h3')).to_have_text('Celebrar');assert len(calls)==before # same prompt uses memory cache
    assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+1');assert not errors,errors
    context.close()
   browser.close();print(engine.name+': AI preferences, edits, capacity, cache and 4 widths OK',flush=True)

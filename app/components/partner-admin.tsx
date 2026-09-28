@@ -2,6 +2,134 @@
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { partnerStatuses, type PartnerStatus } from "@/lib/service-catalog";
+import Link from "next/link";
+
+export function ProspectResearch() {
+  const [specialty, setSpecialty] = useState("Limpeza"),
+    [area, setArea] = useState("");
+  const query = `${specialty} ${area} Guarujá contato comercial`.trim();
+  return (
+    <section className="prospect-research">
+      <div>
+        <span className="eyebrow">BUSCA ATIVA</span>
+        <h2>Encontre quem já atende na cidade.</h2>
+        <p>
+          Pesquise negócios, confira a fonte e salve os que fazem sentido para a
+          rede.
+        </p>
+      </div>
+      <div className="form-grid">
+        <label>
+          Serviço ou especialidade
+          <input
+            value={specialty}
+            onChange={(e) => setSpecialty(e.target.value)}
+            maxLength={80}
+          />
+        </label>
+        <label>
+          <span>
+            Bairro <small>(opcional)</small>
+          </span>
+          <input
+            value={area}
+            onChange={(e) => setArea(e.target.value)}
+            maxLength={80}
+            placeholder="Ex.: Tombo"
+          />
+        </label>
+      </div>
+      <div className="actions">
+        <a
+          className="btn btn-secondary"
+          href={`https://www.google.com/search?q=${encodeURIComponent(query)}`}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Pesquisar negócios ↗
+        </a>
+        <a className="text-link" href="#novo-negocio">
+          Já encontrei um negócio →
+        </a>
+      </div>
+      <p className="field-note">
+        A pesquisa abre em outra aba. Guarde o endereço da fonte ao adicionar um
+        negócio.
+      </p>
+    </section>
+  );
+}
+
+export function PartnerList({
+  rows,
+}: {
+  rows: { id: string; name: string; protocol: string; status: PartnerStatus }[];
+}) {
+  const [query, setQuery] = useState(""),
+    [status, setStatus] = useState("");
+  const normalize = (s: string) =>
+    s
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase();
+  const filtered = rows.filter(
+    (r) =>
+      (!status || r.status === status) &&
+      normalize(r.name + " " + r.protocol).includes(normalize(query)),
+  );
+  return (
+    <section>
+      <h2>Negócios e profissionais</h2>
+      <div className="form-grid">
+        <label>
+          Buscar na rede
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Nome ou protocolo"
+          />
+        </label>
+        <label>
+          Etapa
+          <select value={status} onChange={(e) => setStatus(e.target.value)}>
+            <option value="">Todas</option>
+            {Object.entries(partnerStatuses).map(([value, label]) => (
+              <option key={value} value={value}>
+                {label}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+      <p className="field-note" role="status">
+        {filtered.length} de {rows.length} registros
+      </p>
+      <div className="inbox">
+        {filtered.map((r) => (
+          <Link
+            href={"/operacao/rede/" + r.id}
+            className="inbox-row"
+            key={r.id}
+          >
+            <div>
+              <span className="eyebrow">{r.protocol}</span>
+              <h3>{r.name}</h3>
+            </div>
+            <span className="badge">{partnerStatuses[r.status]} →</span>
+          </Link>
+        ))}
+      </div>
+      {!filtered.length && (
+        <p className="soft-note">
+          {rows.length
+            ? "Nenhum resultado com estes filtros. Tente outro nome ou etapa."
+            : "Comece por um negócio encontrado na pesquisa ou uma indicação."}
+        </p>
+      )}
+    </section>
+  );
+}
 export function ProspectForm() {
   const router = useRouter(),
     key = useRef("");
@@ -10,6 +138,7 @@ export function ProspectForm() {
   return (
     <form
       className="concierge-response"
+      id="novo-negocio"
       onSubmit={async (e) => {
         e.preventDefault();
         if (busy) return;
@@ -37,10 +166,10 @@ export function ProspectForm() {
         }
       }}
     >
-      <h2>Conheceu um bom profissional?</h2>
+      <h2>Adicionar um negócio</h2>
       <p>
-        Registre a indicação para avaliar. Isso não cria perfil público nem
-        envia convite.
+        Salve o contato e a fonte. Depois, prepare o convite na ficha do
+        negócio.
       </p>
       <label>
         Nome profissional
@@ -51,19 +180,19 @@ export function ProspectForm() {
         <input name="contact" required maxLength={150} />
       </label>
       <label>
-        Origem e contexto da indicação
+        Fonte e contexto
         <textarea
           name="source"
           required
           minLength={5}
           maxLength={500}
           rows={2}
-          placeholder="Quem indicou, fonte da informação e contexto em que foi obtida."
+          placeholder="Cole o link do site ou perfil comercial e o serviço que encontrou. Se foi indicação, registre quem indicou."
         />
       </label>
       {error && <p role="alert">{error}</p>}
       <button className="btn btn-primary" disabled={busy}>
-        {busy ? "Salvando…" : "Registrar indicação →"}
+        {busy ? "Salvando…" : "Salvar negócio →"}
       </button>
     </form>
   );
@@ -102,30 +231,42 @@ export function PartnerReview({
         {status === "invited" && (
           <>
             <p>
-              O convite está pronto para compartilhar por um canal autorizado.
-              Nenhuma mensagem foi enviada.
+              Convite preparado. Copie a mensagem para compartilhar com quem
+              aceitou conversar sobre a parceria.
             </p>
-            <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={async () => {
-                try {
-                  await navigator.clipboard.writeText(
-                    new URL(url, window.location.origin).href,
-                  );
-                  setCopied(true);
-                } catch {
-                  setError(
-                    "Não foi possível copiar. Abra o convite e copie o endereço.",
-                  );
-                }
-              }}
-            >
-              {copied ? "Link copiado" : "Copiar link do convite"}
-            </button>
-            <a href={url} className="text-link" target="_blank">
-              Abrir convite ↗
-            </a>
+            <blockquote className="invite-draft">
+              Olá! Somos da Descomplica Guarujá e estamos conhecendo
+              profissionais e negócios da cidade. Gostaríamos de conversar sobre
+              uma possível parceria. Neste link você pode apresentar seu
+              trabalho e escolher como participar.
+            </blockquote>
+            <div className="actions">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={async () => {
+                  try {
+                    await navigator.clipboard.writeText(
+                      "Olá! Somos da Descomplica Guarujá e estamos conhecendo profissionais e negócios da cidade. Gostaríamos de conversar sobre uma possível parceria. Neste link você pode apresentar seu trabalho e escolher como participar: " +
+                        new URL(url, window.location.origin).href,
+                    );
+                    setCopied(true);
+                  } catch {
+                    setError(
+                      "Não foi possível copiar. Abra o convite e copie o endereço.",
+                    );
+                  }
+                }}
+              >
+                {copied ? "Mensagem copiada" : "Copiar mensagem de convite"}
+              </button>
+              <a href={url} className="text-link" target="_blank">
+                Abrir convite ↗
+              </a>
+            </div>
+            <p className="field-note">
+              Nenhuma mensagem foi enviada. Este convite é da homologação.
+            </p>
           </>
         )}
       </section>
@@ -162,7 +303,10 @@ export function PartnerReview({
           <h2>Próximo passo</h2>
           <label>
             Etapa
-            <select value={next} onChange={(e) => setNext(e.target.value as PartnerStatus)}>
+            <select
+              value={next}
+              onChange={(e) => setNext(e.target.value as PartnerStatus)}
+            >
               {allowed.map((s) => (
                 <option key={s} value={s}>
                   {partnerStatuses[s]}

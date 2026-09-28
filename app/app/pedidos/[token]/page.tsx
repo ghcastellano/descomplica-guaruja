@@ -51,7 +51,7 @@ export default async function Page({
         Este link dá acesso ao acompanhamento. Válido por 90 dias. Compartilhe
         apenas com quem participa do pedido. Atualize para consultar a situação mais recente.
       </div>
-      <div className="form-actions">
+      <div className="form-actions tracking-actions">
         <RefreshStatus />
         <CopyLink />
         <Link prefetch={false} href="/pedidos" className="text-link">
