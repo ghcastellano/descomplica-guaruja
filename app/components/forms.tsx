@@ -228,7 +228,7 @@ export function Intake({
           </select>
         </label>
         <label>
-          Local em mente <small>(opcional)</small>
+          <span>Local em mente <small>(opcional)</small></span>
           <input
             name="place"
             defaultValue={initial?.place || ""}
@@ -250,10 +250,10 @@ export function Intake({
           </select>
         </label>
         <label>
-          Expectativa de orçamento (R$){" "}
-          <small>Use 0 se ainda não foi informado.</small>
+          Expectativa de orçamento (R$)
           <input
             name="budget"
+            aria-describedby="intake-budget-help"
             type="number"
             min="0"
             max="1000000"
@@ -261,10 +261,11 @@ export function Intake({
             defaultValue={requestId ? "0" : "1000"}
             required
           />
+          <small id="intake-budget-help">Use 0 se ainda não foi informado.</small>
         </label>
       </div>
       <label>
-        O que devemos saber? <small>(opcional)</small>
+        <span>O que devemos saber? <small>(opcional)</small></span>
         <textarea
           name="notes"
           defaultValue={initial?.notes || ""}
