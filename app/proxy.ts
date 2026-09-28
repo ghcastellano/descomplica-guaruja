@@ -12,6 +12,7 @@ export function proxy(request: NextRequest) {
       "/login",
       "/api/login",
       "/api/stripe/webhook",
+      "/api/whatsapp/webhook",
     ].includes(path);
     const asset =
       path.startsWith("/_next/") ||

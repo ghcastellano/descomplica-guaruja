@@ -35,6 +35,9 @@ try {
     });
   }
   await sql.begin(async (tx) => {
+    await tx`GRANT SELECT,INSERT ON whatsapp_test_events TO descomplica_app`;
+    await tx`GRANT SELECT,INSERT,UPDATE ON whatsapp_test_sends TO descomplica_app`;
+    await tx`GRANT USAGE,SELECT ON SEQUENCE whatsapp_test_events_id_seq TO descomplica_app`;
     await tx`GRANT SELECT,INSERT,UPDATE ON city_requests,ai_interpretations,network_partners TO descomplica_app`;
     await tx`GRANT SELECT,INSERT ON city_request_events,network_partner_events TO descomplica_app`;
     await tx`GRANT USAGE,SELECT ON SEQUENCE city_requests_number_seq,city_request_events_id_seq,network_partners_number_seq,network_partner_events_id_seq TO descomplica_app`;

@@ -49,6 +49,7 @@ export default async function Page({
         </a>
         <a href="/agenda">Agenda e pagamentos →</a>
         <a href="/operacao/rede">Rede local →</a>
+        <a href="/operacao/whatsapp">WhatsApp de teste →</a>
       </nav>
       <form className="contact-search" action="/operacao">
         <label>
