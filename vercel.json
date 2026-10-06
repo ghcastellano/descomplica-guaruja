@@ -115,7 +115,7 @@
   "rewrites": [
     {
       "source": "/setur",
-      "destination": "/cultura-setur.html"
+      "destination": "/cultura-setur"
     }
   ]
 }
