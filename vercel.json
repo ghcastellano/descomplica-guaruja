@@ -103,13 +103,19 @@
       ]
     },
     {
-      "source": "/(visao|resumo-executivo|parceria-pousadas|cultura-setur)(.html)?",
+      "source": "/(visao|resumo-executivo|parceria-pousadas|cultura-setur|setur|semep)(.html)?",
       "headers": [
         {
           "key": "X-Robots-Tag",
           "value": "noindex, nofollow"
         }
       ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/setur",
+      "destination": "/cultura-setur.html"
     }
   ]
 }

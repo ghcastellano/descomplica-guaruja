@@ -4,8 +4,9 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 BASE=os.environ.get('TEST_BASE_URL','http://127.0.0.1:3000')
 OUT=Path('/tmp/cultura-setur-qa');OUT.mkdir(exist_ok=True)
+engines=os.environ.get('TEST_BROWSERS','chromium,webkit').split(',')
 with sync_playwright() as p:
- for engine in [p.chromium,p.webkit]:
+ for engine in [getattr(p,name) for name in engines]:
   browser=engine.launch()
   for motion in ['reduce','no-preference']:
    for width,height in [(320,568),(350,680),(390,844),(768,1024),(1024,768),(1440,900),(1920,1080)]:
@@ -28,7 +29,7 @@ with sync_playwright() as p:
      assert s.locator('.grid2 .photo img').evaluate_all('(els)=>els.every(e=>getComputedStyle(e).objectFit==="contain")')
      if engine.name=='chromium' and motion=='reduce' and width in [390,768,1440]:page.screenshot(path=str(OUT/f'{width}-{i+1:02}.png'))
      if i==5:
-      for topic in ['trabalho','economia','cultura']:
+      for topic in ['trabalho','economia','turismo']:
        button=s.locator(f'[data-value="{topic}"]')
        button.click()
        assert button.get_attribute('aria-pressed')=='true'
@@ -40,7 +41,7 @@ with sync_playwright() as p:
       s.locator('[data-value="economia"]').focus();page.keyboard.press('Enter')
       assert s.locator('#value-economia').is_visible()
       assert page.locator('#cnt').inner_text()=='6 / 11'
-      s.locator('[data-value="cultura"]').click()
+      s.locator('[data-value="turismo"]').click()
      # All content must remain reachable if a small screen needs vertical scrolling.
      s.evaluate('(e)=>e.scrollTop=e.scrollHeight');page.wait_for_timeout(30)
      last=s.locator('.wrap').evaluate('(e)=>e.getBoundingClientRect().bottom')
@@ -59,4 +60,4 @@ with sync_playwright() as p:
   assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
   ctx.close()
   browser.close()
-print('OK: 308 slides, Chrome/Safari, 7 tamanhos e movimento normal/reduzido.')
+print(f'OK: {len(engines)*154} slides/estados SETUR, {engines}, 7 tamanhos e movimento normal/reduzido.')

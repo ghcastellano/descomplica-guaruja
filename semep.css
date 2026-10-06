@@ -1,0 +1,8 @@
+/* Composição SEMEP; tipografia, cores, movimento e controles são compartilhados. */
+.semep .card h3{margin:.65rem 0}
+.semep .card .list{margin-top:.85rem}
+.semep .grid3 .card{display:flex;flex-direction:column;align-items:flex-start}
+.semep .grid3 .card>p:last-child{margin-top:.2rem}
+@media(max-width:700px){
+ .semep .grid2{grid-template-columns:minmax(0,1fr)}
+}

@@ -6,8 +6,10 @@ Site estático em HTML, CSS e JavaScript nativo, sem framework e sem build. Ofer
 
 - `index.html`: página principal, catálogo, quantidade, quiz, dados estruturados e integração WhatsApp/Apps Script.
 - `deck.css` e `deck.js`: apresentação visual e navegação compartilhadas pelas apresentações HTML.
-- `cultura-setur.html` e `cultura-setur.css`: apresentação executiva para Cultura e SETUR, dez slides principais e um apoio opcional de lançamento.
-- `docs/roteiro-cultura-setur-2026-09.md`: roteiro, fontes e uso das notas.
+- `cultura-setur.html` e `cultura-setur.css`: apresentação executiva exclusiva para SETUR (`/setur`; endereço anterior preservado), dez slides principais e um apoio opcional de lançamento.
+- `docs/roteiro-cultura-setur-2026-09.md`: roteiro, fontes e uso das notas da SETUR.
+- `semep.html` e `semep.css`: apresentação para a conversa com Diego da SEMEP (`/semep`), oito slides.
+- `docs/roteiro-semep-2026-10.md`: fala, pedidos e fontes da reunião com a SEMEP.
 - `docs/plano-arquitetura-operacao-2026-09.md`: plano do futuro sistema com equipe própria; não representa backend implantado.
 - `visao.html`: visão futura, com operação própria e experiências até 50 pessoas; não é oferta atual.
 - `resumo-executivo.html`: apresentação institucional, alinhada à oferta e à visão.
@@ -39,3 +41,5 @@ As páginas de cadastro de fornecedores, celebrações, painel e proposta foram 
 Com o servidor local ativo, executar `python3 tests/deck-scroll-checks.py` para testar os slides com animação normal e o ponteiro no canto da tela. `python3 tests/pilot-form-checks.py` verifica os campos da pousada, a mensagem de WhatsApp/e-mail e a recuperação do rascunho nesta aba, bloqueando chamadas externas.
 
 O formulário da pousada prepara a mensagem; o usuário confirma o envio no aplicativo escolhido. Não grava automaticamente no banco ou no webhook do quiz. O QR code identifica o site. O rascunho usa sessionStorage da mesma aba.
+
+Para validar a apresentação da SEMEP com servidor local ativo e navegadores Playwright instalados: `python3 tests/semep-checks.py`.
