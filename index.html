@@ -10,6 +10,7 @@
 <meta name="description" content="Experiências montadas no Guarujá para até 8 pessoas: a dois, aniversários, entre amigas e pedidos de casamento. Valor fechado a partir de R$ 349 para o casal. Proposta pelo WhatsApp.">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://www.descomplicaguaruja.com.br/">
+<meta name="google-site-verification" content="sn_j-JfhBqSHJpUYWiGaVgNVABLwkq1IMAs7fJNroFk">
 <link rel="alternate" hreflang="pt-BR" href="https://www.descomplicaguaruja.com.br/">
 <link rel="alternate" hreflang="x-default" href="https://www.descomplicaguaruja.com.br/">
 <meta name="author" content="Descomplica Guarujá">
@@ -471,9 +472,19 @@ footer{background:var(--petrol-deep);color:rgba(255,255,255,.75);padding:var(--s
 .xp-ctx img{width:64px;height:64px;border-radius:12px;object-fit:cover;flex:none;background:var(--sand)}@media(min-width:900px){.xp-ctx img{display:none}}
 .xp-ctx b{display:block;font-family:var(--f-serif);font-weight:600;color:var(--petrol-deep);font-size:1.05rem;line-height:1.2}
 .xp-ctx span{font-size:.86rem;color:var(--muted);display:block;margin-top:3px;line-height:1.45}.xp-ctx em{font-style:normal;color:var(--terracotta);font-weight:500}
-/* extras (divulgação progressiva) */
-.xp-more{background:none;border:1.5px dashed rgba(43,43,43,.2);border-radius:var(--r-btn);min-height:48px;width:100%;font-weight:500;font-size:.94rem;color:var(--petrol);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:inherit;transition:border-color var(--dur-fast)}
-.xp-more:hover{border-color:var(--petrol)}.xp-more svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;transition:transform var(--dur)}.xp-more[aria-expanded="true"] svg{transform:rotate(45deg)}
+/* extras (divulgação progressiva) — card rico com prévia do que há dentro */
+.xp-more{background:#fff;border:1.5px solid rgba(43,43,43,.12);border-radius:var(--r-md);width:100%;padding:12px 14px;display:grid;grid-template-columns:40px 1fr auto;align-items:center;gap:12px;cursor:pointer;font-family:inherit;text-align:left;color:var(--ink);box-shadow:var(--sh-sm);transition:border-color var(--dur-fast),box-shadow var(--dur-fast);position:relative}
+.xp-more:hover{border-color:var(--petrol)}
+.xp-more .ic{width:40px;height:40px;border-radius:12px;background:var(--sand-soft);display:grid;place-items:center;color:var(--terracotta)}.xp-more .ic svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2}
+.xp-more b{display:block;font-weight:600;font-size:.98rem;color:var(--petrol-deep);line-height:1.2}
+.xp-more b .tag{display:inline-block;font-size:.68rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--terracotta);background:rgba(200,118,90,.12);border-radius:999px;padding:2px 8px;margin-left:8px;vertical-align:middle}
+.xp-more small{display:block;font-size:.82rem;color:var(--muted);line-height:1.4;margin-top:3px}
+.xp-more .cnt{font-family:var(--f-serif);font-weight:600;color:var(--terracotta);font-size:.95rem;white-space:nowrap}
+.xp-more .chev{width:18px;height:18px;stroke:var(--petrol);fill:none;stroke-width:2.5;transition:transform var(--dur)}.xp-more[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.xp-more .r{display:flex;align-items:center;gap:8px}
+@keyframes xpNudge{0%,100%{transform:none;box-shadow:var(--sh-sm)}12%{transform:translateX(-3px)}24%{transform:translateX(3px)}36%{transform:translateX(-2px)}48%{transform:none;box-shadow:0 0 0 4px rgba(200,118,90,.22)}}
+.xp-more.nudge{animation:xpNudge 1.1s ease-out 1;border-color:var(--terracotta)}.xp-more.has .tag{display:none}
+@media(prefers-reduced-motion:reduce){.xp-more.nudge{animation:none}}
 .xp-extras{display:none;gap:8px;grid-template-columns:1fr}.xp-extras.show{display:grid}@media(min-width:600px){.xp-extras{grid-template-columns:1fr 1fr}}
 .achip{border:1.5px solid rgba(43,43,43,.14);background:#fff;border-radius:999px;min-height:44px;padding:6px 14px 6px 10px;font-size:.9rem;font-weight:500;display:inline-flex;align-items:center;gap:8px;transition:all var(--dur-fast);text-align:left;white-space:nowrap;cursor:pointer;font-family:inherit;color:var(--ink)}
 .achip .box{width:16px;height:16px;border-radius:5px;border:1.5px solid rgba(43,43,43,.3);display:grid;place-items:center;flex:none}.achip .box svg{width:11px;height:11px;stroke:#fff;stroke-width:3;fill:none;opacity:0}
@@ -624,7 +635,7 @@ window.phErr=function(el){var p=el.parentNode,s=p&&p.tagName==="PICTURE"&&p.quer
         <div class="xp-ctx" id="xpCtx"></div>
         <div class="xp-row"><span class="xp-lbl">Pessoas</span><div class="stp" id="segN"></div></div>
         <div class="xp-row"><span class="xp-lbl">Horário</span><div class="seg h" id="segH" role="radiogroup" aria-label="Horário"></div></div>
-        <button class="xp-more" id="xpMore" aria-expanded="false" aria-controls="xpExtras"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Adicionar extras <span style="font-weight:400;color:var(--muted)">(opcional)</span></button>
+        <button class="xp-more" id="xpMore" aria-expanded="false" aria-controls="xpExtras"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.4 5.1 5.6.7-4.1 3.9 1.1 5.6L12 15.6 7 18.3l1.1-5.6L4 8.8l5.6-.7z"/></svg></span><span><b>Adicionar extras<span class="tag">opcional</span></b><small id="xpMoreSub">Tábua de frios, registro fotográfico, drone, polaroid, balões e +1h · a partir de R$ 39</small></span><span class="r"><span class="cnt" id="xpMoreCnt"></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
         <div class="xp-extras" id="xpExtras">
           <div class="xp-rule"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg><span>Comida e bebida fazem parte da experiência e vêm com a gente — por isso não é possível trazer itens de fora.</span></div>
         </div>
@@ -826,7 +837,7 @@ const BASE_INC='mesa baixa decorada, tapete, almofadas, flores, velas LED e lou�
 const PESSOA_EXTRA=79;
 const ADICIONAIS=[
  {id:'tabua',nome:'Tábua de frios',preco:149},{id:'bebidas',nome:'Bebidas sem álcool',preco:49},{id:'fotos',nome:'Registro fotográfico',preco:149},
- {id:'drone',nome:'Imagens de drone',preco:199},{id:'instax',nome:'3 fotos instantâneas',preco:39},{id:'baloes',nome:'Balões personalizados',preco:79},{id:'hora',nome:'Hora extra (3h)',preco:99}];
+ {id:'drone',nome:'Imagens de drone',preco:199},{id:'instax',nome:'3 fotos polaroid',preco:39},{id:'baloes',nome:'Balões personalizados',preco:79},{id:'hora',nome:'+1 hora (3h no total)',preco:99}];
 const HORARIOS=[{id:'manha',l:'Manhã'},{id:'tarde',l:'Tarde'},{id:'sol',l:'Pôr do sol',star:true},{id:'noite',l:'Noite'}];
 const BRL=n=>'R$ '+n.toLocaleString('pt-BR');
 const xp={ocasiao:null,pessoas:2,horario:'sol',add:new Set(),id:null};
@@ -837,8 +848,8 @@ function xpAdds(){return [...xp.add].map(id=>ADICIONAIS.find(a=>a.id===id).nome)
 const fmtData=v=>{if(!v)return'';const [y,m,d]=v.split('-');return d&&m?`${d}/${m}${y?'/'+y:''}`:v};
 function xpResumo(){const o=OCASIOES[xp.ocasiao],h=HORARIOS.find(x=>x.id===xp.horario),adds=xpAdds();const nome=$('fNome').value.trim(),data=fmtData($('fData').value);
  return `Olá! ${nome?'Sou '+nome+'. ':''}Quero uma proposta para a experiência *${o.nome}* — ${xp.pessoas} pessoas, *${h.l.toLowerCase()}*${data?', dia '+data:''}.`+(adds.length?` Extras: ${adds.join(', ')}.`:'')+` Total: *${BRL(xpTotal())}*. Ref. ${xp.id} 🌅`}
-function xpUpdate(){const o=OCASIOES[xp.ocasiao],t=xpTotal(),u=waURL(xpResumo());
- $('xpTotal').textContent=BRL(t);$('xpMeta').textContent=`${o.nome} · ${xp.pessoas} pessoas · 2h`;$('xpBarTotal').innerHTML=BRL(t)+`<small>${o.nome} · ${xp.pessoas} pessoas · valor final</small>`;
+function xpUpdate(){const o=OCASIOES[xp.ocasiao],t=xpTotal(),u=waURL(xpResumo());const na=xp.add.size,va=[...xp.add].reduce((s,id)=>s+ADICIONAIS.find(a=>a.id===id).preco,0);$('xpMoreCnt').textContent=na?`${na} extra${na>1?'s':''} · +${BRL(va)}`:'';$('xpMore').classList.toggle('has',na>0);$('xpMoreSub').textContent=na?xpAdds().join(', '):'Tábua de frios, registro fotográfico, drone, polaroid, balões e +1h · a partir de R$ 39';
+ $('xpTotal').textContent=BRL(t);$('xpMeta').textContent=`${o.nome} · ${xp.pessoas} pessoas · ${xp.add.has('hora')?'3h':'2h'}`;$('xpBarTotal').innerHTML=BRL(t)+`<small>${o.nome} · ${xp.pessoas} pessoas · valor final</small>`;
  $('waBtn').href=u;$('waBtn2').href=u;
  const br=[`<li><span>${o.nome} para 2 pessoas</span><b>${BRL(o.preco)}</b></li>`];if(xp.pessoas>2)br.push(`<li><span>${xp.pessoas-2} pessoa(s) a mais</span><b>${BRL((xp.pessoas-2)*PESSOA_EXTRA)}</b></li>`);
  xp.add.forEach(id=>{const a=ADICIONAIS.find(x=>x.id===id);br.push(`<li><span>${a.nome}</span><b>${BRL(a.preco)}</b></li>`)});br.push(`<li><span>Montagem, desmontagem e deslocamento no Guarujá</span><b>incluso</b></li>`);$('xpBreak').innerHTML=br.join('')}
@@ -865,6 +876,7 @@ $('xpMore').addEventListener('click',()=>{const open=$('xpExtras').classList.tog
 $('xpBreakBtn').addEventListener('click',()=>{const open=$('xpBreak').classList.toggle('show');$('xpBreakBtn').setAttribute('aria-expanded',String(open));$('xpBreakBtn').textContent=open?'Ocultar detalhe':'Ver detalhe do valor';if(open)track('breakdown_open')});
 /* extras já abertos no desktop (há espaço); barra fixa só enquanto a seção está na tela */
 if(matchMedia('(min-width:900px)').matches){$('xpExtras').classList.add('show');$('xpMore').setAttribute('aria-expanded','true')}
+else{/* mobile/tablet: chama atenção uma única vez quando o card de extras entra na tela */let nud=false;new IntersectionObserver((es,ob)=>es.forEach(e=>{if(e.isIntersecting&&!nud&&xp.ocasiao){nud=true;setTimeout(()=>$('xpMore').classList.add('nudge'),350);ob.disconnect()}}),{threshold:1}).observe($('xpMore'))}
 const xpSec=$('colecoes');new IntersectionObserver(es=>es.forEach(e=>{const on=e.isIntersecting;$('xpBar').classList.toggle('show',on);document.body.classList.toggle('xp-bar-on',on)}),{threshold:.05}).observe(xpSec);
 /* visualização de seções (funil de leitura) */
 new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){track('section_view',{section:e.target.id||e.target.className.split(' ')[0]});}}),{threshold:.4}).observe(xpSec);
