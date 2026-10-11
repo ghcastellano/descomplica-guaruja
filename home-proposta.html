@@ -251,7 +251,7 @@ footer{background:var(--petrol-deep);color:rgba(255,255,255,.75);padding:var(--s
 .tier-head{flex-wrap:wrap;gap:10px}.tier-price{max-width:100%;text-align:left;font-size:1rem}
 @media(max-width:980px){.top-link{display:none}.col-body{padding:22px}.tier-head{display:block}.tier-price{display:block;margin-top:10px}.tier-head h4 small{font-size:.875rem}.col-tiers .price-note{font-size:.875rem}.guest-choice p{line-height:1.6}}
 @media(max-width:480px){.wrap{padding-left:20px;padding-right:20px}.fab{width:48px;height:48px;right:12px;bottom:12px}.q-opt{min-height:56px}.q-capture-row{flex-direction:column}}
-</style><link rel="stylesheet" href="/prototipos/home-integrada.css?v=1"></head><body><aside class="hi-study">Estudo da home integrada · Valores do protótipo enviado · Em avaliação · Sem envio automático de leads <a href="/laboratorio-home">Comparar os estudos</a></aside>
+</style><link rel="stylesheet" href="/prototipos/home-integrada.css?v=2"></head><body><aside class="hi-study">Estudo da home integrada · Valores do protótipo enviado · Em avaliação · Sem envio automático de leads <a href="/laboratorio-home">Comparar os estudos</a></aside>
 
 <!-- ═══ TOPBAR ═══ -->
 <header class="top" id="top">
@@ -305,6 +305,34 @@ footer{background:var(--petrol-deep);color:rgba(255,255,255,.75);padding:var(--s
   </div>
 </div>
 
+<section class="colecoes" id="colecoes"><div class="wrap">
+<p class="eyebrow">Nossas experiências</p><h2>Qual momento você quer viver?</h2>
+<p class="lead">Escolha a ocasião, conheça a ambientação e acrescente os detalhes que fazem sentido para você.</p>
+<div class="hi-purposes" role="group" aria-label="Ocasião">
+<button type="button" data-occasion="adois" aria-pressed="false" aria-controls="hiExperience"><b>A Dois</b><span>Um tempo só de vocês.</span></button>
+<button type="button" data-occasion="celebrar" aria-pressed="false" aria-controls="hiExperience"><b>Celebrar</b><span>Um aniversário para lembrar.</span></button>
+<button type="button" data-occasion="amigas" aria-pressed="false" aria-controls="hiExperience"><b>Entre Amigas</b><span>Reencontros e histórias para guardar.</span></button>
+<button type="button" data-occasion="pedido" aria-pressed="false" aria-controls="hiExperience"><b>Pedido</b><span>Um grande sim, do seu jeito.</span></button></div>
+<p class="hi-help"><button type="button" class="hi-text-button" data-help>Preciso de ajuda para escolher →</button></p>
+<div id="hiExperience" hidden><div class="hi-layout">
+<figure class="hi-visual"><img id="hiPhoto" src="/img/experiencia-flores-col-800.webp" alt="" width="800" height="500"><figcaption id="hiCaption">Imagem de referência. Itens confirmados na proposta.</figcaption><p id="hiMeaning"></p></figure>
+<div class="hi-config"><p class="eyebrow" id="hiOccasion"></p><h3 id="hiTitle" tabindex="-1"></h3>
+<details class="hi-included"><summary>O que está incluído na experiência</summary><ul class="hi-inclusions"><li>Mesa baixa decorada, tapete e almofadas</li><li>Flores, velas LED e louça para todos</li><li>2 horas, montagem, desmontagem e deslocamento urbano</li><li id="hiIncludedDetail"></li></ul></details>
+<form id="hiForm"><div class="hi-fields">
+<label>Pessoas<select id="hiGuests" required></select><small id="hiGuestNote"></small></label>
+<label>Local<select id="hiPlace"><option value="ajuda">Quero ajuda com o local</option><option value="praia">Praia</option><option value="turistico">Ponto turístico</option><option value="casa">Casa ou condomínio</option><option value="hospedagem">Hospedagem</option></select></label>
+<label>Período<select id="hiPeriod"><option value="a combinar">A combinar</option><option>Manhã</option><option>Tarde</option><option>Pôr do sol</option><option>Noite</option></select></label>
+</div>
+<p class="hi-fine">Data, local e disponibilidade são confirmados na proposta.</p>
+<details class="hi-customize" id="hiExtras"><summary>Adicionar detalhes <span id="hiExtraCount">Opcional</span></summary><fieldset class="hi-addons"><legend>Quer acrescentar algo? <small>Opcional</small></legend><div id="hiDetails"></div></fieldset>
+<div class="hi-food"><h4>Alimentação e bebidas</h4><p><strong>Não é permitido levar alimentos ou bebidas próprios.</strong> Escolha o que gostaria de incluir; a equipe confirma composição, quantidade e valor na proposta.</p><p id="hiFoodScope" class="hi-fine">A tábua de frios é um adicional. No aniversário, o mini bolo já está incluído. Bebidas são combinadas na proposta, pois não há tabela de bebidas neste estudo.</p>
+<div id="hiFoodOptions"></div><p class="hi-fine">Necessidades alimentares específicas são combinadas no atendimento, antes da reserva.</p></div>
+</details><p class="hi-policy"><strong>Alimentos e bebidas próprios não são permitidos.</strong> Tábua de frios nos adicionais; bebidas combinadas na proposta.</p><div class="hi-summary" aria-live="polite"><p class="eyebrow">Sua proposta começa aqui</p><p id="hiSummary"></p><p id="hiAddSummary"></p><p><strong id="hiTotal" class="hi-total"></strong></p><p class="hi-fine">Estimativa do estudo para os itens selecionados. Bebidas, locação e acessos especiais não entram neste cálculo. Valor final confirmado na proposta.</p></div>
+<button class="btn btn-primary btn-block" type="submit">Revisar minha proposta →</button><p class="hi-fine hi-center">Você revisa o resumo antes de abrir a conversa. Sem reserva automática.</p>
+<details class="hi-contact"><summary>Prefiro que vocês me chamem</summary><p>Na versão final, esta alternativa enviará o pedido à equipe e gerará o alerta por e-mail. Aqui você pode testar usando um número fictício.</p><label>Seu WhatsApp com DDD<input id="hiPhone" type="tel" autocomplete="off" placeholder="(13) 99999-9999" maxlength="20"></label><label>Melhor período para contato<select id="hiContactTime"><option>A combinar</option><option>Manhã</option><option>Tarde</option><option>Noite</option></select></label><p class="hi-fine">O contato será usado para responder a esta solicitação. Não é inscrição em mensagens promocionais.</p><button class="btn btn-secondary" type="button" id="hiPreviewEmail">Simular pedido de contato</button><p id="hiContactError" role="status"></p></details>
+</form></div></div></div>
+<noscript><p>Este estudo usa JavaScript para montar seu resumo. A experiência inclui a base de ambientação, montagem e retirada; alimentação e bebidas são combinadas com a equipe e não podem ser trazidas pelo cliente.</p></noscript>
+</div></section>
 <!-- ═══ COMO FUNCIONA ═══ -->
 <section id="como">
   <div class="wrap">
@@ -330,34 +358,6 @@ footer{background:var(--petrol-deep);color:rgba(255,255,255,.75);padding:var(--s
   </div>
 </section>
 
-<section class="colecoes" id="colecoes"><div class="wrap">
-<p class="eyebrow">Nossas experiências</p><h2>Qual momento você quer viver?</h2>
-<p class="lead">Escolha a ocasião, conheça a ambientação e acrescente os detalhes que fazem sentido para você.</p>
-<div class="hi-purposes" role="group" aria-label="Ocasião">
-<button type="button" data-occasion="adois" aria-pressed="false" aria-controls="hiExperience"><b>A Dois</b><span>Um tempo só de vocês.</span></button>
-<button type="button" data-occasion="celebrar" aria-pressed="false" aria-controls="hiExperience"><b>Celebrar</b><span>Um aniversário para lembrar.</span></button>
-<button type="button" data-occasion="amigas" aria-pressed="false" aria-controls="hiExperience"><b>Entre Amigas</b><span>Reencontros e histórias para guardar.</span></button>
-<button type="button" data-occasion="pedido" aria-pressed="false" aria-controls="hiExperience"><b>Pedido</b><span>Um grande sim, do seu jeito.</span></button></div>
-<p class="hi-help"><button type="button" class="hi-text-button" data-help>Preciso de ajuda para escolher →</button></p>
-<div id="hiExperience" hidden><div class="hi-layout">
-<figure class="hi-visual"><img id="hiPhoto" src="/img/experiencia-flores-col-800.webp" alt="" width="800" height="500"><figcaption id="hiCaption">Imagem de referência. Itens confirmados na proposta.</figcaption><p id="hiMeaning"></p></figure>
-<div class="hi-config"><p class="eyebrow" id="hiOccasion"></p><h3 id="hiTitle" tabindex="-1"></h3>
-<ul class="hi-inclusions"><li>Mesa baixa decorada, tapete e almofadas</li><li>Flores, velas LED e louça para todos</li><li>2 horas, montagem, desmontagem e deslocamento urbano</li><li id="hiIncludedDetail"></li></ul>
-<form id="hiForm"><div class="hi-fields">
-<label>Quantas pessoas ao todo?<select id="hiGuests" required></select><small id="hiGuestNote"></small></label>
-<label>Onde você imagina?<select id="hiPlace"><option value="ajuda">Quero ajuda com o local</option><option value="praia">Praia</option><option value="turistico">Ponto turístico</option><option value="casa">Casa ou condomínio</option><option value="hospedagem">Hospedagem</option></select></label>
-<label>Qual período?<select id="hiPeriod"><option value="a combinar">A combinar</option><option>Manhã</option><option>Tarde</option><option>Pôr do sol</option><option>Noite</option></select></label>
-</div>
-<p class="hi-fine">Data, ponto exato, duração e disponibilidade serão confirmados na proposta. Escolher um local não confirma sua reserva.</p>
-<fieldset class="hi-addons"><legend>Quer acrescentar algo? <small>Opcional</small></legend><div id="hiDetails"></div></fieldset>
-<div class="hi-food"><h4>Alimentação e bebidas</h4><p><strong>Não é permitido levar alimentos ou bebidas próprios.</strong> Escolha o que gostaria de incluir; a equipe confirma composição, quantidade e valor na proposta.</p><p id="hiFoodScope" class="hi-fine">A tábua de frios é um adicional. No aniversário, o mini bolo já está incluído. Bebidas são combinadas na proposta, pois não há tabela de bebidas neste estudo.</p>
-<div id="hiFoodOptions"></div><p class="hi-fine">Necessidades alimentares específicas são combinadas no atendimento, antes da reserva.</p></div>
-<div class="hi-summary" aria-live="polite"><p class="eyebrow">Sua proposta começa aqui</p><p id="hiSummary"></p><p id="hiAddSummary"></p><p><strong id="hiTotal" class="hi-total"></strong></p><p class="hi-fine">Estimativa do estudo para os itens selecionados. Bebidas, locação e acessos especiais não entram neste cálculo. Valor final confirmado na proposta.</p></div>
-<button class="btn btn-primary btn-block" type="submit">Pedir proposta pelo WhatsApp →</button><p class="hi-fine hi-center">Você revisa o resumo antes de abrir a conversa. Sem reserva automática.</p>
-<details class="hi-contact"><summary>Prefiro que vocês me chamem</summary><p>Na versão final, esta alternativa enviará o pedido à equipe e gerará o alerta por e-mail. Aqui você pode testar usando um número fictício.</p><label>Seu WhatsApp com DDD<input id="hiPhone" type="tel" autocomplete="off" placeholder="(13) 99999-9999" maxlength="20"></label><label>Melhor período para contato<select id="hiContactTime"><option>A combinar</option><option>Manhã</option><option>Tarde</option><option>Noite</option></select></label><p class="hi-fine">O contato será usado para responder a esta solicitação. Não é inscrição em mensagens promocionais.</p><button class="btn btn-secondary" type="button" id="hiPreviewEmail">Simular pedido de contato</button><p id="hiContactError" role="status"></p></details>
-</form></div></div></div>
-<noscript><p>Este estudo usa JavaScript para montar seu resumo. A experiência inclui a base de ambientação, montagem e retirada; alimentação e bebidas são combinadas com a equipe e não podem ser trazidas pelo cliente.</p></noscript>
-</div></section>
 <!-- ═══ GALERIA ═══ -->
 <section id="momentos">
   <div class="wrap">
@@ -414,4 +414,4 @@ footer{background:var(--petrol-deep);color:rgba(255,255,255,.75);padding:var(--s
   <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22c5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.03a8.1 8.1 0 0 1-4.13-1.13l-.3-.18-3.12.82.83-3.04-.2-.31a8.07 8.07 0 0 1-1.24-4.28c0-4.47 3.64-8.1 8.16-8.1 4.47 0 8.1 3.63 8.1 8.1 0 4.47-3.63 8.12-8.1 8.12zm4.45-6.07c-.24-.12-1.44-.71-1.66-.79-.22-.08-.39-.12-.55.12-.16.24-.63.79-.77.95-.14.16-.28.18-.53.06-.24-.12-1.03-.38-1.96-1.21-.72-.64-1.21-1.44-1.35-1.68-.14-.24-.02-.37.11-.5.11-.11.24-.28.37-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.55-1.32-.75-1.81-.2-.48-.4-.41-.55-.42h-.47c-.16 0-.42.06-.65.3-.22.24-.85.83-.85 2.03s.87 2.36 1 2.52c.12.16 1.72 2.62 4.16 3.68.58.25 1.03.4 1.39.51.58.19 1.11.16 1.53.1.47-.07 1.44-.59 1.64-1.16.2-.57.2-1.05.14-1.16-.06-.1-.22-.16-.46-.28z"/></svg>
 </a>
 
-<dialog id="hiReview" aria-labelledby="hiReviewTitle"><div class="hi-dialog-head"><h2 id="hiReviewTitle">Seu pedido de proposta</h2><button type="button" id="hiClose" aria-label="Fechar">×</button></div><p id="hiReviewNote">Simulação: a mensagem será enviada somente se você confirmar no WhatsApp.</p><label for="hiMessage">Resumo preparado</label><textarea id="hiMessage" readonly></textarea><div class="hi-dialog-actions"><a class="btn btn-primary" id="hiWhatsApp" target="_blank" rel="noopener noreferrer">Abrir WhatsApp com simulação</a><button class="btn btn-secondary" id="hiBack">Voltar e ajustar</button></div><details id="hiEmailExample"><summary>Prévia do alerta para a equipe</summary><pre id="hiEmailBody"></pre></details></dialog><script src="/prototipos/home-integrada.js?v=1" defer></script></body></html>
+<div class="hi-dock" id="hiDock" hidden><div class="hi-dock-inner"><div><small>Estimativa do estudo</small><strong id="hiDockPrice"></strong><span id="hiDockContext"></span></div><button class="btn btn-primary" type="button" id="hiDockReview">Revisar proposta →</button></div></div><dialog id="hiReview" aria-labelledby="hiReviewTitle"><div class="hi-dialog-head"><h2 id="hiReviewTitle">Seu pedido de proposta</h2><button type="button" id="hiClose" aria-label="Fechar">×</button></div><p id="hiReviewNote">Simulação: a mensagem será enviada somente se você confirmar no WhatsApp.</p><label for="hiMessage">Resumo preparado</label><textarea id="hiMessage" readonly></textarea><div class="hi-dialog-actions"><a class="btn btn-primary" id="hiWhatsApp" target="_blank" rel="noopener noreferrer">Abrir WhatsApp com simulação</a><button class="btn btn-secondary" id="hiBack">Voltar e ajustar</button></div><details id="hiEmailExample"><summary>Prévia do alerta para a equipe</summary><pre id="hiEmailBody"></pre></details></dialog><script src="/prototipos/home-integrada.js?v=2" defer></script></body></html>

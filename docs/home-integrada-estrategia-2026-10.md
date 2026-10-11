@@ -10,7 +10,7 @@ O Git remoto foi consultado antes da preparação e deve ser consultado novament
 
 ## Experiência proposta
 
-Preservar abertura e contexto da marca → como funciona → escolher ocasião → foto e inclusões → participantes, local e período → adicionais → resumo → WhatsApp. Manter galeria e FAQ. Retirar o quiz dessa variante, pois ele repetiria decisões já presentes. Para indecisos, manter a ação secundária “Preciso de ajuda para escolher”. Reavaliar um guia só se testes de uso mostrarem que a escolha por ocasião não basta.
+Preservar abertura e contexto da marca → escolher ocasião → foto e inclusões → participantes, local e período → adicionais → resumo → WhatsApp. Como funciona, galeria e FAQ vêm depois do seletor. Retirar o quiz dessa variante, pois ele repetiria decisões já presentes. Para indecisos, manter a ação secundária “Preciso de ajuda para escolher”. Reavaliar um guia só se testes de uso mostrarem que a escolha por ocasião não basta.
 
 As quatro ocasiões não se desdobram em outros três níveis. O serviço compartilha a base e varia os detalhes. A foto de Pedido usa uma referência compacta do acervo atual, sem as grandes letras “Marry me”. A imagem não é apresentada como foto de serviço já entregue nem como prova das inclusões. Para a versão comercial, a melhor próxima fotografia é a montagem real do kit de dois lugares, plaquinha pequena e buquê: enquadramento horizontal, conjunto completo e uma foto de detalhe. Evitar imagem de estrutura maior que a vendida.
 
@@ -86,3 +86,11 @@ Para confirmar recebimento na tela, será necessário um endpoint que responda d
 Implementado no estudo: seletor, fotos, limites, adicionais, soma, duração, regra de consumo próprio, resumo editável voltando ao formulário, link WhatsApp com marca de simulação, entrada por ocasião/UTM e prévia do alerta. Não há fetch, webhook, rastreador externo ou disparo real de e-mail. O telefone digitado na simulação fica apenas em memória/DOM e não é persistido.
 
 A ativação comercial depende de validar preços/escopo e aplicar as mudanças de integração em uma tarefa de produção. Atualizar um `.gs` no Git não publica por si só uma nova implantação no Google Apps Script. Esta entrega não alterou esse serviço.
+
+## Revisão responsiva após avaliação visual
+
+O seletor passa a vir após a abertura, antes de Como funciona. Inclusões e adicionais usam detalhes expansíveis nativos, sem transformar a seleção em quiz. O aviso sobre consumo próprio permanece visível. O valor, a quantidade e a duração acompanham o botão de revisão em uma barra inferior enquanto o configurador está em uso; a barra desaparece no diálogo e fora desse trecho. O WhatsApp flutuante não compete com ela.
+
+Desktop: foto e configuração lado a lado. Mobile/tablet: foto compacta e campos Pessoas/Período na mesma linha, Local em largura completa. Controles têm 48 px de altura e texto de 16 px; a grade não estica os selects conforme a ajuda de outro campo. A área de configuração de Pedido, inicialmente fechada em 390 px, passou de aproximadamente 2.584 para 1.176 px (cerca de 54% menor). É redução de altura observada, não medição de conversão ou teste com usuários.
+
+Validação inclui 320, 390, 768 e 1440 px, além de 844 × 390 na horizontal, em Chromium e WebKit. Adicionais, totais, limite de duração e prévia do contato mantêm o mesmo funcionamento.

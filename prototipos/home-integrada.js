@@ -42,6 +42,7 @@ function update(){
  $('hiSummary').textContent=`${occasions[state.occasion].name} · ${state.guests} pessoas · ${durationLabel()} · ${state.period}`;
  $('hiAddSummary').textContent='Adicionais: '+(picked().map(a=>a.name).join(', ')||'nenhum selecionado')+'.';
  $('hiTotal').textContent=money(total());
+ $('hiDockPrice').textContent=money(total());$('hiDockContext').textContent=`${state.guests} pessoas · ${durationLabel()}`;$('hiExtraCount').textContent=state.addons.size?state.addons.size+' selecionado(s)':'Opcional';syncDock();
  $('hiGuestNote').textContent=occasions[state.occasion].max===2?'Exclusivo para o casal.':'+ R$ 79 por pessoa além de duas · até quatro neste estudo.';
 }
 function choose(key,focus=true){
@@ -74,7 +75,7 @@ function review(help=false,phone=''){
  $('hiEmailExample').hidden=help;$('hiEmailExample').open=Boolean(phone);
  $('hiReviewNote').textContent=phone?'Simulação de pedido de contato. Nenhum telefone foi enviado ou salvo, e nenhum e-mail foi disparado.':'Simulação: a mensagem só é enviada se você confirmar no WhatsApp.';
  if(!help)$('hiEmailBody').textContent=emailPreview(payload(phone));
- $('hiReview').showModal();
+ $('hiReview').showModal();syncDock();
 }
 document.querySelectorAll('[data-occasion]').forEach(b=>b.onclick=()=>choose(b.dataset.occasion));
 $('hiGuests').onchange=e=>{state.guests=Number(e.target.value);noteChange();update();};
@@ -83,9 +84,12 @@ $('hiPeriod').onchange=e=>{state.period=e.target.value;noteChange();update();};
 $('hiForm').onsubmit=e=>{e.preventDefault();review();};
 $('hiPreviewEmail').onclick=()=>{const phone=$('hiPhone').value.replace(/\D/g,'');if(!/^[1-9]{2}\d{8,9}$/.test(phone)){$('hiContactError').textContent='Informe um telefone de teste com DDD e 10 ou 11 dígitos.';$('hiPhone').focus();return;}$('hiContactError').textContent='';review(false,phone);};
 $('hiClose').onclick=$('hiBack').onclick=()=>$('hiReview').close();
+ $('hiReview').addEventListener('close',syncDock);$('hiDockReview').onclick=()=>review();
 document.querySelectorAll('[data-help],.wa-link').forEach(el=>{if(el.tagName==='A')el.href='#colecoes';el.onclick=e=>{e.preventDefault();review(true);};});
 // Existing presentation remains visible without JavaScript; no external trackers from the original home.
 document.querySelectorAll('.rv').forEach(el=>el.classList.add('in'));
-addEventListener('scroll',()=>{$('top')?.classList.toggle('scrolled',scrollY>10);$('fab')?.classList.toggle('show',scrollY>innerHeight*.8);},{passive:true});
+function syncDock(){const r=$('hiExperience').getBoundingClientRect();const show=Boolean(state.occasion&&!$('hiReview').open&&r.top<innerHeight*.85&&r.bottom>110);$('hiDock').hidden=!show;document.body.classList.toggle('hi-configuring',show);}
+addEventListener('resize',syncDock);new IntersectionObserver(syncDock,{threshold:[0,.1,.5,1]}).observe($('hiExperience'));
+addEventListener('scroll',()=>{syncDock();$('top')?.classList.toggle('scrolled',scrollY>10);$('fab')?.classList.toggle('show',scrollY>innerHeight*.8);},{passive:true});
 const aliases={aniversario:'celebrar',entre_amigas:'amigas'};const requested=params.get('ocasiao');const key=aliases[requested]||requested;if(key&&Object.hasOwn(occasions,key))choose(key,false);
 })();
