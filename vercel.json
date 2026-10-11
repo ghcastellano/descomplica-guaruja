@@ -4,22 +4,22 @@
   "redirects": [
     {
       "source": "/montar",
-      "destination": "/?utm_source=instagram&utm_medium=bio#quiz",
+      "destination": "/?utm_source=instagram&utm_medium=bio#colecoes",
       "permanent": false
     },
     {
       "source": "/bio",
-      "destination": "/?utm_source=instagram&utm_medium=bio#quiz",
+      "destination": "/?utm_source=instagram&utm_medium=bio#colecoes",
       "permanent": false
     },
     {
       "source": "/stories",
-      "destination": "/?utm_source=instagram&utm_medium=stories#quiz",
+      "destination": "/?utm_source=instagram&utm_medium=stories#colecoes",
       "permanent": false
     },
     {
       "source": "/insta",
-      "destination": "/?utm_source=instagram&utm_medium=direct#quiz",
+      "destination": "/?utm_source=instagram&utm_medium=direct#colecoes",
       "permanent": false
     },
     {
@@ -50,6 +50,26 @@
     {
       "source": "/futuro",
       "destination": "/visao",
+      "permanent": false
+    },
+    {
+      "source": "/adois",
+      "destination": "/?ocasiao=adois&utm_source=instagram&utm_medium=direct#colecoes",
+      "permanent": false
+    },
+    {
+      "source": "/aniversario",
+      "destination": "/?ocasiao=aniversario&utm_source=instagram&utm_medium=direct#colecoes",
+      "permanent": false
+    },
+    {
+      "source": "/amigas",
+      "destination": "/?ocasiao=amigas&utm_source=instagram&utm_medium=direct#colecoes",
+      "permanent": false
+    },
+    {
+      "source": "/pedido",
+      "destination": "/?ocasiao=pedido&utm_source=instagram&utm_medium=direct#colecoes",
       "permanent": false
     }
   ],

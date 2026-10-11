@@ -20,21 +20,15 @@ for (const name of ['index.html','visao.html','resumo-executivo.html','parceria-
   }
 }
 new vm.Script(read('deck.js'));
-const prices = JSON.parse(html.match(/const PRICE_ESTIMATES = (.*);/)[1]);
-const model = JSON.parse(read('docs/precificacao-2026-09.json'));
-assert.equal(Object.keys(prices).length,11);
-for (const [key, pkg] of Object.entries(model.packages)) {
-  assert.deepEqual(Object.keys(prices[key]).map(Number),key.startsWith('adois') ? [2] : [2,3,4,5,6,7,8]);
-  for(const row of pkg.rows) {
-    assert.deepEqual(prices[key][row.guests],[row.low,row.high]);
-    assert(row.high > row.low && row.modeledResult > 0);
-    assert(Math.abs(Object.values(row.costs).reduce((a,b)=>a+b,0) - row.operatingCost) < .011);
-  }
-  if(pkg.rows.length>1) {
-    assert(pkg.rows[6].low>pkg.rows[0].low);
-    assert(pkg.rows[6].low<pkg.rows[0].low*4,'estrutura compartilhada deve reduzir custo médio entre 2 e 8');
-  }
-}
+// Modelo de oferta atual: 4 ocasiões com valor fechado, + R$ 79 por pessoa (até 4), extras fixos.
+const oc = Object.fromEntries([...html.matchAll(/^ (adois|aniversario|amigas|pedido):\{.*?preco:(\d+).*?max:(\d)/gm)].map(m=>[m[1],{preco:+m[2],max:+m[3]}]));
+assert.deepEqual(oc,{adois:{preco:349,max:2},aniversario:{preco:399,max:8},amigas:{preco:349,max:8},pedido:{preco:549,max:8}});
+assert(html.includes('const PESSOA_EXTRA=79'));
+assert.equal((html.match(/\{id:'[a-z]+',nome:'[^']+',preco:\d+\}/g)||[]).length,7,'7 extras');
+for (const banido of ['#quiz','7 perguntas','Estimativa','estimativa']) assert(!html.includes(banido),`index.html: ${banido}`);
+const ld = JSON.parse(html.match(/<script type="application\/ld\+json">\n(\{[\s\S]*?"@type": "LocalBusiness"[\s\S]*?)\n<\/script>/)[1]);
+assert.equal(ld.hasOfferCatalog.itemListElement.length,4);
+assert(['adois','aniversario','amigas','pedido'].every(s=>read('vercel.json').includes(`"/${s}"`)));
 for (const name of ['visao','resumo-executivo','parceria-pousadas','cultura-setur']) {
  assert(read(name+'.html').includes('content="noindex'));
  assert(read(name+'.html').includes('deck.css?v=20260926-1'));
@@ -42,8 +36,9 @@ for (const name of ['visao','resumo-executivo','parceria-pousadas','cultura-setu
 assert.equal((read('sitemap.xml').match(/<loc>/g)||[]).length,1);
 assert(!/piquenique/i.test(read('llms.txt')));
 for(const name of ['celebracoes.html','parceiros.html','painel.html','proposta.html','app.css']) assert(!fs.existsSync(path.join(root,name)));
+for(const name of ['prototipos','prototipos-claude','laboratorio-home.html','home-completa-tabs.html','home-completa-linha.html']) assert(!fs.existsSync(path.join(root,name)),`protótipo ainda publicado: ${name}`);
 JSON.parse(read('vercel.json'));
-console.log('OK: scripts, assets, SEO, 11 pacotes/59 estimativas, custos e retirada da expansão.');
+console.log('OK: scripts, assets, SEO, 4 ocasiões com valor fechado, extras e sem protótipos.');
 
 // Brand primitives must have one source; every public page consumes it.
 for (const name of ['index','visao','resumo-executivo','parceria-pousadas','cultura-setur','404']) {
@@ -56,7 +51,6 @@ assert(!/--(?:cream|petrol|f-serif)\s*:/.test(read('deck.css')));
 const tokens=read('design-system/tokens.css');
 assert(tokens.includes('--tracking-heading:0'));
 assert(/class="[^"]*\blocal-value\b[^"]*\bgrid3\b/.test(read('cultura-setur.html')));
-assert(html.includes("id:'local'"));
-assert(html.includes('local de preferência: ${LBL.local[answers.local]}'));
-assert(html.includes('Até 7 perguntas'));
-console.log('OK: design system compartilhado e preferência de local no quiz.');
+assert(html.includes('id="segOc"') && html.includes('id="xpSum"') && html.includes('id="xpBar"'));
+assert(html.includes("const ORIGEM") && html.includes("gtag('event', event"));
+console.log('OK: design system compartilhado e seção de experiências em 1 toque.');
