@@ -39,6 +39,7 @@ for(const name of ['celebracoes.html','parceiros.html','painel.html','proposta.h
 for(const name of ['prototipos','prototipos-claude','laboratorio-home.html','home-completa-tabs.html','home-completa-linha.html']) assert(!fs.existsSync(path.join(root,name)),`protótipo ainda publicado: ${name}`);
 JSON.parse(read('vercel.json'));
 assert.ok(/section\[id\]\{scroll-margin-top:calc\(30px - var\(--s7\)\)\}/.test(html)&&/section\[id\]\{scroll-margin-top:calc\(30px - var\(--s8\)\)\}/.test(html),'âncoras do menu compensam o padding da seção (gap ~30px)');
+assert.ok(html.indexOf('href="#como">Como funciona')<html.indexOf('href="#colecoes">Experiências'),'menu na ordem da página: Como funciona antes de Experiências');
 console.log('OK: scripts, assets, SEO, 4 ocasiões com valor fechado, extras e sem protótipos.');
 
 // Brand primitives must have one source; every public page consumes it.
