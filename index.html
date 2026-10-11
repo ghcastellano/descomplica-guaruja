@@ -504,6 +504,24 @@ footer{background:var(--petrol-deep);color:rgba(255,255,255,.75);padding:var(--s
 .xp-bar .v{font-family:var(--f-serif);font-weight:600;font-size:1.45rem;color:var(--petrol-deep);line-height:1}.xp-bar .v small{display:block;font-family:var(--f-sans);font-size:.7rem;font-weight:400;color:var(--muted);margin-top:2px}
 .xp-bar .btn{padding:12px 16px;min-height:46px;font-size:.95rem;flex:none}
 body.xp-bar-on .fab{opacity:0;pointer-events:none}
+.oc em{display:none}
+.xp-sum-ctx{display:none;padding:var(--s4) var(--s4) 0}
+/* desktop: configurador à esquerda (só escolhas), história + valor à direita */
+@media(min-width:900px){
+ .xp{grid-template-columns:1.25fr .75fr;gap:var(--s6)}
+ .xp-row{grid-template-columns:1fr;gap:10px}.xp-lbl{font-size:.7rem}
+ .xp-rows{gap:22px}
+ .oc{grid-template-columns:repeat(4,1fr);gap:12px}.oc button{min-height:96px;padding:16px 16px 14px;gap:4px}
+ .oc b{font-size:1.1rem}.oc small{font-size:1rem}.oc i{display:none}
+ .oc em{display:block;font-style:normal;font-size:.76rem;color:var(--muted);margin-top:4px;letter-spacing:.02em}
+ .xp-ctx{display:none}
+ .xp-sum-ctx{display:block}
+}
+.xp-sum-ctx b{display:block;font-family:var(--f-serif);font-weight:600;color:var(--petrol-deep);font-size:1.25rem;line-height:1.2}
+.xp-sum-ctx p{font-size:.88rem;color:var(--muted);margin:4px 0 0;line-height:1.5}.xp-sum-ctx p em{font-style:normal;color:var(--terracotta);font-weight:500}
+.xp-sum-ctx+.xp-sum-in{padding-top:var(--s3)}.xp-sum-ctx+.xp-sum-in .xp-total{border-top:1px dashed rgba(43,43,43,.18);padding-top:var(--s3)}
+.xp-more:focus:not(:focus-visible){outline:none}
+
 
 </style>
 <script>
@@ -614,6 +632,7 @@ window.phErr=function(el){var p=el.parentNode,s=p&&p.tagName==="PICTURE"&&p.quer
 
       <aside class="xp-sum" id="xpSum" aria-live="polite">
         <img class="xp-sum-img" id="xpSumImg" src="" alt="" loading="lazy">
+        <div class="xp-sum-ctx" id="xpSumCtx"></div>
         <div class="xp-sum-in">
           <div class="xp-total"><span class="v" id="xpTotal"></span><small id="xpMeta"></small></div>
           <button class="xp-link" id="xpBreakBtn" aria-expanded="false">Ver detalhe do valor</button>
@@ -823,7 +842,7 @@ function xpUpdate(){const o=OCASIOES[xp.ocasiao],t=xpTotal(),u=waURL(xpResumo())
  $('waBtn').href=u;$('waBtn2').href=u;
  const br=[`<li><span>${o.nome} para 2 pessoas</span><b>${BRL(o.preco)}</b></li>`];if(xp.pessoas>2)br.push(`<li><span>${xp.pessoas-2} pessoa(s) a mais</span><b>${BRL((xp.pessoas-2)*PESSOA_EXTRA)}</b></li>`);
  xp.add.forEach(id=>{const a=ADICIONAIS.find(x=>x.id===id);br.push(`<li><span>${a.nome}</span><b>${BRL(a.preco)}</b></li>`)});br.push(`<li><span>Montagem, desmontagem e deslocamento no Guarujá</span><b>incluso</b></li>`);$('xpBreak').innerHTML=br.join('')}
-function rOc(){$('segOc').innerHTML=Object.keys(OCASIOES).map(k=>`<button type="button" role="radio" aria-checked="${xp.ocasiao===k}" data-k="${k}" class="${xp.ocasiao===k?'on':''}"><b>${OCASIOES[k].nome}</b><small>${BRL(OCASIOES[k].preco)}</small><i>${OCASIOES[k].desc}</i></button>`).join('');$('segOc').querySelectorAll('button').forEach(b=>b.onclick=()=>xpPick(b.dataset.k))}
+function rOc(){$('segOc').innerHTML=Object.keys(OCASIOES).map(k=>`<button type="button" role="radio" aria-checked="${xp.ocasiao===k}" data-k="${k}" class="${xp.ocasiao===k?'on':''}"><b>${OCASIOES[k].nome}</b><small>${BRL(OCASIOES[k].preco)}</small><em>${OCASIOES[k].max===2?'só o casal':'até '+OCASIOES[k].max+' pessoas'}</em><i>${OCASIOES[k].desc}</i></button>`).join('');$('segOc').querySelectorAll('button').forEach(b=>b.onclick=()=>xpPick(b.dataset.k))}
 function rN(){const o=OCASIOES[xp.ocasiao],solo=o.max===2;$('segN').innerHTML=solo?`<div class="stp-solo">Só o casal · 2 pessoas</div>`:`<button type="button" id="pMenos" aria-label="Menos pessoas">−</button><span><b>${xp.pessoas}</b> pessoas${xp.pessoas>2?`<small>+ ${BRL((xp.pessoas-2)*PESSOA_EXTRA)}</small>`:'<small>base para 2</small>'}</span><button type="button" id="pMais" aria-label="Mais pessoas">+</button><em>até ${o.max}</em>`;
  if(solo)return;const m=$('pMenos'),p=$('pMais');m.disabled=xp.pessoas<=2;p.disabled=xp.pessoas>=o.max;m.onclick=()=>{xp.pessoas--;rN();xpUpdate();track('pessoas_pick',{pessoas:xp.pessoas})};p.onclick=()=>{xp.pessoas++;rN();xpUpdate();track('pessoas_pick',{pessoas:xp.pessoas})}}
 function rH(){$('segH').innerHTML=HORARIOS.map(h=>`<button type="button" role="radio" aria-checked="${xp.horario===h.id}" data-h="${h.id}" class="${xp.horario===h.id?'on':''}">${h.star?'<span class="star">★</span>':''}${h.l}</button>`).join('');$('segH').querySelectorAll('button').forEach(b=>b.onclick=()=>{xp.horario=b.dataset.h;rH();xpUpdate();track('horario_pick',{horario:xp.horario})})}
@@ -831,7 +850,7 @@ function rA(){const el=$('xpExtras');el.querySelectorAll('.achip').forEach(x=>x.
  ADICIONAIS.forEach(a=>{const b=document.createElement('button');b.className='achip'+(xp.add.has(a.id)?' on':'');b.type='button';b.setAttribute('role','checkbox');b.setAttribute('aria-checked',String(xp.add.has(a.id)));
   b.innerHTML=`<span class="box"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></span>${a.nome}<span class="p">+${BRL(a.preco)}</span>`;
   b.onclick=()=>{xp.add.has(a.id)?xp.add.delete(a.id):xp.add.add(a.id);b.classList.toggle('on');b.setAttribute('aria-checked',String(xp.add.has(a.id)));track('addon_toggle',{id:a.id,on:xp.add.has(a.id)});xpUpdate()};el.insertBefore(b,rule)})}
-function rCtx(){const o=OCASIOES[xp.ocasiao];$('xpCtx').innerHTML=`<img src="${o.img}" alt="" loading="lazy"><div><b>${o.titulo}</b><span>${o.desc}</span><span>Inclui ${BASE_INC} · <em>✦ ${o.toque}</em></span></div>`;$('xpSumImg').src=o.img}
+function rCtx(){const o=OCASIOES[xp.ocasiao];$('xpCtx').innerHTML=`<img src="${o.img}" alt="" loading="lazy"><div><b>${o.titulo}</b><span>${o.desc}</span><span>Inclui ${BASE_INC} · <em>✦ ${o.toque}</em></span></div>`;$('xpSumImg').src=o.img;$('xpSumCtx').innerHTML=`<b>${o.titulo}</b><p>${o.desc}</p><p>Inclui ${BASE_INC} · <em>✦ ${o.toque}</em></p>`}
 function xpPick(k){const o=OCASIOES[k];xp.ocasiao=k;xp.pessoas=Math.min(Math.max(xp.pessoas,o.pessoas),o.max);xp.add.clear();xp.id=newId();$('xpSent').classList.remove('show');rOc();rN();rH();rA();rCtx();xpUpdate();track('ocasiao_pick',{ocasiao:k,preco:o.preco})}
 /* envio do lead: compatível com o Apps Script já publicado (lead_capture dispara o e-mail de alerta) */
 function xpSend(){const o=OCASIOES[xp.ocasiao],h=HORARIOS.find(x=>x.id===xp.horario),nome=$('fNome').value.trim(),fone=$('fFone').value.trim(),data=fmtData($('fData').value),t=xpTotal(),adds=xpAdds();
