@@ -53,4 +53,6 @@ assert(tokens.includes('--tracking-heading:0'));
 assert(/class="[^"]*\blocal-value\b[^"]*\bgrid3\b/.test(read('cultura-setur.html')));
 assert(html.includes('id="segOc"') && html.includes('id="xpSum"') && html.includes('id="xpBar"'));
 assert(html.includes("const ORIGEM") && html.includes("gtag('event', event"));
+assert(/<input id="fData" type="date"/.test(html) && !/id="fData"[^>]*inputmode="numeric"/.test(html),'campo de data deve ser type=date (teclado com barra no celular)');
+assert(html.includes('fmtData(') ,'data formatada dd/mm na proposta');
 console.log('OK: design system compartilhado e seção de experiências em 1 toque.');

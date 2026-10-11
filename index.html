@@ -492,6 +492,8 @@ footer{background:var(--petrol-deep);color:rgba(255,255,255,.75);padding:var(--s
 .xp-link{background:none;border:0;color:var(--petrol);font-size:.84rem;font-weight:500;padding:4px 0;cursor:pointer;font-family:inherit;text-decoration:underline;text-underline-offset:3px}
 .xp-form{display:grid;gap:8px;margin-top:var(--s3)}@media(min-width:600px) and (max-width:899px){.xp-form{grid-template-columns:1fr 1fr 1fr}}
 .xp-form input{font:inherit;min-height:46px;border:1.5px solid rgba(43,43,43,.18);border-radius:var(--r-btn);padding:8px 12px;background:#fff;width:100%;color:var(--ink)}.xp-form input:focus{border-color:var(--petrol);outline:none}
+.xp-date{display:grid;gap:4px}.xp-date span{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.xp-date input{color:var(--ink);-webkit-appearance:none;appearance:none;min-height:46px}.xp-date input::-webkit-date-and-time-value{text-align:left}
 .xp-lgpd{font-size:.74rem;color:var(--muted);margin-top:6px;line-height:1.4}
 .xp-trust{font-size:.8rem;color:var(--muted);text-align:center;margin-top:10px;line-height:1.5}
 .xp-sent{background:var(--sand-soft);border-radius:var(--r-md);padding:10px 14px;margin-top:10px;font-size:.88rem;display:none}.xp-sent.show{display:block}
@@ -619,7 +621,7 @@ window.phErr=function(el){var p=el.parentNode,s=p&&p.tagName==="PICTURE"&&p.quer
           <div class="xp-form">
             <input id="fNome" type="text" placeholder="Seu nome" autocomplete="name">
             <input id="fFone" type="tel" placeholder="Seu WhatsApp (opcional)" autocomplete="tel" inputmode="tel">
-            <input id="fData" type="text" placeholder="Data desejada (ex.: 25/10)" inputmode="numeric">
+            <label class="xp-date"><span>Data desejada</span><input id="fData" type="date" aria-label="Data desejada"></label>
           </div>
           <a class="btn btn-wa btn-block" id="waBtn" href="#" target="_blank" rel="noopener" style="margin-top:12px"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22c5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2z"/></svg> Receber proposta no WhatsApp</a>
           <p class="xp-lgpd">Usamos seus dados só para responder a esta proposta (LGPD).</p>
@@ -813,7 +815,8 @@ const newId=()=>{const d=new Date(),p=n=>String(n).padStart(2,'0');return `DG-${
 const $=id=>document.getElementById(id);
 function xpTotal(){const o=OCASIOES[xp.ocasiao];let t=o.preco+Math.max(0,xp.pessoas-2)*PESSOA_EXTRA;xp.add.forEach(id=>{t+=ADICIONAIS.find(a=>a.id===id).preco});return t}
 function xpAdds(){return [...xp.add].map(id=>ADICIONAIS.find(a=>a.id===id).nome)}
-function xpResumo(){const o=OCASIOES[xp.ocasiao],h=HORARIOS.find(x=>x.id===xp.horario),adds=xpAdds();const nome=$('fNome').value.trim(),data=$('fData').value.trim();
+const fmtData=v=>{if(!v)return'';const [y,m,d]=v.split('-');return d&&m?`${d}/${m}${y?'/'+y:''}`:v};
+function xpResumo(){const o=OCASIOES[xp.ocasiao],h=HORARIOS.find(x=>x.id===xp.horario),adds=xpAdds();const nome=$('fNome').value.trim(),data=fmtData($('fData').value);
  return `Olá! ${nome?'Sou '+nome+'. ':''}Quero uma proposta para a experiência *${o.nome}* — ${xp.pessoas} pessoas, *${h.l.toLowerCase()}*${data?', dia '+data:''}.`+(adds.length?` Extras: ${adds.join(', ')}.`:'')+` Total: *${BRL(xpTotal())}*. Ref. ${xp.id} 🌅`}
 function xpUpdate(){const o=OCASIOES[xp.ocasiao],t=xpTotal(),u=waURL(xpResumo());
  $('xpTotal').textContent=BRL(t);$('xpMeta').textContent=`${o.nome} · ${xp.pessoas} pessoas · 2h`;$('xpBarTotal').innerHTML=BRL(t)+`<small>${o.nome} · ${xp.pessoas} pessoas · valor final</small>`;
@@ -831,14 +834,14 @@ function rA(){const el=$('xpExtras');el.querySelectorAll('.achip').forEach(x=>x.
 function rCtx(){const o=OCASIOES[xp.ocasiao];$('xpCtx').innerHTML=`<img src="${o.img}" alt="" loading="lazy"><div><b>${o.titulo}</b><span>${o.desc}</span><span>Inclui ${BASE_INC} · <em>✦ ${o.toque}</em></span></div>`;$('xpSumImg').src=o.img}
 function xpPick(k){const o=OCASIOES[k];xp.ocasiao=k;xp.pessoas=Math.min(Math.max(xp.pessoas,o.pessoas),o.max);xp.add.clear();xp.id=newId();$('xpSent').classList.remove('show');rOc();rN();rH();rA();rCtx();xpUpdate();track('ocasiao_pick',{ocasiao:k,preco:o.preco})}
 /* envio do lead: compatível com o Apps Script já publicado (lead_capture dispara o e-mail de alerta) */
-function xpSend(){const o=OCASIOES[xp.ocasiao],h=HORARIOS.find(x=>x.id===xp.horario),nome=$('fNome').value.trim(),fone=$('fFone').value.trim(),data=$('fData').value.trim(),t=xpTotal(),adds=xpAdds();
+function xpSend(){const o=OCASIOES[xp.ocasiao],h=HORARIOS.find(x=>x.id===xp.horario),nome=$('fNome').value.trim(),fone=$('fFone').value.trim(),data=fmtData($('fData').value),t=xpTotal(),adds=xpAdds();
  const payload={event:'lead_capture',id:xp.id,ts:new Date().toISOString(),phone:fone,nome,best_time:data?'data desejada: '+data:'',
   answers:{ocasiao:o.nome,pessoas:xp.pessoas,horario:h.l,budget:BRL(t)},result:`${o.nome} · ${xp.pessoas} pessoas · ${h.l}`,preco:BRL(t),pkg:`${o.nome} · ${xp.pessoas}p`,source:'proposta_site',
   dica:(adds.length?'Extras: '+adds.join(', ')+'. ':'Sem extras. ')+(nome?'Nome: '+nome+'. ':'')+'Ref. '+xp.id,adicionais:adds.join(', '),total:t,data_desejada:data,utm:ORIGEM,pagina:location.href};
  if(WEBHOOK_URL){try{fetch(WEBHOOK_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(payload)})}catch(e){}}
  track('whatsapp_click',{source:'proposta_site',pkg:payload.pkg,total:t,id:xp.id,com_telefone:!!fone});$('xpSentId').textContent=xp.id;$('xpSent').classList.add('show')}
 ['waBtn','waBtn2'].forEach(id=>$(id).addEventListener('click',xpSend));
-['fNome','fData'].forEach(id=>$(id).addEventListener('input',xpUpdate));
+['fNome','fData'].forEach(id=>$(id).addEventListener('input',xpUpdate));$('fData').addEventListener('change',xpUpdate);$('fData').min=new Date().toISOString().slice(0,10);
 $('xpMore').addEventListener('click',()=>{const open=$('xpExtras').classList.toggle('show');$('xpMore').setAttribute('aria-expanded',String(open));if(open)track('extras_open')});
 $('xpBreakBtn').addEventListener('click',()=>{const open=$('xpBreak').classList.toggle('show');$('xpBreakBtn').setAttribute('aria-expanded',String(open));$('xpBreakBtn').textContent=open?'Ocultar detalhe':'Ver detalhe do valor';if(open)track('breakdown_open')});
 /* extras já abertos no desktop (há espaço); barra fixa só enquanto a seção está na tela */
