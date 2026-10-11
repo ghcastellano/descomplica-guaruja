@@ -324,6 +324,9 @@ h3{font-size:1.25rem;font-weight:500}
 .wrap{max-width:var(--maxw);margin:0 auto;padding-left:var(--s4);padding-right:var(--s4)}
 section{padding:var(--s7) 0}
 @media(min-width:760px){section{padding:var(--s8) 0}}
+/* âncoras do menu: o conteúdo para ~30px abaixo do cabeçalho fixo em qualquer tela (compensa o padding da seção) */
+section[id]{scroll-margin-top:calc(30px - var(--s7))}
+@media(min-width:760px){section[id]{scroll-margin-top:calc(30px - var(--s8))}}
 
 /* reveal leve — só ativa com JS rodando (html.js), nunca deixa a página em branco */
 html.js .rv{opacity:0;transform:translateY(20px);transition:opacity .6s var(--ease-in),transform .6s var(--ease-in);transition-delay:calc(var(--i,0)*80ms)}
