@@ -43,3 +43,9 @@ Com o servidor local ativo, executar `python3 tests/deck-scroll-checks.py` para 
 O formulário da pousada prepara a mensagem; o usuário confirma o envio no aplicativo escolhido. Não grava automaticamente no banco ou no webhook do quiz. O QR code identifica o site. O rascunho usa sessionStorage da mesma aba.
 
 Para validar a apresentação da SEMEP com servidor local ativo e navegadores Playwright instalados: `python3 tests/semep-checks.py`.
+
+## Laboratório da home (outubro de 2026)
+
+`/laboratorio-home` reúne quatro alternativas funcionais isoladas em `/prototipos/`, a avaliação e um simulador de custos. Usam o design system vigente, sem substituir a home. Valores ilustrativos, sem envio real de mensagens; páginas com `noindex`. Base proposta de 90 minutos, limitada a 2h30 de experiência do cliente conforme local; trabalho da equipe calculado separadamente.
+
+Análise, fontes e premissas em `docs/avaliacao-home-2026-10.md`; sensibilidade em `docs/custos-home-2026-10.csv`. Com o servidor local na porta 3000 e Playwright com Chromium/WebKit instalados: `python3 tests/home-prototypes-checks.py`. `TEST_BROWSERS=chromium` permite selecionar apenas esse navegador; `TEST_BASE_URL` altera o servidor de teste.

@@ -1,0 +1,13 @@
+cenario,horas_pessoa,valor_hora,outros_custos,fixos_mensais,vendas_mes,reserva_pct_custos,impostos_pct_receita,pagamento_pct_receita,resultado_pct_receita,preco_calculado
+leve,2.5,35,60,900,4,7,10,1,15,538.61
+leve,2.5,35,60,900,8,7,10,1,15,375.95
+leve,2.5,35,60,900,12,7,10,1,15,321.72
+leve,2.5,35,60,900,20,7,10,1,15,278.34
+base,4.5,35,90,900,4,7,10,1,15,683.21
+base,4.5,35,90,900,8,7,10,1,15,520.54
+base,4.5,35,90,900,12,7,10,1,15,466.32
+base,4.5,35,90,900,20,7,10,1,15,422.94
+maior_dedicacao,7.5,35,90,900,4,7,10,1,15,835.03
+maior_dedicacao,7.5,35,90,900,8,7,10,1,15,672.36
+maior_dedicacao,7.5,35,90,900,12,7,10,1,15,618.14
+maior_dedicacao,7.5,35,90,900,20,7,10,1,15,574.76
